@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Food Explorer - Contact</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+
+        /* Hero */
+        .contact-hero {
+            background: linear-gradient(rgba(0, 0, 0, .45), rgba(0, 0, 0, .45)),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%23ff6b35"/><stop offset="1" stop-color="%23f7931e"/></linearGradient></defs><rect fill="url(%23g)" width="1200" height="600"/><g opacity="0.15"><circle cx="150" cy="120" r="80" fill="%23ffffff"/><circle cx="1000" cy="420" r="140" fill="%23ffffff"/><rect x="0" y="260" width="1200" height="80" fill="%23ffffff"/></g></svg>');
+            background-size: cover;
+            color: #fff;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-hero::before {
+            content: '🌍🍜🌮🥟🥙';
+            position: absolute;
+            top: 15%;
+            left: -10%;
+            font-size: 6rem;
+            opacity: .08;
+            transform: rotate(-10deg);
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .contact-hero::after {
+            content: '🍢🍕🍧🍲🥡';
+            position: absolute;
+            bottom: 15%;
+            right: -10%;
+            font-size: 6rem;
+            opacity: .08;
+            transform: rotate(10deg);
+            animation: float 7s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-10deg)
+            }
+
+            50% {
+                transform: translateY(-18px) rotate(-10deg)
+            }
+        }
+
+        .contact-hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem
+        }
+
+        .contact-form {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-links a {
+            font-size: 1.8rem;
+            margin: 0 10px;
+            color: var(--secondary-color);
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px 0;
+            margin-top: 40px;
+        }
+
+        .footer a {
+            color: #f39c12;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-utensils"></i> Street Food Explorer
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="malaysia.html">Malaysian Food</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="global.html">Global Food</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="map.html">Food Map</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gallery.html">Gallery</a>
+                    </li>
+                    <li class="nav-item active" >
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="contact-hero">
+        <div class="container">
+            <div class="animate__animated animate__fadeInDown">
+                <h1>Contact Us</h1>
+                <p class="lead">We'd love to hear from you! Share your feedback or say hello.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="contact-form">
+                    <h3 class="mb-4">Send us a message</h3>
+                    <form id="contactForm">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Your Name</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Your Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100"><i class="fas fa-paper-plane"></i>
+                            Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Media -->
+        <div class="text-center mt-5">
+            <h4>Follow Us</h4>
+            <div class="social-links">
+                <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-center">
+        <p>&copy; 2025 Street Food Explorer | All Rights Reserved</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Load saved form data
+            const savedData = JSON.parse(localStorage.getItem("contactFormData") || "{}");
+            if (savedData.name) $("#name").val(savedData.name);
+            if (savedData.email) $("#email").val(savedData.email);
+            if (savedData.message) $("#message").val(savedData.message);
+
+            // Save data on input
+            $("#name, #email, #message").on("input", function () {
+                const formData = {
+                    name: $("#name").val(),
+                    email: $("#email").val(),
+                    message: $("#message").val()
+                };
+                localStorage.setItem("contactFormData", JSON.stringify(formData));
+            });
+
+            // Submit handler
+            $("#contactForm").on("submit", function (e) {
+                e.preventDefault();
+                alert("Thank you for contacting us, " + $("#name").val() + "! Your message has been saved.");
+            });
+        });
+    </script>
+</body>
+
+</html>

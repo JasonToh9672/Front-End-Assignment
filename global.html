@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Global Street Food - Street Food Explorer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+
+        /* Hero */
+        .global-hero {
+            background: linear-gradient(rgba(0, 0, 0, .45), rgba(0, 0, 0, .45)),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%23ff6b35"/><stop offset="1" stop-color="%23f7931e"/></linearGradient></defs><rect fill="url(%23g)" width="1200" height="600"/><g opacity="0.15"><circle cx="150" cy="120" r="80" fill="%23ffffff"/><circle cx="1000" cy="420" r="140" fill="%23ffffff"/><rect x="0" y="260" width="1200" height="80" fill="%23ffffff"/></g></svg>');
+            background-size: cover;
+            color: #fff;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .global-hero::before {
+            content: '🌍🍜🌮🥟🥙';
+            position: absolute;
+            top: 15%;
+            left: -10%;
+            font-size: 6rem;
+            opacity: .08;
+            transform: rotate(-10deg);
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .global-hero::after {
+            content: '🍢🍕🍧🍲🥡';
+            position: absolute;
+            bottom: 15%;
+            right: -10%;
+            font-size: 6rem;
+            opacity: .08;
+            transform: rotate(10deg);
+            animation: float 7s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-10deg)
+            }
+
+            50% {
+                transform: translateY(-18px) rotate(-10deg)
+            }
+        }
+
+        .global-hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem
+        }
+
+        /* Filters */
+        .filter-section {
+            background: #fff;
+            padding: 18px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
+            position: sticky;
+            top: 76px;
+            z-index: 100
+        }
+
+        .filter-btn {
+            background: var(--light-color);
+            border: 2px solid transparent;
+            color: var(--dark-color);
+            padding: 9px 18px;
+            margin: 5px;
+            border-radius: 25px;
+            transition: .3s;
+            cursor: pointer
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, .3)
+        }
+
+        .country-scroll {
+            white-space: nowrap;
+            overflow: auto;
+            padding-bottom: 6px
+        }
+
+        .country-chip {
+            display: inline-block;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            padding: 8px 14px;
+            margin: 4px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: .2s
+        }
+
+        .country-chip.active,
+        .country-chip:hover {
+            background: var(--dark-color);
+            color: #fff
+        }
+
+        /* Grid */
+        .food-grid {
+            padding: 80px 0;
+            background: var(--light-color)
+        }
+
+        .food-item {
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .1);
+            transition: .3s;
+            margin-bottom: 30px;
+            position: relative
+        }
+
+        .food-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, .2)
+        }
+
+        .food-image {
+            height: 250px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            position: relative;
+            overflow: hidden
+        }
+
+        .food-emoji {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5rem
+        }
+
+        .food-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, .92);
+            color: var(--primary-color);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: .8rem
+        }
+
+        .favorite-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, .92);
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: .3s
+        }
+
+        .favorite-btn:hover {
+            background: #fff;
+            transform: scale(1.1)
+        }
+
+        .food-content {
+            padding: 25px
+        }
+
+        .food-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--dark-color)
+        }
+
+        .food-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6
+        }
+
+        .food-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px
+        }
+
+        .stars {
+            color: var(--secondary-color);
+            margin-right: 10px
+        }
+
+        .food-price {
+            font-weight: bold;
+            color: var(--accent-color)
+        }
+
+        .food-tags {
+            margin-bottom: 15px
+        }
+
+        .food-tag {
+            background: var(--light-color);
+            color: var(--dark-color);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: .8rem;
+            margin-right: 5px;
+            display: inline-block
+        }
+
+        .btn-custom {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            color: #fff;
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: .3s;
+            display: inline-block;
+            font-weight: 500
+        }
+
+        .btn-custom:hover {
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, .4)
+        }
+
+        /* Section title */
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--dark-color);
+            position: relative
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 50px
+        }
+
+        .spinner {
+            border: 4px solid var(--light-color);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0)
+            }
+
+            100% {
+                transform: rotate(360deg)
+            }
+        }
+
+        /* Search result */
+        .search-results {
+            background: var(--accent-color);
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px
+        }
+
+        /* Stats */
+        .stats-section {
+            background: #fff;
+            padding: 60px 0;
+            border-top: 3px solid var(--primary-color)
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 15px;
+            background: var(--light-color);
+            margin-bottom: 20px;
+            transition: .3s
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .1)
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: block
+        }
+
+        .stat-label {
+            color: var(--dark-color);
+            font-weight: 500;
+            margin-top: 10px
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-color);
+            color: #fff;
+            padding: 50px 0 30px
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px
+        }
+
+        .footer-section h4 {
+            margin-bottom: 20px;
+            color: var(--secondary-color)
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px
+        }
+
+        .footer-section ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: .3s
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--secondary-color)
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            transition: .3s;
+            text-decoration: none
+        }
+
+        .social-links a:hover {
+            color: var(--secondary-color);
+            transform: translateY(-2px)
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #34495e;
+            padding-top: 20px;
+            text-align: center;
+            color: #bdc3c7
+        }
+
+        /* Notification */
+        .notification {
+        display: none; /* hidden by default */
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        min-width: 250px;
+        background: #28a745; /* default green (success) */
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        font-size: 16px;
+        z-index: 2000;
+        animation: fadeIn 0.5s, fadeOut 0.5s 2.5s; /* smooth in/out */
+        }
+
+        @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeOut {
+        from { opacity: 1; transform: translateY(0); }
+        to { opacity: 0; transform: translateY(-20px); }
+        }
+
+
+        .notification.show {
+            transform: translateX(0)
+        }
+
+        /* Responsive */
+        @media (max-width:768px) {
+            .global-hero h1 {
+                font-size: 2.5rem
+            }
+
+            .food-image {
+                height: 200px
+            }
+
+            .food-emoji {
+                font-size: 4rem
+            }
+
+            .country-scroll {
+                padding-top: 8px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><i class="fas fa-utensils"></i> Street Food Explorer</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="malaysia.html">Malaysian Food</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="global.html">Global Food</a></li>
+                    <li class="nav-item"><a class="nav-link" href="map.html">Food Map</a></li>
+                    <li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="global-hero">
+        <div class="container">
+            <div class="animate__animated animate__fadeInDown">
+                <h1>Global Street Food</h1>
+                <p class="lead">Taste the world—iconic bites, bold flavors, and local traditions from every corner.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="row align-items-center gy-2">
+                <div class="col-lg-4">
+                    <div class="d-flex align-items-center flex-wrap">
+                        <span class="me-2 fw-semibold">Category:</span>
+                        <button class="filter-btn active" data-category="all">All</button>
+                        <button class="filter-btn" data-category="rice">Rice</button>
+                        <button class="filter-btn" data-category="noodles">Noodles</button>
+                        <button class="filter-btn" data-category="snacks">Snacks</button>
+                        <button class="filter-btn" data-category="desserts">Desserts</button>
+                        <button class="filter-btn" data-category="drinks">Drinks</button>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="country-scroll" id="countryChips">
+                        <!-- chips inserted by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Grid -->
+    <section class="food-grid">
+        <div class="container">
+            <div id="searchResults" class="search-results" style="display:none;">
+                <i class="fas fa-search me-2"></i>
+                <span id="searchResultText"></span>
+            </div>
+
+            <div class="row" id="foodContainer">
+                <div id="loadingSpinner" class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading delicious global foods...</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-3">
+                <button class="btn btn-outline-secondary" id="exportFavoritesBtn">
+                    <i class="fas fa-file-export me-1"></i> Export My Global Favorites (Alt+G)
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats-section">
+        <div class="container">
+            <h2 class="section-title">Global Bites by the Numbers</h2>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="stat-card animate__animated animate__fadeInUp">
+                        <span class="stat-number counter" data-target="10">0</span>
+                        <div class="stat-label">Countries Covered</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card animate__animated animate__fadeInUp" style="animation-delay:.2s;">
+                        <span class="stat-number counter" data-target="20">0</span>
+                        <div class="stat-label">Iconic Dishes</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card animate__animated animate__fadeInUp" style="animation-delay:.4s;">
+                        <span class="stat-number counter" data-target="5">0</span>
+                        <div class="stat-label">Categories</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card animate__animated animate__fadeInUp" style="animation-delay:.6s;">
+                        <span class="stat-number">24/7</span>
+                        <div class="stat-label">Street Food Spirit</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4><i class="fas fa-utensils"></i> Street Food Explorer</h4>
+                    <p>Your ultimate guide to discovering the world's most amazing street foods. From local Malaysian
+                        favorites to global culinary treasures.</p>
+                    <div class="social-links mt-3">
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="malaysia.html">Malaysian Street Food</a></li>
+                        <li><a href="global.html">Global Street Food</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="gallery.html">Photo Gallery</a></li>
+                        <li><a href="map.html">Food Map</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#" onclick="showPrivacyPolicy()">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> info@streetfoodexplorer.com</p>
+                    <p><i class="fas fa-phone"></i> +60 12-345-6789</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Kuala Lumpur, Malaysia</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Street Food Explorer. All rights reserved. | Developed by UCCD2323 Group Project</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <span id="notificationText"></span>
+        <button type="button" class="btn-close btn-close-white ms-2" onclick="hideNotification()"></button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script>
+        // --------------------------------
+        // Data
+        // --------------------------------
+        let globalFoods = [];
+        let favoritesGlobal = [];
+        let currentCategory = 'all';
+        let currentCountry = 'all';
+
+        const foodsData = [
+            // Japan
+            { id: 101, name: "Takoyaki", description: "Crispy-outside, gooey-inside octopus balls drizzled with sauce and bonito flakes.", category: "snacks", price: "¥400-800", rating: 4.7, emoji: "🐙", tags: ["Crispy", "Savory", "Street Classic"], origin: "Japan", country: "Japan", difficulty: "Medium" },
+            { id: 102, name: "Ramen", description: "Wheat noodles in rich broth topped with chashu, egg, and scallions.", category: "noodles", price: "¥700-1200", rating: 4.8, emoji: "🍜", tags: ["Brothy", "Comfort"], origin: "Japan", country: "Japan", difficulty: "Medium" },
+            // Thailand
+            { id: 201, name: "Pad Thai", description: "Stir-fried rice noodles with tamarind, shrimp, tofu, egg, and peanuts.", category: "noodles", price: "฿40-80", rating: 4.7, emoji: "🍝", tags: ["Sweet-Sour", "Iconic"], origin: "Thailand", country: "Thailand", difficulty: "Medium" },
+            { id: 202, name: "Mango Sticky Rice", description: "Sweet sticky rice with ripe mango and coconut cream.", category: "desserts", price: "฿50-100", rating: 4.6, emoji: "🥭", tags: ["Sweet", "Coconut"], origin: "Thailand", country: "Thailand", difficulty: "Easy" },
+            // Mexico
+            { id: 301, name: "Tacos al Pastor", description: "Marinated pork shaved from a spit, served on corn tortillas with pineapple.", category: "snacks", price: "$1-2/ea", rating: 4.8, emoji: "🌮", tags: ["Spit-roast", "Zesty"], origin: "Mexico", country: "Mexico", difficulty: "Medium" },
+            { id: 302, name: "Elote", description: "Grilled corn slathered with mayo, cheese, chili, and lime.", category: "snacks", price: "$2-4", rating: 4.5, emoji: "🌽", tags: ["Grilled", "Tangy"], origin: "Mexico", country: "Mexico", difficulty: "Easy" },
+            // Turkey
+            { id: 401, name: "Döner Kebab", description: "Thinly sliced seasoned meat in flatbread with veggies and sauce.", category: "snacks", price: "₺60-120", rating: 4.6, emoji: "🥙", tags: ["Hearty", "Spit-roast"], origin: "Turkey", country: "Turkey", difficulty: "Medium" },
+            { id: 402, name: "Kumpir", description: "Loaded baked potato with butter, cheese, and endless toppings.", category: "snacks", price: "₺70-140", rating: 4.4, emoji: "🥔", tags: ["Comfort", "Customizable"], origin: "Turkey", country: "Turkey", difficulty: "Easy" },
+            // India
+            { id: 501, name: "Pani Puri", description: "Crispy puri shells filled with spiced potatoes and tangy tamarind water.", category: "snacks", price: "₹30-80", rating: 4.7, emoji: "🫓", tags: ["Tangy", "Fun-to-eat"], origin: "India", country: "India", difficulty: "Medium" },
+            { id: 502, name: "Masala Dosa", description: "Crisp rice-lentil crepe filled with spiced potatoes; served with chutneys.", category: "rice", price: "₹60-150", rating: 4.6, emoji: "🥞", tags: ["Crisp", "South Indian"], origin: "India", country: "India", difficulty: "Medium" },
+            // Vietnam
+            { id: 601, name: "Bánh Mì", description: "Crispy baguette with pickles, herbs, pâté, and meats.", category: "snacks", price: "₫20k-40k", rating: 4.7, emoji: "🥖", tags: ["Crispy", "Herby"], origin: "Vietnam", country: "Vietnam", difficulty: "Medium" },
+            { id: 602, name: "Phở", description: "Aromatic beef or chicken noodle soup with fresh herbs.", category: "noodles", price: "₫30k-60k", rating: 4.6, emoji: "🍲", tags: ["Herbal", "Comfort"], origin: "Vietnam", country: "Vietnam", difficulty: "Medium" },
+            // Korea
+            { id: 701, name: "Tteokbokki", description: "Chewy rice cakes simmered in spicy gochujang sauce.", category: "snacks", price: "₩3000-6000", rating: 4.5, emoji: "🔥", tags: ["Spicy", "Chewy"], origin: "Korea", country: "South Korea", difficulty: "Easy" },
+            { id: 702, name: "Hotteok", description: "Brown sugar–filled griddled pancakes, crisp outside, gooey inside.", category: "desserts", price: "₩1000-2000", rating: 4.4, emoji: "🧇", tags: ["Sweet", "Warm"], origin: "Korea", country: "South Korea", difficulty: "Easy" },
+            // Indonesia
+            { id: 801, name: "Nasi Goreng", description: "Smoky fried rice with kecap manis and toppings.", category: "rice", price: "Rp15k-30k", rating: 4.6, emoji: "🍚", tags: ["Smoky", "Comfort"], origin: "Indonesia", country: "Indonesia", difficulty: "Easy" },
+            { id: 802, name: "Satay (Sate)", description: "Skewered grilled meats with peanut sauce, Indonesian style.", category: "snacks", price: "Rp2k-5k/stick", rating: 4.6, emoji: "🍢", tags: ["Grilled", "Peanut"], origin: "Indonesia", country: "Indonesia", difficulty: "Medium" },
+            // China
+            { id: 901, name: "Jianbing", description: "Crispy egg crêpe with sauces, herbs, and crunchy cracker.", category: "snacks", price: "¥6-12", rating: 4.5, emoji: "🥞", tags: ["Crispy", "Savory"], origin: "China", country: "China", difficulty: "Medium" },
+            { id: 902, name: "Xiao Long Bao", description: "Soup dumplings bursting with savory broth.", category: "snacks", price: "¥15-30", rating: 4.7, emoji: "🥟", tags: ["Juicy", "Delicate"], origin: "China", country: "China", difficulty: "Hard" },
+            // Singapore
+            { id: 1001, name: "Chili Crab", description: "Sweet–spicy crab in rich tomato-chili sauce; messy and glorious.", category: "snacks", price: "S$25-50", rating: 4.6, emoji: "🦀", tags: ["Seafood", "Spicy"], origin: "Singapore", country: "Singapore", difficulty: "Hard" },
+            { id: 1002, name: "Hainanese Chicken Rice", description: "Poached chicken with fragrant rice and chili-ginger sauce.", category: "rice", price: "S$3-6", rating: 4.7, emoji: "🍗", tags: ["Fragrant", "Comfort"], origin: "Singapore", country: "Singapore", difficulty: "Easy" }
+        ];
+
+        // Build country list dynamically
+        const countries = ['All', 'Japan', 'Thailand', 'Mexico', 'Turkey', 'India', 'Vietnam', 'South Korea', 'Indonesia', 'China', 'Singapore'];
+
+        // --------------------------------
+        // Init
+        // --------------------------------
+        $(document).ready(function () {
+            initializeGlobalPage();
+            loadFavorites();
+            buildCountryChips();
+            setTimeout(loadGlobalFoods, 1200); // loading animation
+            setupFilterButtons();
+            startCounterAnimations();
+            $('#exportFavoritesBtn').on('click', exportMyGlobalFavorites);
+            // Search params
+            setTimeout(checkForSearchParams, 900);
+        });
+
+        function initializeGlobalPage() {
+            const sessionData = JSON.parse(sessionStorage.getItem('streetFood_session') || '{}');
+            if (!sessionData.pageViews) sessionData.pageViews = [];
+            sessionData.pageViews.push({ page: 'global', timestamp: new Date().toISOString() });
+            sessionStorage.setItem('streetFood_session', JSON.stringify(sessionData));
+
+            const prefs = JSON.parse(localStorage.getItem('streetFood_preferences') || '{}');
+            if (!prefs.visitedPages) prefs.visitedPages = [];
+            if (!prefs.visitedPages.includes('global')) {
+                prefs.visitedPages.push('global');
+                localStorage.setItem('streetFood_preferences', JSON.stringify(prefs));
+            }
+            // restore last filters
+            if (prefs.lastGlobalCategory) currentCategory = prefs.lastGlobalCategory;
+            if (prefs.lastGlobalCountry) currentCountry = prefs.lastGlobalCountry;
+
+            console.log('Global page initialized');
+        }
+
+        function loadFavorites() {
+            favoritesGlobal = JSON.parse(localStorage.getItem('streetFood_favorites_global') || '[]');
+        }
+
+        function loadGlobalFoods() {
+            globalFoods = foodsData;
+            // initial render honoring saved filters
+            renderCurrentFiltersUI();
+            applyFiltersAndDisplay();
+            $('#loadingSpinner').fadeOut();
+            console.log('Global foods loaded:', globalFoods.length);
+        }
+
+        // --------------------------------
+        // UI Builders
+        // --------------------------------
+        function buildCountryChips() {
+            const wrap = $('#countryChips');
+            wrap.empty();
+            countries.forEach(c => {
+                const key = c.toLowerCase();
+                const chip = $(`<span class="country-chip ${currentCountry === key ? 'active' : ''}" data-country="${key}">${c}</span>`);
+                wrap.append(chip);
+            });
+            // listeners
+            $('.country-chip').on('click', function () {
+                $('.country-chip').removeClass('active');
+                $(this).addClass('active');
+                currentCountry = $(this).data('country');
+                storeFilterPrefs();
+                trackUserInteraction('filter_country', { country: currentCountry });
+                applyFiltersAndDisplay();
+            });
+        }
+
+        function renderCurrentFiltersUI() {
+            // category buttons
+            $('.filter-btn').removeClass('active');
+            $(`.filter-btn[data-category="${currentCategory}"]`).addClass('active');
+            // country chips
+            $('.country-chip').removeClass('active');
+            $(`.country-chip[data-country="${currentCountry}"]`).addClass('active');
+        }
+
+        // --------------------------------
+        // Filtering & Display
+        // --------------------------------
+        function setupFilterButtons() {
+            $('.filter-btn').on('click', function () {
+                currentCategory = $(this).data('category');
+                $('.filter-btn').removeClass('active');
+                $(this).addClass('active');
+                storeFilterPrefs();
+                trackUserInteraction('filter_category', { category: currentCategory });
+                applyFiltersAndDisplay();
+            });
+        }
+
+        function storeFilterPrefs() {
+            const prefs = JSON.parse(localStorage.getItem('streetFood_preferences') || '{}');
+            prefs.lastGlobalCategory = currentCategory;
+            prefs.lastGlobalCountry = currentCountry;
+            localStorage.setItem('streetFood_preferences', JSON.stringify(prefs));
+        }
+
+        function applyFiltersAndDisplay() {
+            let list = [...globalFoods];
+            if (currentCategory !== 'all') {
+                list = list.filter(f => f.category === currentCategory);
+            }
+            if (currentCountry && currentCountry !== 'all') {
+                list = list.filter(f => f.country.toLowerCase() === currentCountry);
+            }
+            displayFoods(list);
+
+            if (currentCategory !== 'all' || (currentCountry && currentCountry !== 'all')) {
+                const catLabel = currentCategory === 'all' ? 'all categories' : currentCategory;
+                const countryLabel = (!currentCountry || currentCountry === 'all') ? 'all countries' : currentCountry;
+                $('#searchResultText').text(`Showing ${list.length} items • ${catLabel} • ${countryLabel}`);
+                $('#searchResults').show();
+            } else {
+                $('#searchResults').hide();
+            }
+        }
+
+        function displayFoods(foods) {
+            const container = $('#foodContainer');
+            container.empty();
+
+            if (foods.length === 0) {
+                container.html(`
+          <div class="col-12 text-center">
+            <div class="alert alert-info">
+              <i class="fas fa-search"></i>
+              <h5>No foods found</h5>
+              <p>Try a different country or category!</p>
+            </div>
+          </div>
+        `);
+                return;
+            }
+
+            foods.forEach(food => {
+                const card = createFoodCard(food);
+                container.append(card);
+            });
+
+            setTimeout(() => {
+                $('.favorite-btn').off('click').on('click', function (e) {
+                    e.preventDefault();
+                    const id = parseInt($(this).data('food-id'));
+                    toggleFavorite(id);
+                });
+                $('.view-details').off('click').on('click', function (e) {
+                    e.preventDefault();
+                    const id = parseInt($(this).data('food-id'));
+                    viewFoodDetails(id);
+                });
+            }, 80);
+        }
+
+        function createFoodCard(food) {
+            const isFav = favoritesGlobal.includes(food.id);
+            const favClass = isFav ? 'fas text-danger' : 'far';
+            return $(`
+        <div class="col-lg-4 col-md-6 food-item-wrapper" data-category="${food.category}" data-country="${food.country}">
+          <div class="food-item animate__animated animate__fadeInUp">
+            <div class="food-image">
+              <div class="food-emoji">${food.emoji}</div>
+              <div class="food-badge">${food.country}</div>
+              <button class="favorite-btn" data-food-id="${food.id}">
+                <i class="${favClass} fa-heart"></i>
+              </button>
+            </div>
+            <div class="food-content">
+              <h4 class="food-title">${food.name}</h4>
+              <p class="food-description">${food.description}</p>
+              <div class="food-tags">
+                ${food.tags.map(t => `<span class="food-tag">${t}</span>`).join('')}
+              </div>
+              <div class="food-meta">
+                <div class="food-rating">
+                  <div class="stars">${generateStars(food.rating)}</div>
+                  <span>${food.rating}</span>
+                </div>
+                <div class="food-price">${food.price}</div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <a href="#" class="btn-custom view-details" data-food-id="${food.id}">
+                  <i class="fas fa-info-circle"></i> Learn More
+                </a>
+                <small class="text-muted">
+                  <i class="fas fa-globe"></i> ${food.origin}
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      `);
+        }
+
+        function generateStars(r) { const full = Math.floor(r); const half = r % 1 !== 0; let s = ''; for (let i = 0; i < full; i++) s += '<i class="fas fa-star"></i>'; if (half) s += '<i class="fas fa-star-half-alt"></i>'; const empty = 5 - Math.ceil(r); for (let i = 0; i < empty; i++) s += '<i class="far fa-star"></i>'; return s; }
+
+        // --------------------------------
+        // Favorites, Details, Share
+        // --------------------------------
+        function toggleFavorite(id) {
+            const idx = favoritesGlobal.indexOf(id);
+            if (idx > -1) {
+                favoritesGlobal.splice(idx, 1);
+                showNotification('Removed from favorites', 'info');
+            } else {
+                favoritesGlobal.push(id);
+                showNotification('Added to favorites', 'success');
+            }
+            localStorage.setItem('streetFood_favorites_global', JSON.stringify(favoritesGlobal));
+            applyFiltersAndDisplay();
+            trackUserInteraction('toggle_favorite_global', { foodId: id, action: idx > -1 ? 'remove' : 'add' });
+        }
+
+        function viewFoodDetails(id) {
+            const food = globalFoods.find(f => f.id === id);
+            if (!food) return;
+            // save for details page
+            sessionStorage.setItem('selectedFood', JSON.stringify(food));
+            // modal preview
+            showFoodModal(food);
+            // track
+            trackUserInteraction('view_details_global', { foodId: id, foodName: food.name });
+        }
+
+        function showFoodModal(food) {
+            const modal = `
+        <div class="modal fade" id="foodModal" tabindex="-1" aria-labelledby="foodModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header" style="background:linear-gradient(135deg,var(--primary-color),var(--secondary-color)); color:#fff;">
+                <h5 class="modal-title" id="foodModalLabel"><span style="font-size:2rem; margin-right:10px;">${food.emoji}</span>${food.name}</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <h6>Description</h6>
+                    <p>${food.description}</p>
+                    <h6>Origin</h6>
+                    <p><strong>Country:</strong> ${food.country}<br><strong>From:</strong> ${food.origin}</p>
+                    <h6>Fun Facts</h6>
+                    <ul>
+                      <li>Often served fresh from bustling street stalls.</li>
+                      <li>Represents local flavors and cooking traditions.</li>
+                      <li>Perfect for first-time visitors exploring the cuisine.</li>
+                    </ul>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="bg-light p-3 rounded">
+                      <h6>Quick Info</h6>
+                      <p><strong>Price Range:</strong><br>${food.price}</p>
+                      <p><strong>Rating:</strong><br><span class="stars">${generateStars(food.rating)}</span> ${food.rating}/5</p>
+                      <p><strong>Category:</strong><br><span class="badge bg-primary">${food.category}</span></p>
+                      <p><strong>Tags:</strong><br>${food.tags.map(t => `<span class="badge bg-secondary me-1">${t}</span>`).join('')}</p>
+                    </div>
+                    <div class="mt-3 d-grid gap-2">
+                      <button class="btn btn-custom" onclick="shareFood(${food.id})"><i class="fas fa-share"></i> Share</button>
+                      <a class="btn btn-outline-dark" href="details.html"><i class="fas fa-up-right-from-square"></i> Open Details Page</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-custom" onclick="addToFavorites(${food.id})" data-bs-dismiss="modal"><i class="fas fa-heart"></i> Add to Favorites</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+            $('#foodModal').remove();
+            $('body').append(modal);
+            $('#foodModal').modal('show');
+            $('#foodModal').on('hidden.bs.modal', function () { $(this).remove(); });
+        }
+
+        function shareFood(id) {
+            const food = globalFoods.find(f => f.id === id);
+            if (!food) return;
+            const url = window.location.href + `?food=${id}`;
+            if (navigator.share) {
+                navigator.share({ title: `Check out ${food.name}!`, text: food.description, url });
+            } else {
+                const txt = `Check out ${food.name}! ${food.description} - ${url}`;
+                navigator.clipboard.writeText(txt).then(() => showNotification('Link copied to clipboard!', 'success'));
+            }
+            trackUserInteraction('share_food_global', { foodId: id, foodName: food.name });
+        }
+
+        function addToFavorites(id) {
+            if (!favoritesGlobal.includes(id)) {
+                favoritesGlobal.push(id);
+                localStorage.setItem('streetFood_favorites_global', JSON.stringify(favoritesGlobal));
+                showNotification('Added to favorites!', 'success');
+            } else {
+                showNotification('Already in favorites!', 'info');
+            }
+        }
+
+        // --------------------------------
+        // Search / URL params
+        // --------------------------------
+        function checkForSearchParams() {
+            const p = new URLSearchParams(window.location.search);
+            const searchTerm = p.get('search');
+            const foodId = p.get('food');
+
+            if (searchTerm) { performSearch(searchTerm); }
+            if (foodId) {
+                setTimeout(() => {
+                    const el = $(`.food-item-wrapper .view-details[data-food-id="${foodId}"]`).closest('.food-item');
+                    if (el.length) {
+                        el.addClass('highlight-food');
+                        $('html, body').animate({ scrollTop: el.offset().top - 100 }, 1000);
+                    }
+                }, 1600);
+            }
+        }
+
+        function performSearch(term) {
+            const results = globalFoods.filter(f =>
+                f.name.toLowerCase().includes(term.toLowerCase()) ||
+                f.description.toLowerCase().includes(term.toLowerCase()) ||
+                f.tags.some(t => t.toLowerCase().includes(term.toLowerCase())) ||
+                f.country.toLowerCase().includes(term.toLowerCase())
+            );
+            displayFoods(results);
+            $('#searchResultText').text(`${results.length} result(s) for "${term}"`);
+            $('#searchResults').show();
+            trackUserInteraction('search_global', { term, results: results.length });
+        }
+
+        // --------------------------------
+        // Notification, Counters, Export
+        // --------------------------------
+        function showNotification(message, type = "success") {
+            const notif = document.getElementById("notification");
+            const notifText = document.getElementById("notificationText");
+
+            // Change background color depending on type
+            if (type === "success") {
+                notif.style.background = "#28a745"; // green
+            } else if (type === "error") {
+                notif.style.background = "#dc3545"; // red
+            } else if (type === "info") {
+                notif.style.background = "#0d6efd"; // blue
+            } else {
+                notif.style.background = "#6c757d"; // gray
+            }
+
+            notifText.textContent = message;
+            notif.style.display = "block";
+
+            // Auto-hide after 3 seconds
+            setTimeout(hideNotification, 3000);
+        }
+
+        function hideNotification() {
+            document.getElementById("notification").style.display = "none";
+        }
+
+
+        function startCounterAnimations() {
+            const counters = document.querySelectorAll('.counter');
+            const obs = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) { animateCounter(e.target); obs.unobserve(e.target); }
+                });
+            });
+            counters.forEach(c => obs.observe(c));
+        }
+        function animateCounter(el) {
+            const target = parseInt(el.getAttribute('data-target')); const inc = target / 50; let cur = 0;
+            const timer = setInterval(() => {
+                cur += inc;
+                if (cur >= target) { el.textContent = target; clearInterval(timer); }
+                else { el.textContent = Math.ceil(cur); }
+            }, 40);
+        }
+
+        function exportMyGlobalFavorites() {
+            const favFoods = globalFoods.filter(f => favoritesGlobal.includes(f.id));
+            if (favFoods.length === 0) { showNotification('No favorites to export!', 'warning'); return; }
+            const dataStr = JSON.stringify({ exportDate: new Date().toISOString(), totalFavorites: favFoods.length, foods: favFoods }, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = 'my_global_favorites.json'; a.click();
+            URL.revokeObjectURL(url);
+            showNotification(`Exported ${favFoods.length} favorite foods!`, 'success');
+            trackUserInteraction('export_favorites_global', { count: favFoods.length });
+        }
+        // Alt+G shortcut
+        document.addEventListener('keydown', e => {
+            if (e.altKey && e.key.toLowerCase() === 'g') { e.preventDefault(); exportMyGlobalFavorites(); }
+        });
+
+        // --------------------------------
+        // Privacy modal (reuse)
+        // --------------------------------
+        function showPrivacyPolicy() {
+            const modal = `
+        <div class="modal fade" id="privacyModal" tabindex="-1">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Privacy Policy</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <h6>Information We Collect</h6>
+                <p>We collect preferences like visited pages, favorites, and filters to personalize your experience.</p>
+                <h6>How We Use Information</h6>
+                <p>Your data helps us improve recommendations and remember your choices.</p>
+                <h6>Data Protection</h6>
+                <p>We use local/session storage in your browser; clear it anytime in your settings.</p>
+              </div>
+            </div>
+          </div>
+        </div>`;
+            $('body').append(modal);
+            $('#privacyModal').modal('show');
+            $('#privacyModal').on('hidden.bs.modal', function () { $(this).remove(); });
+        }
+
+        // --------------------------------
+        // Smooth scroll & basic AOS
+        // --------------------------------
+        $('a[href^="#"]').on('click', function (e) {
+            e.preventDefault();
+            const t = $($(this).attr('href'));
+            if (t.length) { $('html, body').animate({ scrollTop: t.offset().top - 100 }, 800); }
+        });
+        const animateOnScroll = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('animate__animated', 'animate__fadeInUp'); } });
+        });
+        // will auto-apply when cards render
+
+        // Track interactions
+        function trackUserInteraction(action, details = {}) {
+            const sessionData = JSON.parse(sessionStorage.getItem('streetFood_session') || '{}');
+            if (!sessionData.interactions) sessionData.interactions = [];
+            sessionData.interactions.push({ action, page: 'global', details, timestamp: new Date().toISOString() });
+            sessionStorage.setItem('streetFood_session', JSON.stringify(sessionData));
+        }
+
+        // highlight style for search-linked items
+        $('<style>').prop('type', 'text/css').html(`
+      .highlight-food{
+        animation: highlightPulse 2s ease-in-out 3;
+        border:3px solid var(--accent-color) !important;
+      }
+      @keyframes highlightPulse{
+        0%,100%{transform:scale(1); box-shadow:0 10px 30px rgba(0,0,0,.1)}
+        50%{transform:scale(1.05); box-shadow:0 20px 40px rgba(46,204,113,.3)}
+      }
+    `).appendTo('head');
+
+        console.log('🌍 Global Street Food Page Loaded!');
+    </script>
+</body>
+
+</html>

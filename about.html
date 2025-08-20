@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Street Food Explorer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+
+        /* Hero Section */
+        .about-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-hero::before {
+            content: '🍜🌍🍢🥘🍲';
+            position: absolute;
+            top: 20%;
+            left: -10%;
+            font-size: 6rem;
+            opacity: 0.1;
+            transform: rotate(-15deg);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .about-hero::after {
+            content: '🥡🌮🍕🥟🧆';
+            position: absolute;
+            bottom: 20%;
+            right: -10%;
+            font-size: 6rem;
+            opacity: 0.1;
+            transform: rotate(15deg);
+            animation: float 6s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-15deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(-15deg);
+            }
+        }
+
+        .about-hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .about-hero p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Story Section */
+        .story-section {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .story-content {
+            background: var(--light-color);
+            border-radius: 20px;
+            padding: 50px;
+            margin-bottom: 50px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .story-icon {
+            position: absolute;
+            top: -30px;
+            left: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--dark-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        /* Mission Section */
+        .mission-section {
+            padding: 100px 0;
+            background: var(--light-color);
+        }
+
+        .mission-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+            margin-bottom: 30px;
+        }
+
+        .mission-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .mission-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .mission-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        /* Fun Facts Section */
+        .fun-facts {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fun-facts::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle fill="rgba(255,255,255,0.1)" cx="20" cy="20" r="2"/><circle fill="rgba(255,255,255,0.1)" cx="80" cy="80" r="2"/><circle fill="rgba(255,255,255,0.1)" cx="40" cy="60" r="1"/><circle fill="rgba(255,255,255,0.1)" cx="60" cy="40" r="1"/></svg>') repeat;
+            animation: backgroundMove 20s linear infinite;
+        }
+
+        @keyframes backgroundMove {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(100px, 100px);
+            }
+        }
+
+        .fact-card {
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .fact-number {
+            font-size: 4rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .fact-label {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .fact-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+
+        /* Team Section */
+        .team-section {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .team-member {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .team-avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover .team-avatar {
+            transform: scale(1.1);
+        }
+
+        .team-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+
+        .team-role {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .team-description {
+            color: #666;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        /* Call to Action */
+        .cta-section {
+            padding: 80px 0;
+            background: var(--dark-color);
+            color: white;
+            text-align: center;
+        }
+
+        .btn-custom {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-weight: 500;
+            margin: 10px;
+        }
+
+        .btn-custom:hover {
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        /* Footer - Same as index.html */
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 50px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #34495e;
+            padding-top: 20px;
+            text-align: center;
+            color: #bdc3c7;
+        }
+
+        /* Counter Animation */
+        .counter {
+            display: inline-block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .about-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .story-content {
+                padding: 30px 20px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .team-avatar {
+                width: 150px;
+                height: 150px;
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-utensils"></i> Street Food Explorer
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="about.html">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="malaysia.html">Malaysian Food</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="global.html">Global Food</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="map.html">Food Map</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gallery.html">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="container">
+            <div class="animate__animated animate__fadeInDown">
+                <h1>About Street Food Explorer</h1>
+                <p class="lead">Connecting food lovers with the incredible world of street food culture, one delicious
+                    discovery at a time.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story-section">
+        <div class="container">
+            <h2 class="section-title animate__animated animate__fadeInUp">Our Story</h2>
+
+            <div class="story-content animate__animated animate__fadeInLeft">
+                <div class="story-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3>How It All Began</h3>
+                <p>Street Food Explorer was born from a simple yet powerful idea: to celebrate and preserve the rich
+                    cultural heritage of street food around the world. As university students passionate about food and
+                    technology, we noticed that many incredible street food stories were being lost to time, and amazing
+                    local dishes were unknown to the broader community.</p>
+                <p>Our journey started during a late-night study session when we were craving authentic Malaysian street
+                    food. We realized that while there were many restaurant review sites, there wasn't a dedicated
+                    platform that truly captured the essence, history, and cultural significance of street food.</p>
+            </div>
+
+            <div class="story-content animate__animated animate__fadeInRight">
+                <div class="story-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h3>Our Passion</h3>
+                <p>What drives us is the belief that street food is more than just affordable, convenient meals. It's
+                    about community, tradition, and the incredible creativity of everyday people who have perfected
+                    their recipes through generations. Every bowl of laksa, every piece of roti canai, and every stick
+                    of satay tells a story.</p>
+                <p>We want to be the bridge that connects food enthusiasts with these amazing stories and helps preserve
+                    culinary traditions for future generations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <div class="container">
+            <h2 class="section-title">Our Mission</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mission-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                        <div class="mission-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4 class="mission-title">Community Building</h4>
+                        <p>Connect food lovers, vendors, and cultural enthusiasts to create a vibrant community that
+                            celebrates street food diversity.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mission-card animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                        <div class="mission-icon">
+                            <i class="fas fa-compass"></i>
+                        </div>
+                        <h4 class="mission-title">Culinary Discovery</h4>
+                        <p>Help people discover authentic street food experiences and support local vendors who keep
+                            these traditions alive.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mission-card animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+                        <div class="mission-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h4 class="mission-title">Cultural Preservation</h4>
+                        <p>Document and preserve street food traditions from Malaysia and around the world, ensuring these
+                            culinary treasures are never forgotten.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fun Facts Section -->
+    <section class="fun-facts">
+        <div class="container">
+            <h2 class="section-title text-white">Fun Facts About Malaysian Street Food</h2>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="fact-card animate__animated animate__fadeInUp">
+                        <span class="fact-number counter" data-target="200">0</span>
+                        <div class="fact-label">Types of Street Food</div>
+                        <div class="fact-description">Malaysia has over 200 different types of street food dishes</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="fact-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                        <span class="fact-number counter" data-target="13">0</span>
+                        <div class="fact-label">States</div>
+                        <div class="fact-description">Each of Malaysia's 13 states has unique street food specialties
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="fact-card animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                        <span class="fact-number">24/7</span>
+                        <div class="fact-label">Availability</div>
+                        <div class="fact-description">Street food is available around the clock in major Malaysian
+                            cities</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="fact-card animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+                        <span class="fact-number counter" data-target="3">0</span>
+                        <div class="fact-label">Major Influences</div>
+                        <div class="fact-description">Malay, Chinese, and Indian culinary traditions shape Malaysian
+                            street food</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-12 text-center">
+                    <h3 class="mb-4">Did You Know?</h3>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="bg-white bg-opacity-10 p-3 rounded">
+                                <i class="fas fa-utensils fa-2x mb-2"></i>
+                                <p><strong>Nasi Lemak</strong> is considered Malaysia's national dish and can be found
+                                    at any time of day</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="bg-white bg-opacity-10 p-3 rounded">
+                                <i class="fas fa-fire fa-2x mb-2"></i>
+                                <p><strong>Char Kway Teow</strong> must be cooked over extremely high heat to achieve
+                                    the perfect "wok hei" flavor</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="bg-white bg-opacity-10 p-3 rounded">
+                                <i class="fas fa-leaf fa-2x mb-2"></i>
+                                <p><strong>Banana leaves</strong> are commonly used as natural plates, adding subtle
+                                    flavor to the food</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <h2 class="section-title">Meet Our Team</h2>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="team-member animate__animated animate__fadeInUp">
+                        <div class="team-avatar">👨‍💻</div>
+                        <h4 class="team-name">Toh Jie Kang</h4>
+                        <div class="team-role">Lead Developer & Food Enthusiast</div>
+                        <p class="team-description">Passionate about combining technology with culinary culture.
+                            Specializes in front-end development and user experience design.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="team-member animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                        <div class="team-avatar">👩‍🎨</div>
+                        <h4 class="team-name">Teoh Wei Zhong</h4>
+                        <div class="team-role">UI/UX Designer</div>
+                        <p class="team-description">Creates beautiful and intuitive interfaces that make exploring
+                            street food culture a delightful experience for users.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="team-member animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                        <div class="team-avatar">👨‍🍳</div>
+                        <h4 class="team-name">Chai Chuan Wei</h4>
+                        <div class="team-role">Content Curator</div>
+                        <p class="team-description">Food historian and writer who researches and documents the stories
+                            behind every street food dish on our platform.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="team-member animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+                        <div class="team-avatar">👩‍💼</div>
+                        <h4 class="team-name">Lim Johern</h4>
+                        <div class="team-role">Project Manager</div>
+                        <p class="team-description">Ensures our team stays focused on delivering the best street food
+                            discovery experience while managing partnerships.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Why Street Food Matters Section -->
+    <section style="padding: 100px 0; background: var(--light-color);">
+        <div class="container">
+            <h2 class="section-title">Why Street Food Matters</h2>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="animate__animated animate__fadeInLeft">
+                        <h3 class="mb-4">Cultural Heritage</h3>
+                        <p class="lead">Street food is a living museum of culinary traditions, passed down through
+                            generations and constantly evolving with the times.</p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Preserves traditional
+                                cooking methods</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Maintains cultural
+                                identity</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Supports local
+                                communities</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Promotes cultural
+                                exchange</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="animate__animated animate__fadeInRight">
+                        <div class="bg-white p-4 rounded-3 shadow">
+                            <h4 class="text-center mb-4">Tourism Impact</h4>
+                            <div class="row text-center">
+                                <div class="col-6 mb-3">
+                                    <div class="text-primary">
+                                        <i class="fas fa-plane fa-2x mb-2"></i>
+                                        <h5 class="counter" data-target="68">0</h5>
+                                        <small>% of tourists visit for food</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <div class="text-warning">
+                                        <i class="fas fa-dollar-sign fa-2x mb-2"></i>
+                                        <h5>RM<span class="counter" data-target="15">0</span>B</h5>
+                                        <small>Annual food tourism revenue</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-center small text-muted mt-3">Street food plays a crucial role in Malaysia's
+                                tourism industry</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="animate__animated animate__fadeInUp">
+                <h2 class="mb-4">Join Our Culinary Journey</h2>
+                <p class="lead mb-4">Ready to explore the amazing world of street food? Start discovering, tasting, and
+                    sharing your favorite finds with our community.</p>
+                <div class="mt-4">
+                    <a href="malaysia.html" class="btn-custom">
+                        <i class="fas fa-utensils"></i> Explore Malaysian Foods
+                    </a>
+                    <a href="global.html" class="btn-custom">
+                        <i class="fas fa-globe"></i> Discover Global Cuisines
+                    </a>
+                    <a href="contact.html" class="btn-custom">
+                        <i class="fas fa-envelope"></i> Get In Touch
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4><i class="fas fa-utensils"></i> Street Food Explorer</h4>
+                    <p>Your ultimate guide to discovering the world's most amazing street foods. From local Malaysian
+                        favorites to global culinary treasures.</p>
+                    <div class="social-links mt-3">
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="malaysia.html">Malaysian Street Food</a></li>
+                        <li><a href="global.html">Global Street Food</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="gallery.html">Photo Gallery</a></li>
+                        <li><a href="map.html">Food Map</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#" onclick="showPrivacyPolicy()">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> info@streetfoodexplorer.com</p>
+                    <p><i class="fas fa-phone"></i> +60 12-345-6789</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Kuala Lumpur, Malaysia</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Street Food Explorer. All rights reserved. | Developed by UCCD2323 Group Project</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script>
+        // Initialize page
+        $(document).ready(function () {
+            initializeAboutPage();
+            updatePageTracking();
+            startCounterAnimations();
+        });
+
+        function initializeAboutPage() {
+            // Store page visit in session storage
+            const sessionData = JSON.parse(sessionStorage.getItem('streetFood_session') || '{}');
+            if (!sessionData.pageViews) sessionData.pageViews = [];
+
+            sessionData.pageViews.push({
+                page: 'about',
+                timestamp: new Date().toISOString()
+            });
+
+            sessionStorage.setItem('streetFood_session', JSON.stringify(sessionData));
+            console.log('About page initialized');
+        }
+
+        function updatePageTracking() {
+            // Update user preferences for visited pages
+            const preferences = JSON.parse(localStorage.getItem('streetFood_preferences') || '{}');
+            if (!preferences.visitedPages) preferences.visitedPages = [];
+
+            if (!preferences.visitedPages.includes('about')) {
+                preferences.visitedPages.push('about');
+                localStorage.setItem('streetFood_preferences', JSON.stringify(preferences));
+            }
+        }
+
+        // Counter Animation
+        function startCounterAnimations() {
+            const counters = document.querySelectorAll('.counter');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounter(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+
+            counters.forEach(counter => {
+                observer.observe(counter);
+            });
+        }
+
+        function animateCounter(element) {
+            const target = parseInt(element.getAttribute('data-target'));
+            const increment = target / 50;
+            let current = 0;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.ceil(current);
+                }
+            }, 40);
+        }
+
+        // Privacy policy function
+        function showPrivacyPolicy() {
+            const modal = `
+                <div class="modal fade" id="privacyModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header bg-primary text-white">
+                                <h5 class="modal-title">Privacy Policy</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h6>Information We Collect</h6>
+                                <p>We collect information to provide better services including search preferences, favorite foods, and usage patterns.</p>
+                                <h6>How We Use Information</h6>
+                                <p>Your information helps us personalize your experience and improve our services.</p>
+                                <h6>Data Protection</h6>
+                                <p>We implement security measures to protect your personal information.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            $('body').append(modal);
+            $('#privacyModal').modal('show');
+            $('#privacyModal').on('hidden.bs.modal', function () {
+                $(this).remove();
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        $('a[href^="#"]').on('click', function (e) {
+            e.preventDefault();
+            const target = $($(this).attr('href'));
+            if (target.length) {
+                $('html, body').animate({
+                    scrollTop: target.offset().top - 100
+                }, 800);
+            }
+        });
+
+        // Animation on scroll
+        const animateOnScroll = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                }
+            });
+        });
+
+        document.querySelectorAll('.mission-card, .fact-card, .team-member').forEach(el => {
+            animateOnScroll.observe(el);
+        });
+
+        console.log('🍜 About Us Page Loaded Successfully!');
+        console.log('📊 Page tracking and analytics active');
+        console.log('✨ Animations and counters ready');
+    </script>
+</body>
+
+</html>

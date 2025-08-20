@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Food Explorer - Discover Amazing Street Foods</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23ff6b35" width="1200" height="600"/><circle fill="%23f7931e" cx="200" cy="150" r="80"/><circle fill="%23f7931e" cx="1000" cy="450" r="100"/><rect fill="%23ffffff" opacity="0.1" x="0" y="0" width="1200" height="600"/></svg>');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            opacity: 0.8;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .search-input {
+            padding: 15px 60px 15px 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            width: 100%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            bottom: 5px;
+            border: none;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 50px;
+            padding: 0 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: #27ae60;
+            transform: scale(1.05);
+        }
+
+        /* Popular Foods Section */
+        .popular-foods {
+            padding: 80px 0;
+            background: var(--light-color);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--dark-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        .food-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            height: 100%;
+        }
+
+        .food-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+
+        .food-image {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+            background: #f2f2f2; /* optional placeholder bg */
+        }
+
+        .food-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .food-content {
+            padding: 20px;
+        }
+
+        .food-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+
+        .food-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .food-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stars {
+            color: var(--secondary-color);
+            margin-right: 10px;
+        }
+
+        .btn-custom {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-weight: 500;
+        }
+
+        .btn-custom:hover {
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.4);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: var(--light-color);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 50px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 20px;
+
+            color: var(--secondary-color);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #34495e;
+            padding-top: 20px;
+            text-align: center;
+            color: #bdc3c7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .search-container {
+                margin: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Loading spinner */
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Modal styles */
+        .modal-content {
+            border: none;
+            border-radius: 15px;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .welcome-message {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: var(--accent-color);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .welcome-message.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">
+                <i class="fas fa-utensils"></i> Street Food Explorer
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="malaysia.html">Malaysian Food</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="global.html">Global Food</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="map.html">Food Map</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gallery.html">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Welcome Message -->
+    <div id="welcomeMessage" class="welcome-message">
+        <i class="fas fa-hand-wave"></i> Welcome back!
+        <button type="button" class="btn-close btn-close-white ms-2" aria-label="Close"
+            onclick="hideWelcome()"></button>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content animate__animated animate__fadeInDown">
+                <h1 class="display-3 fw-bold">Discover Amazing Street Foods</h1>
+                <p class="lead">Explore the world's most delicious street food culture, from local Malaysian delights to
+                    global culinary adventures</p>
+
+                <div class="search-container">
+                    <input type="text" id="searchInput" class="search-input"
+                        placeholder="Search for street food or locations...">
+                    <button class="search-btn" onclick="performSearch()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+
+                <div class="mt-4">
+                    <a href="malaysia.html"
+                        class="btn btn-custom btn-lg me-3 animate__animated animate__pulse animate__infinite">
+                        <i class="fas fa-map-marker-alt"></i> Explore Malaysian Food
+                    </a>
+                    <a href="global.html" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-globe"></i> Global Street Food
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Foods Section -->
+    <section class="popular-foods">
+        <div class="container">
+            <h2 class="section-title animate__animated animate__fadeInUp">Popular Street Foods</h2>
+            <div class="row" id="popularFoodsContainer">
+                <!-- Popular foods will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title animate__animated animate__fadeInUp">Why Choose Street Food Explorer?</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="feature-card animate__animated animate__fadeInLeft">
+                        <div class="feature-icon">
+                            <i class="fas fa-globe-asia"></i>
+                        </div>
+                        <h3 class="feature-title">Global Coverage</h3>
+                        <p>Discover street foods from Malaysia and around the world with detailed information and
+                            cultural insights.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card animate__animated animate__fadeInUp">
+                        <div class="feature-icon">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Interactive Maps</h3>
+                        <p>Find street food stalls near you with our interactive map feature and GPS integration.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card animate__animated animate__fadeInRight">
+                        <div class="feature-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3 class="feature-title">Save Favorites</h3>
+                        <p>Create your personal collection of favorite street foods and share them with friends.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4><i class="fas fa-utensils"></i> Street Food Explorer</h4>
+                    <p>Your ultimate guide to discovering the world's most amazing street foods. From local Malaysian
+                        favorites to global culinary treasures.</p>
+                    <div class="social-links mt-3">
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="malaysia.html">Malaysian Street Food</a></li>
+                        <li><a href="global.html">Global Street Food</a></li>
+                        <li><a href="map.html">Food Map</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="gallery.html">Photo Gallery</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a></li>
+                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> info@streetfoodexplorer.com</p>
+                    <p><i class="fas fa-phone"></i> +60 12-345-6789</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Kuala Lumpur, Malaysia</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Street Food Explorer. All rights reserved. | Developed by UCCD2323 Group Project</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Privacy Policy Modal -->
+    <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="privacyModalLabel">Privacy Policy</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Data Collection</h6>
+                    <p>We collect information to provide better services to our users. This includes search preferences,
+                        favorite foods, and location data when you use our map features.</p>
+
+                    <h6>Use of Cookies</h6>
+                    <p>We use cookies and local storage to enhance your browsing experience, remember your preferences,
+                        and provide personalized content.</p>
+
+                    <h6>Data Security</h6>
+                    <p>We implement appropriate security measures to protect your personal information against
+                        unauthorized access, alteration, disclosure, or destruction.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="termsModalLabel">Terms of Service</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Website Usage</h6>
+                    <p>By using Street Food Explorer, you agree to use the site responsibly and not engage in any
+                        activities that could harm the site or other users.</p>
+
+                    <h6>Content Guidelines</h6>
+                    <p>All user-generated content must be respectful and relevant to street food culture. We reserve the
+                        right to remove inappropriate content.</p>
+
+                    <h6>Liability</h6>
+                    <p>Street Food Explorer provides information for educational and entertainment purposes. We are not
+                        responsible for any food-related incidents or experiences.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script>
+        // Global variables
+        let lastSearch = '';
+        let visitCount = 0;
+        let favoritesList = [];
+        let userPreferences = {};
+
+        // Popular foods data
+        const popularFoods = [
+            {
+                id: 1,
+                name: "Char Kway Teow",
+                description: "Stir-fried rice noodles with prawns, cockles, Chinese sausage, and bean sprouts. A Malaysian favorite!",
+                rating: 4.8,
+                country: "Malaysia",
+                image: "images/char-koay-teow.jpg",
+                category: "Noodles"
+            },
+            {
+                id: 2,
+                name: "Roti Canai",
+                description: "Flaky flatbread served with curry. Perfect for breakfast or anytime snack.",
+                rating: 4.7,
+                country: "Malaysia",
+                image: "images/RotiCanai.jpg",
+                category: "Bread"
+            },
+            {
+                id: 3,
+                name: "Satay",
+                description: "Grilled skewered meat served with peanut sauce and rice cakes.",
+                rating: 4.6,
+                country: "Malaysia",
+                image: "images/satay.avif",
+                category: "Grilled"
+            },
+            {
+                id: 4,
+                name: "Nasi Lemak",
+                description: "Coconut rice with sambal, anchovies, peanuts, and boiled egg. Malaysia's national dish!",
+                rating: 4.9,
+                country: "Malaysia",
+                image: "images/nasi_lemak.webp",
+                category: "Rice"
+            },
+            {
+                id: 5,
+                name: "Cendol",
+                description: "Sweet dessert with pandan jelly, coconut milk, and palm sugar syrup.",
+                rating: 4.5,
+                country: "Malaysia",
+                image: "images/cendol.webp",
+                category: "Dessert"
+            },
+            {
+                id: 6,
+                name: "Laksa",
+                description: "Spicy noodle soup with coconut milk, perfect balance of flavors.",
+                rating: 4.7,
+                country: "Malaysia",
+                image: "images/curry-laksa.jpg",
+                category: "Soup"
+            }
+        ];
+
+        // Initialize the website
+        $(document).ready(function () {
+            initializeStorage();
+            loadPopularFoods();
+            showWelcomeMessage();
+            loadLastSearch();
+            trackVisit();
+            setupAnimations();
+
+            // Load user preferences
+            loadUserPreferences();
+
+            console.log('Street Food Explorer initialized successfully!');
+        });
+
+        // Storage Management Functions
+        function initializeStorage() {
+            // Initialize localStorage for favorites
+            if (!localStorage.getItem('streetFood_favorites')) {
+                localStorage.setItem('streetFood_favorites', JSON.stringify([]));
+            }
+
+            // Initialize localStorage for user preferences
+            if (!localStorage.getItem('streetFood_preferences')) {
+                const defaultPrefs = {
+                    theme: 'light',
+                    language: 'en',
+                    notifications: true,
+                    favoriteCategories: []
+                };
+                localStorage.setItem('streetFood_preferences', JSON.stringify(defaultPrefs));
+            }
+
+            // Initialize sessionStorage for current session
+            if (!sessionStorage.getItem('streetFood_session')) {
+                const sessionData = {
+                    startTime: new Date().toISOString(),
+                    pageViews: [],
+                    searchHistory: []
+                };
+                sessionStorage.setItem('streetFood_session', JSON.stringify(sessionData));
+            }
+
+            // Load favorites from localStorage
+            favoritesList = JSON.parse(localStorage.getItem('streetFood_favorites'));
+
+            console.log('Storage initialized successfully');
+        }
+
+        function setCookie(name, value, days) {
+            const expires = new Date();
+            expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+            document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        function trackVisit() {
+            visitCount = parseInt(getCookie('streetFood_visits') || '0') + 1;
+            setCookie('streetFood_visits', visitCount, 30);
+
+            // Update session data
+            const sessionData = JSON.parse(sessionStorage.getItem('streetFood_session'));
+            sessionData.pageViews.push({
+                page: 'home',
+                timestamp: new Date().toISOString()
+            });
+            sessionStorage.setItem('streetFood_session', JSON.stringify(sessionData));
+
+            console.log(`Visit #${visitCount} tracked`);
+        }
+
+        function showWelcomeMessage() {
+            setTimeout(() => {
+                const welcomeMsg = document.getElementById('welcomeMessage');
+                if (visitCount > 1) {
+                    welcomeMsg.querySelector('i').className = 'fas fa-smile';
+                    welcomeMsg.innerHTML = `<i class="fas fa-smile"></i> Welcome back! Visit #${visitCount} <button type="button" class="btn-close btn-close-white ms-2" aria-label="Close" onclick="hideWelcome()"></button>`;
+                }
+                welcomeMsg.classList.add('show');
+
+                setTimeout(() => {
+                    welcomeMsg.classList.remove('show');
+                }, 5000);
+            }, 2000);
+        }
+
+        function hideWelcome() {
+            document.getElementById('welcomeMessage').classList.remove('show');
+        }
+
+        // Search functionality
+        function performSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchTerm = searchInput.value.trim();
+
+            if (searchTerm) {
+                // Save search to localStorage
+                localStorage.setItem('streetFood_lastSearch', searchTerm);
+
+                // Update session search history
+                const sessionData = JSON.parse(sessionStorage.getItem('streetFood_session'));
+                sessionData.searchHistory.push({
+                    term: searchTerm,
+                    timestamp: new Date().toISOString()
+                });
+                sessionStorage.setItem('streetFood_session', JSON.stringify(sessionData));
+
+                // Simulate search results
+                showSearchResults(searchTerm);
+
+                console.log(`Search performed: ${searchTerm}`);
+            }
+        }
+
+        function showSearchResults(searchTerm) {
+            // Filter popular foods based on search term
+            const results = popularFoods.filter(food =>
+                food.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                food.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                food.category.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+
+            if (results.length > 0) {
+                // Update the popular foods container with search results
+                const container = document.getElementById('popularFoodsContainer');
+                container.innerHTML = `<div class="col-12"><h4>Search Results for "${searchTerm}":</h4></div>`;
+
+                results.forEach(food => {
+                    const foodCard = createFoodCard(food);
+                    container.innerHTML += foodCard;
+                });
+            } else {
+                alert(`No results found for "${searchTerm}". Try searching for Malaysian foods like "nasi lemak" or "char kway teow"`);
+            }
+        }
+
+        function loadLastSearch() {
+            const lastSearch = localStorage.getItem('streetFood_lastSearch');
+            if (lastSearch) {
+                document.getElementById('searchInput').placeholder = `Last search: ${lastSearch}`;
+            }
+        }
+
+        // Food card creation and management
+        function loadPopularFoods() {
+            const container = document.getElementById('popularFoodsContainer');
+            container.innerHTML = '';
+
+            popularFoods.forEach(food => {
+                const foodCard = createFoodCard(food);
+                container.innerHTML += foodCard;
+            });
+
+            // Add event listeners for favorite buttons
+            setTimeout(() => {
+                $('.favorite-btn').on('click', function () {
+                    const foodId = parseInt($(this).data('food-id'));
+                    toggleFavorite(foodId);
+                });
+            }, 100);
+        }
+
+        function createFoodCard(food) {
+            const isFavorite = favoritesList.includes(food.id);
+            const favoriteClass = isFavorite ? 'fas' : 'far';
+            const favoriteColor = isFavorite ? 'color: #e74c3c;' : '';
+
+            return `
+            <div class="col-lg-4 col-md-6 fade-in">
+                <div class="food-card">
+                    <div class="food-image" style="position: relative;">
+                        <img src="${food.image}" alt="${food.name}">
+                        <button class="btn btn-sm position-absolute top-0 end-0 m-2 favorite-btn" 
+                                data-food-id="${food.id}" 
+                                style="background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 40px; height: 40px;">
+                            <i class="${favoriteClass} fa-heart" style="${favoriteColor}"></i>
+                        </button>
+                        </div>
+                        <div class="food-content">
+                            <h5 class="food-title">${food.name}</h5>
+                            <p class="food-description">${food.description}</p>
+                            <div class="food-rating">
+                                <div class="stars">
+                                    ${generateStars(food.rating)}
+                                </div>
+                                <span class="rating-text">${food.rating}/5</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="details.html?id=${food.id}" class="btn btn-custom">
+                                    <i class="fas fa-info-circle"></i> Learn More
+                                </a>
+                                <small class="text-muted">
+                                    <i class="fas fa-map-marker-alt"></i> ${food.country}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+            let stars = '';
+
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+
+            const emptyStars = 5 - Math.ceil(rating);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+
+            return stars;
+        }
+
+        function toggleFavorite(foodId) {
+            const index = favoritesList.indexOf(foodId);
+
+            if (index > -1) {
+                // Remove from favorites
+                favoritesList.splice(index, 1);
+                showNotification('Removed from favorites', 'info');
+            } else {
+                // Add to favorites
+                favoritesList.push(foodId);
+                showNotification('Added to favorites!', 'success');
+            }
+
+            // Update localStorage
+            localStorage.setItem('streetFood_favorites', JSON.stringify(favoritesList));
+
+            // Refresh the display
+            loadPopularFoods();
+
+            console.log('Favorites updated:', favoritesList);
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = $(`
+                <div class="alert alert-${type === 'success' ? 'success' : 'info'} position-fixed" 
+                     style="top: 80px; right: 20px; z-index: 9999; min-width: 250px;">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+                    ${message}
+                    <button type="button" class="btn-close ms-2" data-bs-dismiss="alert"></button>
+                </div>
+            `);
+
+            $('body').append(notification);
+
+            setTimeout(() => {
+                notification.fadeOut(() => notification.remove());
+            }, 3000);
+        }
+
+        // User preferences management
+        function loadUserPreferences() {
+            userPreferences = JSON.parse(localStorage.getItem('streetFood_preferences'));
+
+            // Apply theme if needed
+            if (userPreferences.theme === 'dark') {
+                document.body.classList.add('dark-theme');
+            }
+
+            console.log('User preferences loaded:', userPreferences);
+        }
+
+        function updateUserPreferences(newPrefs) {
+            userPreferences = { ...userPreferences, ...newPrefs };
+            localStorage.setItem('streetFood_preferences', JSON.stringify(userPreferences));
+            console.log('Preferences updated:', userPreferences);
+        }
+
+        // Animation setup
+        function setupAnimations() {
+            // Intersection Observer for scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animation
+            document.querySelectorAll('.food-card, .feature-card').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Search input event listeners
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('searchInput');
+
+            searchInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+
+            // Add autocomplete suggestions
+            searchInput.addEventListener('input', function (e) {
+                const value = e.target.value.toLowerCase();
+                if (value.length > 2) {
+                    showSearchSuggestions(value);
+                } else {
+                    hideSearchSuggestions();
+                }
+            });
+        });
+
+        function showSearchSuggestions(query) {
+            const suggestions = [
+                'nasi lemak', 'char kway teow', 'roti canai', 'satay', 'laksa',
+                'cendol', 'teh tarik', 'mee goreng', 'rendang', 'asam laksa'
+            ].filter(item => item.includes(query));
+
+            if (suggestions.length > 0) {
+                let suggestionHTML = '<div class="search-suggestions position-absolute w-100 bg-white border rounded shadow-sm" style="top: 100%; z-index: 1000;">';
+
+                suggestions.slice(0, 5).forEach(suggestion => {
+                    suggestionHTML += `<div class="suggestion-item p-2 border-bottom" style="cursor: pointer;" onclick="selectSuggestion('${suggestion}')">${suggestion}</div>`;
+                });
+
+                suggestionHTML += '</div>';
+
+                const searchContainer = document.querySelector('.search-container');
+                const existingSuggestions = searchContainer.querySelector('.search-suggestions');
+                if (existingSuggestions) {
+                    existingSuggestions.remove();
+                }
+                searchContainer.insertAdjacentHTML('beforeend', suggestionHTML);
+            }
+        }
+
+        function hideSearchSuggestions() {
+            const suggestions = document.querySelector('.search-suggestions');
+            if (suggestions) {
+                suggestions.remove();
+            }
+        }
+
+        function selectSuggestion(suggestion) {
+            document.getElementById('searchInput').value = suggestion;
+            hideSearchSuggestions();
+            performSearch();
+        }
+
+        // Analytics and tracking functions
+        function trackUserInteraction(action, details = {}) {
+            const sessionData = JSON.parse(sessionStorage.getItem('streetFood_session'));
+
+            if (!sessionData.interactions) {
+                sessionData.interactions = [];
+            }
+
+            sessionData.interactions.push({
+                action: action,
+                details: details,
+                timestamp: new Date().toISOString()
+            });
+
+            sessionStorage.setItem('streetFood_session', JSON.stringify(sessionData));
+        }
+
+        // API integration for enhanced functionality
+        async function fetchFoodData() {
+            try {
+                // Simulate API call for demo purposes
+                const response = await new Promise(resolve => {
+                    setTimeout(() => {
+                        resolve({
+                            foods: popularFoods,
+                            totalCount: popularFoods.length,
+                            lastUpdated: new Date().toISOString()
+                        });
+                    }, 1000);
+                });
+
+                console.log('Food data fetched successfully');
+                return response;
+            } catch (error) {
+                console.error('Error fetching food data:', error);
+                return null;
+            }
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function (e) {
+            // Alt + S for search focus
+            if (e.altKey && e.key === 's') {
+                e.preventDefault();
+                document.getElementById('searchInput').focus();
+            }
+
+            // Alt + H for home
+            if (e.altKey && e.key === 'h') {
+                e.preventDefault();
+                window.location.href = '#home';
+            }
+        });
+
+        // Cleanup function for page unload
+        window.addEventListener('beforeunload', function () {
+            // Update session end time
+            const sessionData = JSON.parse(sessionStorage.getItem('streetFood_session'));
+            sessionData.endTime = new Date().toISOString();
+            sessionStorage.setItem('streetFood_session', JSON.stringify(sessionData));
+        });
+
+        // Social media sharing functions
+        function shareOnFacebook(url, title) {
+            const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(title)}`;
+            window.open(shareUrl, '_blank', 'width=600,height=400');
+            trackUserInteraction('social_share', { platform: 'facebook', content: title });
+        }
+
+        function shareOnTwitter(url, title) {
+            const shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
+            window.open(shareUrl, '_blank', 'width=600,height=400');
+            trackUserInteraction('social_share', { platform: 'twitter', content: title });
+        }
+
+        // Print functionality
+        function printPage() {
+            window.print();
+            trackUserInteraction('print_page');
+        }
+
+        // Export data function
+        function exportFavorites() {
+            const favoriteFoods = popularFoods.filter(food => favoritesList.includes(food.id));
+            const dataStr = JSON.stringify(favoriteFoods, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'my_favorite_street_foods.json';
+            link.click();
+
+            trackUserInteraction('export_favorites', { count: favoriteFoods.length });
+        }
+
+        console.log('🍜 Street Food Explorer - Home Page Loaded Successfully!');
+        console.log('📱 Mobile responsive design activated');
+        console.log('💾 Storage systems initialized');
+        console.log('🎨 Animations and interactions ready');
+    </script>
+</body>
+
+</html>

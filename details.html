@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Food Explorer - Food Details</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .food-details {
+            padding: 50px 0;
+        }
+
+        .food-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .food-tags span {
+            background: var(--accent-color);
+            color: white;
+            padding: 5px 12px;
+            margin: 3px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        .related {
+            margin-top: 40px;
+        }
+
+        .related .card {
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .related .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px 0;
+            margin-top: 60px;
+        }
+
+        .footer a {
+            color: #f39c12;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-utensils"></i> Street Food Explorer
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="malaysia.html">Malaysian Food</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="global.html">Global Food</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="map.html">Food Map</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gallery.html">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1 id="foodTitle">🍲 Food Name</h1>
+            <p class="lead" id="foodSubtitle">Explore the taste, origin, and story of this dish.</p>
+        </div>
+    </section>
+
+    <!-- Food Details -->
+    <section class="food-details">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <div class="food-card">
+                        <h3>Description</h3>
+                        <p id="foodDescription"></p>
+                        <h4>Origin & Taste</h4>
+                        <p><strong>Origin:</strong> <span id="foodOrigin"></span></p>
+                        <p><strong>Taste:</strong> <span id="foodTaste"></span></p>
+                        <h4>Ingredients</h4>
+                        <ul id="foodIngredients"></ul>
+                        <h4>Tags</h4>
+                        <div class="food-tags" id="foodTags"></div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="food-card text-center">
+                        <h5>Quick Info</h5>
+                        <p><strong>Price:</strong> <span id="foodPrice"></span></p>
+                        <p><strong>Rating:</strong> <span id="foodRating"></span></p>
+                        <button class="btn btn-success w-100 mb-2" id="addToFavBtn"><i class="fas fa-heart"></i> Add to
+                            Favorites</button>
+                        <button class="btn btn-primary w-100 mb-2" id="shareBtn"><i class="fas fa-share"></i> Share This
+                            Dish</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Dishes -->
+            <div class="related">
+                <h3 class="mt-5">Related Dishes</h3>
+                <div class="row" id="relatedDishes"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer text-center">
+        <p>&copy; 2025 Street Food Explorer | All Rights Reserved</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let food = JSON.parse(sessionStorage.getItem('selectedFood') || '{}');
+
+        $(document).ready(function () {
+            if (food && food.name) {
+                $('#foodTitle').text(food.emoji + " " + food.name);
+                $('#foodSubtitle').text("A beloved " + food.origin + " dish loved by many.");
+                $('#foodDescription').text(food.description);
+                $('#foodOrigin').text(food.origin);
+                $('#foodTaste').text(food.taste || "Savory and delicious");
+                $('#foodPrice').text(food.price || "Varies");
+                $('#foodRating').text(food.rating + " / 5");
+
+                // Ingredients (mock if not provided)
+                const ingredients = food.ingredients || ["Rice noodles", "Soy sauce", "Egg", "Vegetables"];
+                ingredients.forEach(i => $('#foodIngredients').append(`<li>${i}</li>`));
+
+                // Tags
+                if (food.tags) {
+                    food.tags.forEach(t => $('#foodTags').append(`<span>${t}</span>`));
+                }
+
+                // Related dishes (mock for now)
+                const related = [
+                    { name: "Satay", emoji: "🍢" },
+                    { name: "Laksa", emoji: "🍜" },
+                    { name: "Nasi Lemak", emoji: "🍛" }
+                ];
+                related.forEach(r => {
+                    $('#relatedDishes').append(`
+            <div class="col-md-4">
+              <div class="card p-3">
+                <h5>${r.emoji} ${r.name}</h5>
+                <a href="details.html" class="btn btn-sm btn-outline-primary mt-2">View</a>
+              </div>
+            </div>
+          `);
+                });
+            }
+
+            // Favorites
+            $('#addToFavBtn').on('click', function () {
+                let favs = JSON.parse(localStorage.getItem('streetFood_favorites') || '[]');
+                if (!favs.includes(food.id)) {
+                    favs.push(food.id);
+                    localStorage.setItem('streetFood_favorites', JSON.stringify(favs));
+                    alert("Added to favorites!");
+                } else {
+                    alert("Already in favorites!");
+                }
+            });
+
+            // Sharing
+            $('#shareBtn').on('click', function () {
+                if (navigator.share) {
+                    navigator.share({
+                        title: food.name,
+                        text: food.description,
+                        url: window.location.href
+                    });
+                } else {
+                    navigator.clipboard.writeText(`${food.name} - ${food.description}`);
+                    alert("Link copied to clipboard!");
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Food Explorer - Gallery</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background-size: cover;
+            color: #fff;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .gallery-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery-img {
+            border-radius: 15px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            height: 250px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .gallery-item {
+            position: relative;
+            margin-bottom: 30px;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.8), rgba(243, 156, 18, 0.8));
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .filter-buttons {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 10px 25px;
+            margin: 5px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .video-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-item {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .video-item:hover {
+            transform: scale(1.02);
+        }
+
+        .slideshow-container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .slideshow {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            height: 400px;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 40px 30px 20px;
+            text-align: center;
+        }
+
+        .slideshow-controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .control-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 0 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        .slide-indicators {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(231, 76, 60, 0.3);
+            display: inline-block;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .indicator.active {
+            background: var(--primary-color);
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+
+        .footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: white;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .modal img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: var(--secondary-color);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2c3e50;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-utensils"></i> Street Food Explorer
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="malaysia.html">Malaysian Food</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="global.html">Global Food</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="map.html">Food Map</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="gallery.html">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="animate__animated animate__fadeInDown">
+                <h1>Street Food Gallery</h1>
+                <p class="lead">Explore vibrant photos and videos of street food from around the world</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Gallery -->
+    <div class="container py-5">
+        <div class="gallery-section">
+            <h2 class="section-title">📸 Food Photos</h2>
+
+            <!-- Filter Buttons -->
+            <div class="filter-buttons">
+                <button class="btn filter-btn active" data-filter="all">All</button>
+                <button class="btn filter-btn" data-filter="asian">Asian</button>
+                <button class="btn filter-btn" data-filter="western">Western</button>
+                <button class="btn filter-btn" data-filter="dessert">Desserts</button>
+            </div>
+
+            <div class="row g-4" id="galleryGrid">
+                <div class="col-md-4 gallery-item" data-category="asian">
+                    <img src="images/Ramen_Bowl.webp"
+                        class="gallery-img" alt="Ramen Bowl">
+                    <div class="gallery-overlay">
+                        <h5>🍜 Authentic Ramen</h5>
+                        <p>Traditional Japanese street ramen with rich tonkotsu broth</p>
+                        <small><i class="fas fa-map-marker-alt"></i> Tokyo, Japan</small>
+                    </div>
+                </div>
+
+                <div class="col-md-4 gallery-item" data-category="asian">
+                    <img src="images/Dumplings.jpg"
+                        class="gallery-img" alt="Dumplings">
+                    <div class="gallery-overlay">
+                        <h5>🥟 Steamed Dumplings</h5>
+                        <p>Hand-made pork and chive dumplings from a street cart</p>
+                        <small><i class="fas fa-map-marker-alt"></i> Shanghai, China</small>
+                    </div>
+                </div>
+
+                <div class="col-md-4 gallery-item" data-category="asian">
+                    <img src="images/Pad_Thai.webp"
+                        class="gallery-img" alt="Pad Thai">
+                    <div class="gallery-overlay">
+                        <h5>🍛 Pad Thai</h5>
+                        <p>Classic Thai stir-fried noodles with shrimp and peanuts</p>
+                        <small><i class="fas fa-map-marker-alt"></i> Bangkok, Thailand</small>
+                    </div>
+                </div>
+
+                <div class="col-md-4 gallery-item" data-category="western">
+                    <img src="images/Tacos.jpg"
+                        class="gallery-img" alt="Tacos">
+                    <div class="gallery-overlay">
+                        <h5>🌮 Street Tacos</h5>
+                        <p>Authentic carnitas tacos with fresh cilantro and onions</p>
+                        <small><i class="fas fa-map-marker-alt"></i> Mexico City, Mexico</small>
+                    </div>
+                </div>
+
+                <div class="col-md-4 gallery-item" data-category="western">
+                    <img src="images/PizzaSlice.jpg"
+                        class="gallery-img" alt="Pizza">
+                    <div class="gallery-overlay">
+                        <h5>🍕 New York Pizza</h5>
+                        <p>Classic NY-style pizza slice from a street vendor</p>
+                        <small><i class="fas fa-map-marker-alt"></i> New York, USA</small>
+                    </div>
+                </div>
+
+                <div class="col-md-4 gallery-item" data-category="dessert">
+                    <img src="images/Ice-cream.webp"
+                        class="gallery-img" alt="Ice Cream">
+                    <div class="gallery-overlay">
+                        <h5>🍦 Gelato</h5>
+                        <p>Artisan gelato with pistachio and vanilla flavors</p>
+                        <small><i class="fas fa-map-marker-alt"></i> Rome, Italy</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Section -->
+    <div class="container py-5">
+        <div class="video-section">
+            <h2 class="section-title">🎬 Food Videos</h2>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="video-item">
+                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/tna16oZTGCg"
+                            title="Street Food Documentary" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <h5 class="mt-3 text-center">🌏 Asian Street Food Tour</h5>
+                </div>
+                <div class="col-md-6">
+                    <div class="video-item">
+                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/2Yxwj38V_Ag"
+                            title="Malaysian Street Food" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <h5 class="mt-3 text-center">🇲🇾 Malaysian Street Food</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slideshow -->
+    <div class="container py-5">
+        <div class="slideshow-container">
+            <h2 class="section-title">🎞️ Featured Slideshow</h2>
+
+            <div class="slideshow">
+                <div class="slide active">
+                    <img src="images/Thailand_Street_Food.webp"
+                        alt="Thailand Street Food">
+                    <div class="slide-overlay">
+                        <h4>🇹🇭 Thailand Street Food Adventure</h4>
+                        <p>Discover the vibrant flavors of Bangkok's street food scene</p>
+                    </div>
+                </div>
+
+                <div class="slide">
+                    <img src="images/Vietnam_Street_Food.jpg"
+                        alt="Vietnam Local Street Food">
+                    <div class="slide-overlay">
+                        <h4>🇻🇳 Vietnamese Street Food </h4>
+                        <p>Experience the aromatic street foods of Ho Chi Minh City</p>
+                    </div>
+                </div>
+
+                <div class="slide">
+                    <img src="images/Korean_Street_Food.jpeg"
+                        alt="Korea Street Food">
+                    <div class="slide-overlay">
+                        <h4>🇰🇷 Korean Street Food Culture</h4>
+                        <p>From kimchi to Korean BBQ, explore Seoul's food markets</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slideshow-controls">
+                <button class="control-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+                <button class="control-btn" id="playPauseBtn"><i class="fas fa-pause"></i></button>
+                <button class="control-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+
+            <div class="slide-indicators">
+                <span class="indicator active" data-slide="0"></span>
+                <span class="indicator" data-slide="1"></span>
+                <span class="indicator" data-slide="2"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for enlarged images -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="">
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-center">
+        <div class="container">
+            <p>&copy; 2025 Street Food Explorer | All Rights Reserved</p>
+            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Gallery functionality
+        let currentSlide = 0;
+        let isPlaying = true;
+        let slideInterval;
+        let lastViewedSlide = 0; // Memory-based storage instead of localStorage
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                // Update active button
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                // Filter items
+                const filter = this.getAttribute('data-filter');
+                const items = document.querySelectorAll('.gallery-item');
+
+                items.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateY(0)';
+                        }, 100);
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Image modal functionality
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const close = document.querySelector('.close');
+
+        document.querySelectorAll('.gallery-img').forEach(img => {
+            img.addEventListener('click', function () {
+                modal.style.display = 'block';
+                modalImg.src = this.src;
+                modalImg.alt = this.alt;
+            });
+        });
+
+        close.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Slideshow functionality
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+
+            slides[index].classList.add('active');
+            indicators[index].classList.add('active');
+
+            currentSlide = index;
+            lastViewedSlide = index; // Save to memory
+        }
+
+        function nextSlide() {
+            const next = (currentSlide + 1) % totalSlides;
+            showSlide(next);
+        }
+
+        function prevSlide() {
+            const prev = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(prev);
+        }
+
+        function startSlideshow() {
+            slideInterval = setInterval(nextSlide, 4000);
+            isPlaying = true;
+            document.querySelector('#playPauseBtn i').className = 'fas fa-pause';
+        }
+
+        function pauseSlideshow() {
+            clearInterval(slideInterval);
+            isPlaying = false;
+            document.querySelector('#playPauseBtn i').className = 'fas fa-play';
+        }
+
+        // Event listeners
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            nextSlide();
+            if (isPlaying) {
+                clearInterval(slideInterval);
+                startSlideshow();
+            }
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            prevSlide();
+            if (isPlaying) {
+                clearInterval(slideInterval);
+                startSlideshow();
+            }
+        });
+
+        document.getElementById('playPauseBtn').addEventListener('click', () => {
+            if (isPlaying) {
+                pauseSlideshow();
+            } else {
+                startSlideshow();
+            }
+        });
+
+        // Indicator clicks
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                showSlide(index);
+                if (isPlaying) {
+                    clearInterval(slideInterval);
+                    startSlideshow();
+                }
+            });
+        });
+
+        // Initialize slideshow
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load last viewed slide from memory
+            showSlide(lastViewedSlide);
+            startSlideshow();
+
+            // Add smooth scroll animations for gallery items
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all gallery items
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(30px)';
+                item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(item);
+            });
+        });
+
+        // Keyboard navigation for slideshow
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                nextSlide();
+                if (isPlaying) {
+                    clearInterval(slideInterval);
+                    startSlideshow();
+                }
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+                if (isPlaying) {
+                    clearInterval(slideInterval);
+                    startSlideshow();
+                }
+            } else if (e.key === ' ') {
+                e.preventDefault();
+                if (isPlaying) {
+                    pauseSlideshow();
+                } else {
+                    startSlideshow();
+                }
+            }
+        });
+
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        const slideshow = document.querySelector('.slideshow');
+
+        slideshow.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        slideshow.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    // Swiped left - next slide
+                    nextSlide();
+                } else {
+                    // Swiped right - previous slide
+                    prevSlide();
+                }
+
+                if (isPlaying) {
+                    clearInterval(slideInterval);
+                    startSlideshow();
+                }
+            }
+        }
+
+        // Auto-pause slideshow when page is not visible
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                if (isPlaying) {
+                    clearInterval(slideInterval);
+                }
+            } else {
+                if (isPlaying) {
+                    startSlideshow();
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

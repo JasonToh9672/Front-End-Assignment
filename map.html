@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Street Food Explorer - Map</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <style>
+
+        /* Hero */
+        .map-hero {
+            background: linear-gradient(rgba(255, 255, 0, 0), rgba(255, 255, 255, 0.053)),
+                linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-hero::before {
+            content: '🌍🗺️🗾';
+            position: absolute;
+            top: 15%;
+            left: 0%;
+            font-size: 6rem;
+            opacity: .2;
+            transform: rotate(-10deg);
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .map-hero::after {
+            content: '📍✈️🌐';
+            position: absolute;
+            bottom: 15%;
+            right:0%;
+            font-size: 6rem;
+            opacity: .2;
+            transform: rotate(10deg);
+            animation: float 5s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-10deg)
+            }
+
+            50% {
+                transform: translateY(-18px) rotate(-10deg)
+            }
+        }
+
+        .map-hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem
+        }
+
+    #map {
+      width: 100%;
+      height: 500px;
+      border-radius: 10px;
+      border: 3px solid #ddd;
+    }
+
+    .map-controls {
+      margin-top: 20px;
+    }
+
+    .footer {
+      background: #2c3e50;
+      color: white;
+      padding: 30px 0;
+      margin-top: 40px;
+    }
+
+    .footer a {
+      color: #f39c12;
+      text-decoration: none;
+    }
+
+    .location-info {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .food-marker {
+      background: var(--primary-color);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      border: 3px solid white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-utensils"></i> Street Food Explorer
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="malaysia.html">Malaysian Food</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="global.html">Global Food</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="map.html">Food Map</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="gallery.html">Gallery</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+      <section class="map-hero">
+        <div class="container">
+            <div class="animate__animated animate__fadeInDown">
+                <h1>Street Food Map</h1>
+                <p class="lead">Find delicious street food stalls near you!</p>
+            </div>
+        </div>
+    </section>
+
+  <!-- Map Section -->
+  <div class="container py-5">
+    <div id="map"></div>
+
+    <div class="map-controls">
+      <div class="row">
+        <div class="col-md-8">
+          <input type="text" id="locationSearch" class="form-control mb-3"
+            placeholder="Enter a location (e.g. Kuala Lumpur, Penang, Bangkok)">
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-primary me-2" id="searchBtn"><i class="fas fa-search"></i> Search</button>
+          <button class="btn btn-success" id="myLocationBtn"><i class="fas fa-location-arrow"></i> My Location</button>
+        </div>
+      </div>
+      <div class="text-center mt-3">
+        <button class="btn btn-warning" id="saveLocationBtn"><i class="fas fa-bookmark"></i> Save Current View</button>
+      </div>
+    </div>
+
+    <div class="location-info" id="locationInfo" style="display:none;">
+      <h4><i class="fas fa-map-marker-alt text-danger"></i> Current Location</h4>
+      <p id="currentLocationText">Kuala Lumpur, Malaysia</p>
+      <p><small class="text-muted">Showing popular street food areas in this region</small></p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer text-center">
+    <div class="container">
+      <p>&copy; 2025 Street Food Explorer | All Rights Reserved</p>
+      <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    let map;
+    let markers = [];
+    let currentLocation = "Kuala Lumpur";
+
+    // Street food locations database
+    const streetFoodLocations = {
+      "kuala lumpur": [
+        { lat: 3.1390, lng: 101.6869, name: "Jalan Alor Food Street", desc: "Famous night food street with diverse local cuisine" },
+        { lat: 3.1520, lng: 101.7020, name: "Kampung Baru Night Market", desc: "Traditional Malay street food" },
+        { lat: 3.1478, lng: 101.6953, name: "Petaling Street", desc: "Chinatown street food and local delicacies" },
+        { lat: 3.1319, lng: 101.6841, name: "Bangsar Food Court", desc: "Popular local food court" },
+        { lat: 3.1570, lng: 101.7116, name: "Wangsa Maju Night Market", desc: "Local night market with variety of street food" }
+      ],
+      "penang": [
+        { lat: 5.4164, lng: 100.3327, name: "Gurney Drive Food Court", desc: "Seaside hawker center with famous Penang dishes" },
+        { lat: 5.4141, lng: 100.3288, name: "Chulia Street Night Market", desc: "Heritage area with diverse street food" },
+        { lat: 5.4238, lng: 100.3105, name: "Red Garden Food Paradise", desc: "Popular food court in George Town" },
+        { lat: 5.4185, lng: 100.3292, name: "Armenian Street", desc: "Historical street with local food vendors" },
+        { lat: 5.4089, lng: 100.3418, name: "New Lane Hawker Center", desc: "Local hawker center with authentic dishes" }
+      ],
+      "bangkok": [
+        { lat: 13.7563, lng: 100.5018, name: "Chatuchak Weekend Market", desc: "Massive market with incredible street food variety" },
+        { lat: 13.7440, lng: 100.5014, name: "Khao San Road", desc: "Backpacker area with diverse street food" },
+        { lat: 13.7308, lng: 100.5065, name: "Chinatown (Yaowarat)", desc: "Best Chinese-Thai street food in Bangkok" },
+        { lat: 13.7278, lng: 100.5340, name: "Rot Fai Night Market", desc: "Vintage night market with great food stalls" },
+        { lat: 13.7461, lng: 100.5351, name: "Or Tor Kor Market", desc: "Premium fresh market with food court" }
+      ],
+      "singapore": [
+        { lat: 1.2834, lng: 103.8607, name: "Maxwell Food Centre", desc: "Famous hawker center in Chinatown" },
+        { lat: 1.3048, lng: 103.8318, name: "Lau Pa Sat", desc: "Historic hawker center with satay street" },
+        { lat: 1.3521, lng: 103.8198, name: "Newton Food Centre", desc: "24-hour hawker center popular with tourists" },
+        { lat: 1.3138, lng: 103.8611, name: "Chinatown Complex Food Centre", desc: "Largest hawker center in Singapore" },
+        { lat: 1.4370, lng: 103.7865, name: "Jurong East Hawker Centre", desc: "Local hawker center in residential area" }
+      ]
+    };
+
+    function initMap() {
+      // Initialize map centered on Kuala Lumpur
+      map = L.map('map').setView([3.1390, 101.6869], 12);
+
+      // Add OpenStreetMap tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      // Load default location
+      loadStreetFoodMarkers(currentLocation.toLowerCase());
+      updateLocationInfo(currentLocation);
+    }
+
+    function loadStreetFoodMarkers(location) {
+      // Clear existing markers
+      markers.forEach(marker => map.removeLayer(marker));
+      markers = [];
+
+      const locations = streetFoodLocations[location];
+      if (!locations) {
+        // If location not in database, show generic message
+        showNoDataMessage(location);
+        return;
+      }
+
+      // Add markers for street food locations
+      locations.forEach((spot, index) => {
+        const customIcon = L.divIcon({
+          className: 'food-marker',
+          html: '🍜',
+          iconSize: [30, 30],
+          iconAnchor: [15, 15]
+        });
+
+        const marker = L.marker([spot.lat, spot.lng], { icon: customIcon })
+          .addTo(map)
+          .bindPopup(`
+            <div style="text-align: center; min-width: 200px;">
+              <h6 style="color: #e74c3c; margin-bottom: 10px;">🍽️ ${spot.name}</h6>
+              <p style="margin: 5px 0; font-size: 14px;">${spot.desc}</p>
+              <hr style="margin: 10px 0;">
+              <small style="color: #666;">📍 ${spot.lat.toFixed(4)}, ${spot.lng.toFixed(4)}</small>
+            </div>
+          `);
+
+        markers.push(marker);
+      });
+
+      // Fit map to show all markers
+      if (locations.length > 0) {
+        const group = new L.featureGroup(markers);
+        map.fitBounds(group.getBounds().pad(0.1));
+      }
+    }
+
+    function showNoDataMessage(location) {
+      // Center map on a default location and show message
+      map.setView([3.1390, 101.6869], 10);
+
+      const popup = L.popup()
+        .setLatLng([3.1390, 101.6869])
+        .setContent(`
+          <div style="text-align: center;">
+            <h6 style="color: #e74c3c;">📍 ${location}</h6>
+            <p>Street food data for this location is being collected.</p>
+            <small>Currently showing: Kuala Lumpur area</small>
+          </div>
+        `)
+        .openOn(map);
+    }
+
+    function updateLocationInfo(location) {
+      document.getElementById('currentLocationText').textContent = location;
+      document.getElementById('locationInfo').style.display = 'block';
+    }
+
+    // Event handlers
+    $(document).ready(function () {
+      initMap();
+
+      // Search button
+      $("#searchBtn").on("click", function () {
+        const searchTerm = $("#locationSearch").val().trim().toLowerCase();
+        if (searchTerm) {
+          currentLocation = searchTerm;
+          loadStreetFoodMarkers(searchTerm);
+          updateLocationInfo(searchTerm);
+          $("#locationSearch").val('');
+        } else {
+          alert("Please enter a location to search!");
+        }
+      });
+
+      // Enter key search
+      $("#locationSearch").on("keypress", function (e) {
+        if (e.which === 13) {
+          $("#searchBtn").click();
+        }
+      });
+
+      // My location button
+      $("#myLocationBtn").on("click", function () {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            map.setView([lat, lng], 15);
+
+            // Add marker for user location
+            const userIcon = L.divIcon({
+              className: 'food-marker',
+              html: '📍',
+              iconSize: [30, 30],
+              iconAnchor: [15, 15]
+            });
+
+            L.marker([lat, lng], { icon: userIcon })
+              .addTo(map)
+              .bindPopup("📍 You are here!")
+              .openPopup();
+
+            updateLocationInfo("Your Current Location");
+          }, function () {
+            alert("Unable to get your location. Please ensure location services are enabled.");
+          });
+        } else {
+          alert("Geolocation is not supported by this browser.");
+        }
+      });
+
+      // Save location button
+      $("#saveLocationBtn").on("click", function () {
+        const center = map.getCenter();
+        const zoom = map.getZoom();
+
+        // Store in memory (since localStorage isn't available)
+        window.savedLocation = {
+          lat: center.lat,
+          lng: center.lng,
+          zoom: zoom,
+          name: currentLocation
+        };
+
+        alert(`📌 Saved current map view of ${currentLocation}!\n\nLocation: ${center.lat.toFixed(4)}, ${center.lng.toFixed(4)}\nZoom: ${zoom}`);
+      });
+    });
+  </script>
+</body>
+
+</html>
