@@ -69,7 +69,7 @@
             padding: 18px 0;
             box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
             position: sticky;
-            top: 76px;
+            top: 65px;
             z-index: 100
         }
 
@@ -143,12 +143,18 @@
             overflow: hidden
         }
 
-        .food-emoji {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 5rem
+        .food-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .modal-food-img {
+            height: auto;
+            width: 40%; 
+            object-fit: contain;
+            vertical-align: middle;
         }
 
         .food-badge {
@@ -441,10 +447,6 @@
                 height: 200px
             }
 
-            .food-emoji {
-                font-size: 4rem
-            }
-
             .country-scroll {
                 padding-top: 8px
             }
@@ -543,8 +545,8 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="stat-card animate__animated animate__fadeInUp" style="animation-delay:.2s;">
-                        <span class="stat-number counter" data-target="20">0</span>
+                    <div class="stat-card animate__animated animate__fadeInUp" style="animation-delay:.3s;">
+                        <span class="stat-number counter" data-target="40">0</span>
                         <div class="stat-label">Iconic Dishes</div>
                     </div>
                 </div>
@@ -629,35 +631,56 @@
 
         const foodsData = [
             // Japan
-            { id: 101, name: "Takoyaki", description: "Crispy-outside, gooey-inside octopus balls drizzled with sauce and bonito flakes.", category: "snacks", price: "¥400-800", rating: 4.7, emoji: "🐙", tags: ["Crispy", "Savory", "Street Classic"], origin: "Japan", country: "Japan", difficulty: "Medium" },
-            { id: 102, name: "Ramen", description: "Wheat noodles in rich broth topped with chashu, egg, and scallions.", category: "noodles", price: "¥700-1200", rating: 4.8, emoji: "🍜", tags: ["Brothy", "Comfort"], origin: "Japan", country: "Japan", difficulty: "Medium" },
+            { id: 101, name: "Takoyaki", description: "Crispy-outside, gooey-inside octopus balls drizzled with sauce and bonito flakes.", category: "snacks", price: "¥400-800", rating: 4.7, image: "images/Takoyaki.webp", ingredients: ["Octopus", "Flour batter", "Green onion", "Pickled ginger", "Bonito flakes", "Takoyaki sauce"], tags: ["Crispy", "Street Classic"], taste: "Crispy will upcoming at the first bite, savory and umani follows up on the second.",origin: "Osaka", country: "Japan", difficulty: "Medium" },
+            { id: 102, name: "Ramen", description: "Wheat noodles in rich broth topped with chashu, egg, and scallions.", category: "noodles", price: "¥700-1200", rating: 4.8, image: "images/Ramen_Bowl.webp", ingredients: ["Wheat noodles", "Pork or chicken broth", "Chashu (braised pork)", "Soft-boiled egg", "Scallions", "Nori seaweed", "Bamboo shoots"], tags: ["Brothy", "Comfort"], taste:"The first sip delivers a rich, savory broth, followed by springy noodles and a satisfying umami taste." ,origin: "Tokyo", country: "Japan", difficulty: "Medium" },
+            { id: 103, name: "Matcha Ice Cream", description: "Creamy ice cream flavored with Japanese matcha green tea.", category: "desserts", price: "¥100-300", rating: 4.3, image: "images/matcha_ice.jpg", ingredients: ["Milk", "Heavy cream", "Sugar", "Egg yolk", "Matcha powder"], tags: ["Cold", "Creamy"], taste: "Creamy and smooth with a rich, slightly bitter matcha flavor that lingers on the palate.", origin: "Japan", country: "Japan", difficulty: "Easy" },
+            { id: 104, name: "Dango", description: "Skewered rice dumplings, often served with sweet sauces or coatings.", category: "desserts", price: "¥100-300", rating: 4.5, image: "images/dango.jpg", ingredients: ["Rice flour", "Sugar", "Hot water", "Matcha powder"], tags: ["Sweet", "Soft"], taste: "oft and chewy rice dumplings, subtly sweet, with a hint of roasted soy glaze on top.", origin: "Japan", country: "Japan", difficulty: "Easy" },
             // Thailand
-            { id: 201, name: "Pad Thai", description: "Stir-fried rice noodles with tamarind, shrimp, tofu, egg, and peanuts.", category: "noodles", price: "฿40-80", rating: 4.7, emoji: "🍝", tags: ["Sweet-Sour", "Iconic"], origin: "Thailand", country: "Thailand", difficulty: "Medium" },
-            { id: 202, name: "Mango Sticky Rice", description: "Sweet sticky rice with ripe mango and coconut cream.", category: "desserts", price: "฿50-100", rating: 4.6, emoji: "🥭", tags: ["Sweet", "Coconut"], origin: "Thailand", country: "Thailand", difficulty: "Easy" },
+            { id: 201, name: "Pad Thai", description: "Stir-fried rice noodles with tamarind, shrimp, tofu, egg, and peanuts.", category: "noodles", price: "฿40-80", rating: 4.7, image: "images/Pad_Thai.jpg", ingredients: ["Rice noodles", "Tamarind paste", "Shrimp", "Tofu", "Egg", "Bean sprouts", "Peanuts", "Green onion", "Garlic"], tags: ["Sweet-Sour", "Iconic"], taste: "Sweet, tangy, and savory with a hint of tamarind and a satisfying crunch from peanuts.", origin: "Bangkok", country: "Thailand", difficulty: "Medium" },
+            { id: 202, name: "Mango Sticky Rice", description: "Sweet sticky rice with ripe mango and coconut cream.", category: "desserts", price: "฿50-100", rating: 4.6, image: "images/mango_rice.webp", ingredients: ["Glutinous rice", "Coconut cream/milk", "Sugar", "Ripe mango", "Salt", "Toasted sesame seeds"], tags: ["Sweet", "Coconut"], taste: "Sweet and creamy sticky rice paired with juicy mango, with a rich coconut flavor.", origin: "Bangkok", country: "Thailand", difficulty: "Easy" },
+            { id: 203, name: "Thai Iced Tea", description: "Sweet and creamy iced tea made with strong brewed black tea, sugar, and condensed milk.", category: "drinks", price: "฿30-120", rating: 4.5, image: "images/thai_tea.jpg", ingredients: ["Black tea", "Sugar", "Condensed milk", "Fresh milk", "Ice"], tags: ["Sweet", "Refreshing"], taste: "Sweet, creamy, and fragrant with a strong black tea flavor and subtle spices.", origin: "Thailand", country: "Thailand", difficulty: "Easy" },
+            { id: 204, name: "Thai Green Curry Rice", description: "Spicy and aromatic green curry served with steamed rice.", category: "rice", price: "฿50-150", rating: 4.8, image: "images/green_curry.jpg", ingredients: ["Cooked rice", "Chicken", "Green curry paste", "Coconut milk", "Vegetables", "Fish sauce", "Sugar"], tags: ["Curry", "Spicy"], taste: "Spicy and aromatic, with tender meat and vegetables in a rich coconut curry, each bite packed with flavour.", origin: "Thailand", country: "Thailand", difficulty: "Medium" },
             // Mexico
-            { id: 301, name: "Tacos al Pastor", description: "Marinated pork shaved from a spit, served on corn tortillas with pineapple.", category: "snacks", price: "$1-2/ea", rating: 4.8, emoji: "🌮", tags: ["Spit-roast", "Zesty"], origin: "Mexico", country: "Mexico", difficulty: "Medium" },
-            { id: 302, name: "Elote", description: "Grilled corn slathered with mayo, cheese, chili, and lime.", category: "snacks", price: "$2-4", rating: 4.5, emoji: "🌽", tags: ["Grilled", "Tangy"], origin: "Mexico", country: "Mexico", difficulty: "Easy" },
+            { id: 301, name: "Tacos al Pastor", description: "Marinated pork shaved from a spit, served on corn tortillas with pineapple.", category: "snacks", price: "MXN $15-30/ea", rating: 4.8, image: "images/tacos.webp", ingredients: ["Pork", "Pineapple", "Corn tortillas", "Onion", "Cilantro", "Achiote paste", "Chili peppers"], tags: ["Spit-roast", "Zesty"], taste: "Juicy, savory pork with a hint of smokiness and sweetness, balanced by fresh pineapple and soft tortillas.", origin: "Mexico City", country: "Mexico", difficulty: "Medium" },
+            { id: 302, name: "Elote", description: "Grilled corn slathered with mayo, cheese, chili, and lime.", category: "snacks", price: "MXN $10-35", rating: 4.5, image: "images/elote.jpg", ingredients: ["Corn on the cob", "Mayonnaise", "Cotija cheese", "Chili powder", "Lime"], tags: ["Grilled", "Tangy"], taste: "Sweet and smoky grilled corn, creamy with a touch of cheese, lime, and chili powder.", origin: "Mexico", country: "Mexico", difficulty: "Easy" },
+            { id: 303, name: "Margarita", description: "Classic tequila-based cocktail mixed with lime juice and orange liqueur, served with a salted rim.", category: "drinks", price: "MXN $80-400", rating: 4.4, image: "images/margarita.webp", ingredients: ["Tequila", "Lime juice", "Orange liqueur", "Salt", "Ice"], tags: ["Cocktail", "Refreshing"], taste: "Crisp and tangy with a refreshing lime flavor and a subtle hint of orange liqueur.", origin: "Mexico", country: "Mexico", difficulty: "Hard" },
+            { id: 304, name: "Churros", description: "Fried dough pastry coated in sugar, often served with chocolate or caramel dipping sauce.", category: "desserts", price: "MXN $10-30/ea", rating: 4.6, image: "images/churros.jpg", ingredients: ["Wheat flour", "Water", "Sugar", "Salt", "Cinnamon","Chocolate/Caramel sauce"], tags: ["Fried", "Sweet"], taste: "Crispy on the outside, soft and tender inside, coated in sugar with a hint of cinnamon.", origin: "Mexico", country: "Mexico", difficulty: "Medium" },
             // Turkey
-            { id: 401, name: "Döner Kebab", description: "Thinly sliced seasoned meat in flatbread with veggies and sauce.", category: "snacks", price: "₺60-120", rating: 4.6, emoji: "🥙", tags: ["Hearty", "Spit-roast"], origin: "Turkey", country: "Turkey", difficulty: "Medium" },
-            { id: 402, name: "Kumpir", description: "Loaded baked potato with butter, cheese, and endless toppings.", category: "snacks", price: "₺70-140", rating: 4.4, emoji: "🥔", tags: ["Comfort", "Customizable"], origin: "Turkey", country: "Turkey", difficulty: "Easy" },
+            { id: 401, name: "Döner Kebab (Rotisserie Meat)", description: "Thinly sliced seasoned meat in flatbread with veggies and sauce.", category: "snacks", price: "₺60-120", rating: 4.6, image: "images/Doner_kebab.jpg", ingredients: ["Lamb or chicken", "Flatbread", "Tomato", "Cucumber", "Lettuce", "Onion", "Yogurt sauce", "Spices"], tags: ["Hearty", "Spit-roast"], taste: "Juicy, flavorful meat with aromatic spices, wrapped in soft bread with fresh vegetables and sauces.", origin: "Anatolia", country: "Turkey", difficulty: "Medium" },
+            { id: 402, name: "Kumpir (Baked Potato)", description: "Loaded baked potato with butter, cheese, and endless toppings.", category: "snacks", price: "₺70-140", rating: 4.4, image: "images/kumpir.webp", ingredients: ["Baked potato", "Butter", "Cheese", "Corn", "Sausage", "Olives", "Pickles", "Mayonnaise"], tags: ["Comfort", "Customizable"], taste: "Warm, fluffy potato with creamy butter and cheese, customizable with savory toppings.", origin: "Istanbul", country: "Turkey", difficulty: "Easy" },
+            { id: 403, name: "Künefe", description: "Warm dessert made with shredded phyllo dough and melted cheese, soaked in sweet sugar syrup.", category: "desserts", price: "₺30-100", rating: 4.5, image: "images/kunefe.jpg", ingredients: ["Kadayif", "Unsalted cheese", "Butter", "Sugar syrup", "Pistachious"], tags: ["Sweet", "Soft"], taste: "Sweet, warm, and cheesy with crispy shredded pastry and a rich sugar syrup.", origin: "Hatay", country: "Turkey", difficulty: "Hard" },
+            { id: 404, name: "Çay (Turkish Tea)", description: "Strong black tea traditionally brewed in a double teapot, served hot in small tulip-shaped glasses.", category: "drinks", price: "₺3-15", rating: 4.3, image: "images/cay.jpg", ingredients: ["Black tea leaves", "Water", "Sugar"], tags: ["Hot", "Tea"], taste: "Strong, robust, and slightly astringent, with a comforting and warming aroma.", origin: "Turkey", country: "Turkey", difficulty: "Easy" },
             // India
-            { id: 501, name: "Pani Puri", description: "Crispy puri shells filled with spiced potatoes and tangy tamarind water.", category: "snacks", price: "₹30-80", rating: 4.7, emoji: "🫓", tags: ["Tangy", "Fun-to-eat"], origin: "India", country: "India", difficulty: "Medium" },
-            { id: 502, name: "Masala Dosa", description: "Crisp rice-lentil crepe filled with spiced potatoes; served with chutneys.", category: "rice", price: "₹60-150", rating: 4.6, emoji: "🥞", tags: ["Crisp", "South Indian"], origin: "India", country: "India", difficulty: "Medium" },
+            { id: 501, name: "Pani Puri", description: "Crispy puri shells filled with spiced potatoes and tangy tamarind water.", category: "snacks", price: "₹30-80", rating: 4.7, image: "images/pani_puri.jpg", ingredients: ["Puri shells", "Potatoes", "Chickpeas", "Tamarind chutney", "Mint-coriander water", "Spices"], tags: ["Tangy", "Fun-to-eat"], taste: "Crispy hollow shells filled with tangy, spicy water and savory potato or chickpea stuffing.", origin: "Northern India", country: "India", difficulty: "Medium" },
+            { id: 502, name: "Masala Dosa", description: "Crisp rice-lentil crepe filled with spiced potatoes; served with chutneys.", category: "rice", price: "₹60-150", rating: 4.6, image: "images/masala.jpg", ingredients: ["Rice flour", "Lentils", "Potatoes", "Onion", "Mustard seeds", "Curry leaves", "Turmeric", "Chutneys"], tags: ["Crisp", "South Indian"], taste: "Crispy and golden on the outside, soft with spiced potato filling, accompanied by tangy chutneys.", origin: "South India", country: "India", difficulty: "Medium" },
+            { id: 503, name: "Masala Chai", description: "Spiced tea brewed with black tea, milk, sugar, and a blend of aromatic spices.", category: "drinks", price: "₹10-50", rating: 4.6, image: "images/masala_chai.jpg", ingredients: ["Black tea leaves", "Milk", "Sugar", "Spices"], tags: ["Tea", "Spiced"], taste: "Warm, sweet, and spicy with aromatic notes of cinnamon, cardamom, and ginger.", origin: "Northern India", country: "India", difficulty: "Easy" },
+            { id: 504, name: "Lassi", description: "Refreshing yogurt-based drink, can be sweet or salty, often flavored with fruits or spices.", category: "drinks", price: "₹20-80", rating: 4.6, image: "images/lassi.jpg", ingredients: ["Yogurt", "Milk", "Sugar/Salt", "Fruit/Spices"], tags: ["Yogurt", "Tradional"], taste: "Refreshing, creamy, and slightly tangy, with a gentle sweetness or subtle fruit flavor.", origin: "Northern India", country: "India", difficulty: "Easy" },
+
             // Vietnam
-            { id: 601, name: "Bánh Mì", description: "Crispy baguette with pickles, herbs, pâté, and meats.", category: "snacks", price: "₫20k-40k", rating: 4.7, emoji: "🥖", tags: ["Crispy", "Herby"], origin: "Vietnam", country: "Vietnam", difficulty: "Medium" },
-            { id: 602, name: "Phở", description: "Aromatic beef or chicken noodle soup with fresh herbs.", category: "noodles", price: "₫30k-60k", rating: 4.6, emoji: "🍲", tags: ["Herbal", "Comfort"], origin: "Vietnam", country: "Vietnam", difficulty: "Medium" },
+            { id: 601, name: "Bánh Mì (Vietnamese Bread)", description: "Crispy baguette with pickles, herbs, pâté, and meats.", category: "snacks", price: "₫20k-40k", rating: 4.7, image: "images/banh_mi.jpg", ingredients: ["Baguette", "Pâté", "Pickled carrots & daikon", "Cucumber", "Cilantro", "Meats (pork/chicken)"], tags: ["Crispy", "Herby"], taste: "Crispy baguette with savory fillings, fresh herbs, and a hint of pickled tang.", origin: "Saigon (Ho Chi Minh City)", country: "Vietnam", difficulty: "Medium" },
+            { id: 602, name: "Phở", description: "Aromatic beef or chicken noodle soup with fresh herbs.", category: "noodles", price: "₫30k-60k", rating: 4.6, image: "images/pho.jpg", ingredients: ["Rice noodles", "Beef or chicken", "Beef/Chicken broth", "Onion", "Ginger", "Star anise", "Cilantro", "Thai basil", "Lime", "Bean sprouts"], tags: ["Herbal", "Comfort"], taste: "Aromatic, savory broth with tender noodles, fresh herbs, and a delicate balance of spices.", origin: "Hanoi", country: "Vietnam", difficulty: "Medium" },
+            { id: 603, name: "Cà Phê Trứng (Egg Coffee)", description: "Rich Vietnamese coffee topped with a creamy, sweet egg yolk foam.", category: "drinks", price: "₫30k-60k", rating: 4.6, image: "images/caphe.jpg", ingredients: ["Strong vietnamese coffee", "Egg yolk", "Condensed Milk", "Sugar"], tags: ["Creamy", "Coffee"], taste: "Rich and creamy with strong coffee flavor, sweetened with frothy, velvety egg yolk, smooth in every sip.", origin: "Hanoi", country: "Vietnam", difficulty: "Easy" },
+            { id: 604, name: "Chè Sương Sa Hạt Lựu (Rainbow Dessert)", description: "Sweet Vietnamese dessert made with agar jelly, water chestnuts, and tapioca pearls in coconut milk.", category: "desserts", price: "₫15k-50k", rating: 4.6, image: "images/chesuong.jpg", ingredients: ["Agar Jelly", "Water chestnuts", "Tapioca pearls", "Coconut mlik", "Sugar"], tags: ["Sweet", "Jelly"], taste: "Sweet and refreshing with chewy jelly in the mouth, packed the tender water chestnuts, and creamy coconut milk in every taste.", origin: "South Vietnam", country: "Vietnam", difficulty: "Easy" },
             // Korea
-            { id: 701, name: "Tteokbokki", description: "Chewy rice cakes simmered in spicy gochujang sauce.", category: "snacks", price: "₩3000-6000", rating: 4.5, emoji: "🔥", tags: ["Spicy", "Chewy"], origin: "Korea", country: "South Korea", difficulty: "Easy" },
-            { id: 702, name: "Hotteok", description: "Brown sugar–filled griddled pancakes, crisp outside, gooey inside.", category: "desserts", price: "₩1000-2000", rating: 4.4, emoji: "🧇", tags: ["Sweet", "Warm"], origin: "Korea", country: "South Korea", difficulty: "Easy" },
+            { id: 701, name: "Tteokbokki (Spicy Rice Cake)", description: "Chewy rice cakes simmered in spicy gochujang sauce.", category: "snacks", price: "₩3000-6000", rating: 4.5, image: "images/tteobokki.jpg", ingredients: ["Rice cakes", "Gochujang (Korean chili paste)", "Fish cakes", "Green onions", "Garlic", "Sugar", "Soy sauce"], tags: ["Spicy", "Chewy"], taste: "Chewy rice cakes first hit with a fiery, sweet-spicy gochujang sauce, leaving a lingering umami warmth.", origin: "South Korea (Seoul)", country: "South Korea", difficulty: "Medium" },
+            { id: 702, name: "Hotteok (Sweet Pancake)", description: "Brown sugar–filled griddled pancakes, crisp outside, gooey inside.", category: "desserts", price: "₩1000-2000", rating: 4.4, image: "images/hotteok.jpg", ingredients: ["Wheat flour", "Brown sugar", "Cinnamon", "Yeast", "Milk", "Oil", "Walnuts or peanuts"], tags: ["Sweet", "Warm"], taste: "Warm, pillowy dough melts in your mouth, revealing a gooey, caramelized brown sugar and nut filling.", origin: "South Korea", country: "South Korea", difficulty: "Medium" },
+            { id: 703, name: "Kimchi Fried Rice", description: "Flavorful fried rice dish stir-fried with kimchi, vegetables, and sometimes meat or egg.", category: "rice", price: "₩3000-10000", rating: 4.5, image: "images/kimchi_rice.jpg", ingredients: ["Cooked rice", "Kimchi", "Vegetables", "Egg", "Meat", "Soy sauce"], tags: ["Spicy", "Warm"], taste: "Each bite bursts with spicy, tangy kimchi, perfectly mingled with savory rice and a subtle smokiness.", origin: "South Korea", country: "South Korea", difficulty: "Easy" },
+            { id: 704, name: "Banana Milk", description: "Sweet, creamy milk flavored with banana, typically sold in bottles or cartons.", category: "drinks", price: "₩1000-2500", rating: 4.7, image: "images/banana_milk.jpg", ingredients: ["Banana", "Milk", "Sugar"], tags: ["Fruity", "Creamy"], taste: "Smooth, creamy milk with a gentle banana sweetness that feels comforting and refreshing sip by sip.", origin: "South Korea", country: "South Korea", difficulty: "Easy" },
             // Indonesia
-            { id: 801, name: "Nasi Goreng", description: "Smoky fried rice with kecap manis and toppings.", category: "rice", price: "Rp15k-30k", rating: 4.6, emoji: "🍚", tags: ["Smoky", "Comfort"], origin: "Indonesia", country: "Indonesia", difficulty: "Easy" },
-            { id: 802, name: "Satay (Sate)", description: "Skewered grilled meats with peanut sauce, Indonesian style.", category: "snacks", price: "Rp2k-5k/stick", rating: 4.6, emoji: "🍢", tags: ["Grilled", "Peanut"], origin: "Indonesia", country: "Indonesia", difficulty: "Medium" },
+            { id: 801, name: "Nasi Goreng (Indonesian Fried Rice)", description: "Smoky fried rice with kecap manis and toppings.", category: "rice", price: "Rp15k-30k", rating: 4.6, image: "images/nasi_goreng.jpg", ingredients: ["Cooked rice", "Sweet soy sauce (kecap manis)", "Garlic", "Shallots", "Egg", "Chicken or shrimp", "Green onions", "Chili"], tags: ["Smoky", "Comfort"], taste: "Fragrant fried rice with a savory, slightly sweet soy flavor, punctuated by tender pieces of meat and a hint of spice in every bite.", origin: "Indonesia", country: "Indonesia", difficulty: "Easy" },
+            { id: 802, name: "Satay (Sate)", description: "Skewered grilled meats with peanut sauce, Indonesian style.", category: "snacks", price: "Rp2k-5k/stick", rating: 4.6, image: "images/satay.jpg", ingredients: ["Chicken, beef or lamb", "Skewers", "Peanut sauce", "Soy sauce", "Turmeric", "Garlic", "Shallots", "Sugar"], tags: ["Grilled", "Peanut"], taste: "Juicy, marinated meat grilled to perfection, with a smoky char and a rich, nutty peanut sauce that lingers on the palate.", origin: "Indonesia", country: "Indonesia", difficulty: "Medium" },
+            { id: 803, name: "Kopi Luwak", description: "Rare and expensive coffee made from beans digested and excreted by civet cats, known for its smooth flavor.", category: "drinks", price: "Rp100k-500k", rating: 4.6, image: "images/kopi_luwak.jpg", ingredients: ["Civet-processed coffee beans", "Hot water"], tags: ["Premium", "Coffee"], taste: "Smooth and mellow coffee with a unique earthy richness, gentle bitterness, and a lingering, aromatic finish.", origin: "Indonesia", country: "Indonesia", difficulty: "Medium" },
+            { id: 804, name: "Dadar Gulung", description: "Green pandan-flavored crepe roll filled with sweet coconut and palm sugar.", category: "desserts", price: "Rp2k-10k/ea", rating: 4.6, image: "images/dadar_gulung.jpg", ingredients: ["Pandan juice", "Wheat flour", "Coconut milk", "Grated coconut", "Palm sugar"], tags: ["Pandan", "Sweet"], taste: "Soft, pandan-flavored crepe wraps a sweet, fragrant coconut filling, creating a delightful balance of subtle sweetness and creamy texture.", origin: "Indonesia", country: "Indonesia", difficulty: "Medium" },
             // China
-            { id: 901, name: "Jianbing", description: "Crispy egg crêpe with sauces, herbs, and crunchy cracker.", category: "snacks", price: "¥6-12", rating: 4.5, emoji: "🥞", tags: ["Crispy", "Savory"], origin: "China", country: "China", difficulty: "Medium" },
-            { id: 902, name: "Xiao Long Bao", description: "Soup dumplings bursting with savory broth.", category: "snacks", price: "¥15-30", rating: 4.7, emoji: "🥟", tags: ["Juicy", "Delicate"], origin: "China", country: "China", difficulty: "Hard" },
+            { id: 901, name: "Jianbing", description: "Crispy egg crêpe with sauces, herbs, and crunchy cracker.", category: "snacks", price: "¥6-12", rating: 4.4, image: "images/jianbing.jpg", ingredients: ["Wheat flour", "Eggs", "Scallions", "Cilantro", "Crispy cracker", "Hoisin sauce", "Chili sauce"], tags: ["Crispy", "Savory"], taste: "Crispy, golden crepe with a savory egg layer, complemented by crunchy wonton pieces, fresh herbs, and a hint of sweet and spicy sauce.", origin: "China", country: "China", difficulty: "Medium" },
+            { id: 902, name: "Xiao Long Bao", description: "Soup dumplings bursting with savory broth.", category: "snacks", price: "¥15-30", rating: 4.5, image: "images/xiaolongbao.jpg", ingredients: ["Wheat flour", "Pork", "Gelatinized broth", "Ginger", "Scallions", "Soy sauce"], tags: ["Juicy", "Delicate"], taste: "Delicate, thin-skinned dumplings burst with hot, savory broth and tender, flavorful pork filling in every bite.", origin: "China", country: "China", difficulty: "Hard" },
+            { id: 903, name: "Peking Duck", description: "Crispy duck skin and rich flavor, traditionally enjoyed with thin pancakes and condiments.", category: "snacks", price: "¥120-200", rating: 4.8, image: "images/peking_duck.jpg", ingredients: ["Duck", "Maltose syrup", "Seasonings", "Pancakes", "Scallions", "Hoisin sauce"], tags: ["Crispy", "Tradional"], taste: "Crispy skin gives way to succulent, richly flavored meat, served with soft pancakes, and sweet-savory sauce.", origin: "Beijing", country: "China", difficulty: "Hard" },
+            { id: 904, name: "Zha Jiang Mian", description: "Soup dumplings bursting with savory broth.", category: "noodles", price: "¥20-60", rating: 4.6, image: "images/zhajiangmian.webp", ingredients: ["Wheat noodles", "Minced pork", "Fermented soybean paste", "Garlic", "Ginger", "Scallions", "Vegetables","Soy sauce"], tags: ["Savory", "Traditional"], taste: "Thick wheat noodles coated in a savory, slightly salty soybean paste with minced pork, balanced by fresh julienned vegetables.", origin: "Beijing", country: "China", difficulty: "Medium" },
             // Singapore
-            { id: 1001, name: "Chili Crab", description: "Sweet–spicy crab in rich tomato-chili sauce; messy and glorious.", category: "snacks", price: "S$25-50", rating: 4.6, emoji: "🦀", tags: ["Seafood", "Spicy"], origin: "Singapore", country: "Singapore", difficulty: "Hard" },
-            { id: 1002, name: "Hainanese Chicken Rice", description: "Poached chicken with fragrant rice and chili-ginger sauce.", category: "rice", price: "S$3-6", rating: 4.7, emoji: "🍗", tags: ["Fragrant", "Comfort"], origin: "Singapore", country: "Singapore", difficulty: "Easy" }
+            { id: 1001, name: "Chilli Crab", description: "Sweet–spicy crab in rich tomato-chili sauce; messy and glorious.", category: "snacks", price: "S$25-50", rating: 4.6, image: "images/chilli_crab.avif", ingredients: ["Crab", "Tomato sauce", "Chili sauce", "Garlic", "Ginger", "Eggs", "Cornstarch", "Sugar"], tags: ["Seafood", "Spicy"], taste: "Sweet, savory, and spicy sauce envelops tender crab meat, with a rich tomato and chili flavor that lingers delightfully.", origin: "Singapore", country: "Singapore", difficulty: "Hard" },
+            { id: 1002, name: "Hainanese Chicken Rice", description: "Poached chicken with fragrant rice and chili-ginger sauce.", category: "rice", price: "S$3-6", rating: 4.7, image: "images/hainan_chicken.jpg", ingredients: ["Chicken", "Rice cooked in chicken fat", "Ginger", "Garlic", "Cucumber", "Chili-ginger sauce", "Soy sauce"], tags: ["Fragrant", "Comfort"], taste: "Tender poached chicken with fragrant, oily rice, subtly seasoned and accompanied by savory sauces and aromatic broth.", origin: "Singapore", country: "Singapore", difficulty: "Medium" },
+            { id: 1003, name: "Xing Zhou Bee Hoon (Singapore Fried Noodles)", description: "Stir-fried rice vermicelli with curry powder, vegetables, shrimp, and sometimes char siu or egg", category: "noodles", price: "S$4-12", rating: 4.6, image: "images/xingzhou.jpg", ingredients: ["Rice vermicelli", "Curry Powder", "Meat", "Egg", "Soy sauce", "Vegetables"], tags: ["Stir-fried", "Savory"], taste: "Thin rice vermicelli stir-fried with aromatic curry, tender shrimp, and vegetables, offering a balanced sweet and savory flavor.", origin: "Singapore", country: "Singapore", difficulty: "Medium" },
+            { id: 1004, name: "Mee Siam", description: "Thin rice noodles in a tangy, spicy, and slightly sweet gravy, often served with tofu, egg, and shrimp.", category: "noodles", price: "S$3-12", rating: 4.5, image: "images/meesiam.avif", ingredients: ["Rice vermicelli", "Tamarind paste", "Shrimp/Dried shrimp", "Tofu", "Eggs", "Bean sprouts", "Spices"], tags: ["Tangy", "Savory"], taste: "Tangy, spicy, and slightly sweet gravy coats delicate rice noodles, complemented by shrimp, tofu, and fresh bean sprouts.", origin: "Singapore/Johor", country: "Singapore", difficulty: "Medium" }
         ];
 
         // Build country list dynamically
@@ -825,7 +848,7 @@
         <div class="col-lg-4 col-md-6 food-item-wrapper" data-category="${food.category}" data-country="${food.country}">
           <div class="food-item animate__animated animate__fadeInUp">
             <div class="food-image">
-              <div class="food-emoji">${food.emoji}</div>
+              ${food.image ? `<img src="${food.image}" alt="${food.name}">` : ''}
               <div class="food-badge">${food.country}</div>
               <button class="favorite-btn" data-food-id="${food.id}">
                 <i class="${favClass} fa-heart"></i>
@@ -858,7 +881,13 @@
       `);
         }
 
-        function generateStars(r) { const full = Math.floor(r); const half = r % 1 !== 0; let s = ''; for (let i = 0; i < full; i++) s += '<i class="fas fa-star"></i>'; if (half) s += '<i class="fas fa-star-half-alt"></i>'; const empty = 5 - Math.ceil(r); for (let i = 0; i < empty; i++) s += '<i class="far fa-star"></i>'; return s; }
+        function generateStars(r) { 
+            const full = Math.floor(r); const half = r % 1 !== 0; let s = ''; 
+            for (let i = 0; i < full; i++) s += '<i class="fas fa-star"></i>'; 
+            if (half) s += '<i class="fas fa-star-half-alt"></i>'; 
+            const empty = 5 - Math.ceil(r); 
+            for (let i = 0; i < empty; i++) s += '<i class="far fa-star"></i>'; 
+        return s; }
 
         // --------------------------------
         // Favorites, Details, Share
@@ -894,7 +923,7 @@
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-header" style="background:linear-gradient(135deg,var(--primary-color),var(--secondary-color)); color:#fff;">
-                <h5 class="modal-title" id="foodModalLabel"><span style="font-size:2rem; margin-right:10px;">${food.emoji}</span>${food.name}</h5>
+                <h5 class="modal-title" id="foodModalLabel"><span style="font-size:2rem; margin-right:10px;">${food.image ? `<img src="${food.image}" alt="${food.name}" class="modal-food-img">` : ''}</span>${food.name}</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -902,8 +931,8 @@
                   <div class="col-md-8">
                     <h6>Description</h6>
                     <p>${food.description}</p>
-                    <h6>Origin</h6>
-                    <p><strong>Country:</strong> ${food.country}<br><strong>From:</strong> ${food.origin}</p>
+                    <h6>Origin & Difficulty</h6>
+                    <p><strong>Country:</strong> ${food.country}<br><strong>From:</strong> ${food.origin}<br><strong>Diffculty to Make: </strong>${food.difficulty}</p>
                     <h6>Fun Facts</h6>
                     <ul>
                       <li>Often served fresh from bustling street stalls.</li>
