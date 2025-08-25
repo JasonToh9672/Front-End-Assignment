@@ -11,10 +11,16 @@
     <style>
 
         .hero {
-            padding: 80px 0;
+            padding: 20px 0;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             text-align: center;
+        }
+
+        .hero img {
+            margin-top: 80px;
+            width: 30%;
+            height: auto;
         }
 
         .hero h1 {
@@ -111,9 +117,10 @@
 
     <!-- Hero -->
     <section class="hero">
-        <div class="container">
-            <h1 id="foodTitle">🍲 Food Name</h1>
-            <p class="lead" id="foodSubtitle">Explore the taste, origin, and story of this dish.</p>
+        <div class="container text-center">
+            <img id="foodImage" src="" alt="Food Name">
+            <h1 id="foodTitle"></h1>
+            <p class="lead" id="foodSubtitle"></p>
         </div>
     </section>
 
@@ -125,8 +132,10 @@
                     <div class="food-card">
                         <h3>Description</h3>
                         <p id="foodDescription"></p>
-                        <h4>Origin & Taste</h4>
+                        <h4>Origin & Diffculty</h4>
+                        <p><strong>Country:</strong> <span id="foodCountry"></span></p>
                         <p><strong>Origin:</strong> <span id="foodOrigin"></span></p>
+                        <p><strong>Difficulty to Make:</strong> <span id="foodDifficulty"></span></p>
                         <p><strong>Taste:</strong> <span id="foodTaste"></span></p>
                         <h4>Ingredients</h4>
                         <ul id="foodIngredients"></ul>
@@ -168,16 +177,19 @@
 
         $(document).ready(function () {
             if (food && food.name) {
-                $('#foodTitle').text(food.emoji + " " + food.name);
+                $('#foodImage').attr('src', food.image || '').attr('alt', food.name);
+                $('#foodTitle').text(food.name);
                 $('#foodSubtitle').text("A beloved " + food.origin + " dish loved by many.");
                 $('#foodDescription').text(food.description);
+                $('#foodCountry').text(food.country);
                 $('#foodOrigin').text(food.origin);
-                $('#foodTaste').text(food.taste || "Savory and delicious");
-                $('#foodPrice').text(food.price || "Varies");
+                $('#foodDifficulty').text(food.difficulty);
+                $('#foodTaste').text(food.taste || "Not Found");
+                $('#foodPrice').text(food.price || "Not Found");
                 $('#foodRating').text(food.rating + " / 5");
 
                 // Ingredients (mock if not provided)
-                const ingredients = food.ingredients || ["Rice noodles", "Soy sauce", "Egg", "Vegetables"];
+                const ingredients = food.ingredients || ["Not Found"];
                 ingredients.forEach(i => $('#foodIngredients').append(`<li>${i}</li>`));
 
                 // Tags
@@ -187,20 +199,21 @@
 
                 // Related dishes (mock for now)
                 const related = [
-                    { name: "Satay", emoji: "🍢" },
-                    { name: "Laksa", emoji: "🍜" },
-                    { name: "Nasi Lemak", emoji: "🍛" }
+                    { name: "Satay", image: "🍢" },
+                    { name: "Laksa", image: "🍜" },
+                    { name: "Nasi Lemak", image: "🍛" }
                 ];
                 related.forEach(r => {
                     $('#relatedDishes').append(`
-            <div class="col-md-4">
-              <div class="card p-3">
-                <h5>${r.emoji} ${r.name}</h5>
-                <a href="details.html" class="btn btn-sm btn-outline-primary mt-2">View</a>
-              </div>
-            </div>
-          `);
+                        <div class="col-md-4">
+                            <div class="card p-3">
+                                <h5>${r.image} ${r.name}</h5>
+                                <a href="details.html" class="btn btn-sm btn-outline-primary mt-2">View</a>
+                            </div>
+                        </div>
+                    `);
                 });
+                
             }
 
             // Favorites
