@@ -10,7 +10,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
     <style>
-
         .hero {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             background-size: cover;
@@ -20,7 +19,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .hero::before {
             content: '';
             position: absolute;
@@ -318,6 +317,55 @@
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
             border-radius: 2px;
         }
+
+        /* Social Media Button Enhancements */
+        .btn-primary {
+            background: #1877f2;
+            border-color: #1877f2;
+        }
+
+        .btn-primary:hover {
+            background: #166fe5;
+            border-color: #166fe5;
+        }
+
+        .btn-info {
+            background: #1da1f2;
+            border-color: #1da1f2;
+        }
+
+        .btn-info:hover {
+            background: #0d8bd9;
+            border-color: #0d8bd9;
+        }
+
+        .btn-success {
+            background: #25d366;
+            border-color: #25d366;
+        }
+
+        .btn-success:hover {
+            background: #128c7e;
+            border-color: #128c7e;
+        }
+
+        /* Social buttons spacing */
+        .text-center .d-inline-block {
+            margin: 5px;
+        }
+
+        .api-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: var(--secondary-color);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 12px;
+        font-weight: bold;
+        z-index: 2;
+        }
     </style>
 </head>
 
@@ -380,66 +428,98 @@
                 <button class="btn filter-btn" data-filter="asian">Asian</button>
                 <button class="btn filter-btn" data-filter="western">Western</button>
                 <button class="btn filter-btn" data-filter="dessert">Desserts</button>
+                <button class="btn filter-btn" data-filter="api">API Foods</button>
+            </div>
+
+
+            <!-- Loading Spinner -->
+            <div class="loading-spinner" id="loadingSpinner" style="display: none; text-align: center; padding: 20px;">
+                <div class="spinner-border" role="status" style="color: #e74c3c;">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2">Loading delicious foods from API...</p>
             </div>
 
             <div class="row g-4" id="galleryGrid">
                 <div class="col-md-4 gallery-item" data-category="asian">
-                    <img src="images/Ramen_Bowl.webp"
-                        class="gallery-img" alt="Ramen Bowl">
+                    <img src="images/Ramen_Bowl.webp" class="gallery-img" alt="Ramen Bowl">
                     <div class="gallery-overlay">
-                        <h5>🍜 Authentic Ramen</h5>
+                        <h5>Authentic Ramen</h5>
                         <p>Traditional Japanese street ramen with rich tonkotsu broth</p>
                         <small><i class="fas fa-map-marker-alt"></i> Tokyo, Japan</small>
                     </div>
                 </div>
 
                 <div class="col-md-4 gallery-item" data-category="asian">
-                    <img src="images/Dumplings.jpg"
-                        class="gallery-img" alt="Dumplings">
+                    <img src="images/Dumplings.jpg" class="gallery-img" alt="Dumplings">
                     <div class="gallery-overlay">
-                        <h5>🥟 Steamed Dumplings</h5>
+                        <h5>Steamed Dumplings</h5>
                         <p>Hand-made pork and chive dumplings from a street cart</p>
                         <small><i class="fas fa-map-marker-alt"></i> Shanghai, China</small>
                     </div>
                 </div>
 
-                <div class="col-md-4 gallery-item" data-category="asian">
-                    <img src="images/Pad_Thai.webp"
-                        class="gallery-img" alt="Pad Thai">
+                <div class="col-md-4 gallery-item" data-category="dessert">
+                    <img src="images/Ice-cream.webp" class="gallery-img" alt="Ice Cream">
                     <div class="gallery-overlay">
-                        <h5>🍛 Pad Thai</h5>
-                        <p>Classic Thai stir-fried noodles with shrimp and peanuts</p>
-                        <small><i class="fas fa-map-marker-alt"></i> Bangkok, Thailand</small>
+                        <h5>Gelato</h5>
+                        <p>Artisan gelato with pistachio and vanilla flavors</p>
+                        <small><i class="fas fa-map-marker-alt"></i> Rome, Italy</small>
                     </div>
                 </div>
 
                 <div class="col-md-4 gallery-item" data-category="western">
-                    <img src="images/Tacos.jpg"
-                        class="gallery-img" alt="Tacos">
+                    <img src="images/Tacos.jpg" class="gallery-img" alt="Tacos">
                     <div class="gallery-overlay">
-                        <h5>🌮 Street Tacos</h5>
+                        <h5>Street Tacos</h5>
                         <p>Authentic carnitas tacos with fresh cilantro and onions</p>
                         <small><i class="fas fa-map-marker-alt"></i> Mexico City, Mexico</small>
                     </div>
                 </div>
 
                 <div class="col-md-4 gallery-item" data-category="western">
-                    <img src="images/PizzaSlice.jpg"
-                        class="gallery-img" alt="Pizza">
+                    <img src="images/PizzaSlice.jpg" class="gallery-img" alt="Pizza">
                     <div class="gallery-overlay">
-                        <h5>🍕 New York Pizza</h5>
+                        <h5>New York Pizza</h5>
                         <p>Classic NY-style pizza slice from a street vendor</p>
                         <small><i class="fas fa-map-marker-alt"></i> New York, USA</small>
                     </div>
                 </div>
 
-                <div class="col-md-4 gallery-item" data-category="dessert">
-                    <img src="images/Ice-cream.webp"
-                        class="gallery-img" alt="Ice Cream">
+                <div class="col-md-4 gallery-item" data-category="asian">
+                    <img src="images/Pad_Thai.webp" class="gallery-img" alt="Pad Thai">
                     <div class="gallery-overlay">
-                        <h5>🍦 Gelato</h5>
-                        <p>Artisan gelato with pistachio and vanilla flavors</p>
-                        <small><i class="fas fa-map-marker-alt"></i> Rome, Italy</small>
+                        <h5>Pad Thai</h5>
+                        <p>Classic Thai stir-fried noodles with shrimp and peanuts</p>
+                        <small><i class="fas fa-map-marker-alt"></i> Bangkok, Thailand</small>
+                    </div>
+                </div>
+
+                <div class="col-md-4 gallery-item" data-category="western">
+                    <img src="images/Hamburger.webp" class="gallery-img" alt="Hamburger">
+                    <div class="gallery-overlay">
+                        <h5>Hamburger</h5>
+                        <p>Meat patty served in a sliced bun with toppings and condiments</p>
+                        <small><i class="fas fa-map-marker-alt"></i> Washington, USA</small>
+                    </div>
+                </div>
+
+                <div class="col-md-4 gallery-item" data-category="dessert">
+                    <img src="images/Macaron.jpg" class="gallery-img" alt="Macaron">
+                    <div class="gallery-overlay">
+                        <h5>Macaron</h5>
+                        <p>Delicate and sweet meringue cookie sandwich</p>
+                        <small><i class="fas fa-map-marker-alt"></i> Paris, French</small>
+                    </div>
+                </div>
+
+                <div class="col-md-4 gallery-item" data-category="dessert">
+                    <img src="images/Milkshake.jpg" class="gallery-img" alt="Milkshake">
+                    <div class="gallery-overlay">
+                        <h5>Milkshake</h5>
+                        <p>Thick, cold, sweet beverage of blended ice cream, milk, and flavorings like fruit or
+                            chocolate</p>
+                        <small><i class="fas fa-map-marker-alt"></i> Los Angeles, USA</small>
                     </div>
                 </div>
             </div>
@@ -465,6 +545,20 @@
                     </div>
                     <h5 class="mt-3 text-center">🇲🇾 Malaysian Street Food</h5>
                 </div>
+                <div class="col-md-6">
+                    <div class="video-item">
+                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/CFdVDbriog8"
+                            title="American Street Food" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <h5 class="mt-3 text-center">🇺🇸 American Street Food</h5>
+                </div>
+                <div class="col-md-6">
+                    <div class="video-item">
+                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/KaaW5JnUhHo"
+                            title="German Street Food" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <h5 class="mt-3 text-center">🇩🇪 German Street Food</h5>
+                </div>
             </div>
         </div>
     </div>
@@ -476,8 +570,7 @@
 
             <div class="slideshow">
                 <div class="slide active">
-                    <img src="images/Thailand_Street_Food.webp"
-                        alt="Thailand Street Food">
+                    <img src="images/Thailand_Street_Food.webp" alt="Thailand Street Food">
                     <div class="slide-overlay">
                         <h4>🇹🇭 Thailand Street Food Adventure</h4>
                         <p>Discover the vibrant flavors of Bangkok's street food scene</p>
@@ -485,8 +578,7 @@
                 </div>
 
                 <div class="slide">
-                    <img src="images/Vietnam_Street_Food.jpg"
-                        alt="Vietnam Local Street Food">
+                    <img src="images/Vietnam_Street_Food.jpg" alt="Vietnam Local Street Food">
                     <div class="slide-overlay">
                         <h4>🇻🇳 Vietnamese Street Food </h4>
                         <p>Experience the aromatic street foods of Ho Chi Minh City</p>
@@ -494,8 +586,7 @@
                 </div>
 
                 <div class="slide">
-                    <img src="images/Korean_Street_Food.jpeg"
-                        alt="Korea Street Food">
+                    <img src="images/Korean_Street_Food.jpeg" alt="Korea Street Food">
                     <div class="slide-overlay">
                         <h4>🇰🇷 Korean Street Food Culture</h4>
                         <p>From kimchi to Korean BBQ, explore Seoul's food markets</p>
@@ -524,6 +615,55 @@
             <img id="modalImage" src="" alt="">
         </div>
     </div>
+
+    <!-- Social Media Buttons -->
+    <div class="text-center my-4">
+        <!-- Facebook -->
+        <div class="d-inline-block mx-2">
+            <div class="fb-share-button" data-href="https://yourwebsite.com/gallery.html" data-layout="button_count"
+                data-size="large">
+                <!-- Fallback link if Facebook SDK doesn't load -->
+                <a target="_blank"
+                    href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fyourwebsite.com%2Fgallery.html"
+                    class="btn btn-primary">
+                    <i class="fab fa-facebook-f"></i> Share on Facebook
+                </a>
+            </div>
+        </div>
+
+        <!-- Twitter -->
+        <div class="d-inline-block mx-2">
+            <a href="https://twitter.com/intent/tweet?text=Check%20out%20this%20amazing%20Street%20Food%20Gallery!&url=https://yourwebsite.com/gallery.html"
+            class="btn btn-info text-white" 
+            target="_blank">
+                <i class="fab fa-twitter"></i> Tweet
+            </a>
+        </div>
+
+        <!-- WhatsApp -->
+        <div class="d-inline-block mx-2">
+            <a href="https://wa.me/?text=Check%20out%20this%20amazing%20Street%20Food%20Gallery!%20https://yourwebsite.com/gallery.html"
+                class="btn btn-success" target="_blank">
+                <i class="fab fa-whatsapp"></i> Share via WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <!-- Facebook SDK -->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous"
+        src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0"></script>
+
+    <!-- Initialize Facebook SDK -->
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                xfbml: true,
+                version: 'v18.0'
+            });
+        };
+    </script>
+
 
     <!-- Footer -->
     <footer class="footer text-center">
@@ -575,12 +715,13 @@
         const modalImg = document.getElementById('modalImage');
         const close = document.querySelector('.close');
 
-        document.querySelectorAll('.gallery-img').forEach(img => {
-            img.addEventListener('click', function () {
+        // Use event delegation for both existing and API images
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('gallery-img')) {
                 modal.style.display = 'block';
-                modalImg.src = this.src;
-                modalImg.alt = this.alt;
-            });
+                modalImg.src = e.target.src;
+                modalImg.alt = e.target.alt;
+            }
         });
 
         close.addEventListener('click', () => {
@@ -769,6 +910,53 @@
             }
         });
     </script>
+
+    <!-- jQuery (needed for REST API calls) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Show loading spinner
+            $('#loadingSpinner').show();
+
+            // Call TheMealDB API - FIXED VERSION (doesn't clear existing items)
+            $.getJSON("https://www.themealdb.com/api/json/v1/1/search.php?f=c")
+                .done(function (data) {
+                    if (data.meals) {
+                        // Add new meals from API (keeping your original 9 items)
+                        data.meals.slice(0, 6).forEach(meal => {
+                        const item = `
+                            <div class="col-md-4 gallery-item" data-category="api">
+                                <img src="${meal.strMealThumb}" class="gallery-img" alt="${meal.strMeal}">
+                                <div class="api-badge">API</div>
+                                <div class="gallery-overlay">
+                                    <h5>${meal.strMeal}</h5>
+                                    <p>${meal.strArea} - ${meal.strCategory}</p>
+                                    <small><i class="fas fa-globe"></i> ${meal.strArea}</small>
+                                </div>
+                            </div>`;
+                            $("#galleryGrid").append(item);
+                        });
+                    }
+                })
+                .fail(function () {
+                    console.log("Failed to load API data");
+                    $('#galleryGrid').append(`
+                    <div class="col-12 text-center">
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Failed to load additional food items. Please try refreshing.
+                        </div>
+                    </div>
+                `);
+                })
+                .always(function () {
+                    // Hide loading spinner
+                    $('#loadingSpinner').hide();
+                });
+        });
+    </script>
+
 </body>
 
 </html>
