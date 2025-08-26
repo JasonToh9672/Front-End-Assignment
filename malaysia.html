@@ -1561,7 +1561,7 @@
             const favoriteClass = isFavorite ? 'fas text-danger' : 'far';
 
             return $(`
-                <div class="col-lg-4 col-md-6 food-item-wrapper" data-category="${food.category}">
+                <div class="col-lg-4 col-md-6 food-item-wrapper" data-category="${normalizeCategory(food.category)}">
                     <div class="food-item animate__animated animate__fadeInUp">
                         <div class="food-image">
                             ${
@@ -1623,9 +1623,27 @@
             return stars;
         }
 
+        // 1) Helper: normalize category labels consistently
+        function normalizeCategory(cat) {
+            if (!cat) return 'other';
+            const c = String(cat).trim().toLowerCase();
+            if (['rice','rice dish','rice dishes'].includes(c)) return 'rice';
+            if (['noodle','noodles'].includes(c)) return 'noodles';
+            if (['snack','snacks'].includes(c)) return 'snacks';
+            if (['dessert','desserts','sweet'].includes(c)) return 'desserts';
+            if (['drink','drinks','beverage','beverages'].includes(c)) return 'drinks';
+            // pass-through known extras so they can be filtered too
+            if (['bread','meat','seafood','soup'].includes(c)) return c;
+            return c;
+        }
+
+        // 2) UPDATED: event delegation + safe preference restore
         function setupFilterButtons() {
-            $('.filter-btn').on('click', function () {
-                const category = $(this).data('category');
+            // Delegate to the container so it still works if buttons are created later
+            $('#filterButtons')
+                .off('click', '.filter-btn')
+                .on('click', '.filter-btn', function () {
+                const category = String($(this).data('category') || 'all').toLowerCase();
 
                 // Update active button
                 $('.filter-btn').removeClass('active');
@@ -1639,32 +1657,37 @@
                 preferences.lastMalaysianFilter = category;
                 localStorage.setItem('streetFood_preferences', JSON.stringify(preferences));
 
-                // Track interaction
-                trackUserInteraction('filter_foods', { category: category });
-            });
+                // Track interaction (if your function exists)
+                if (typeof trackUserInteraction === 'function') {
+                    trackUserInteraction('filter_foods', { category });
+                }
+             });
 
-            // Load last filter preference
+            // Load last filter preference (fallback to 'all' if not found)
             const preferences = JSON.parse(localStorage.getItem('streetFood_preferences') || '{}');
-            if (preferences.lastMalaysianFilter) {
-                $(`.filter-btn[data-category="${preferences.lastMalaysianFilter}"]`).click();
+            const last = (preferences.lastMalaysianFilter || 'all').toLowerCase();
+            const $btn = $(`.filter-btn[data-category="${last}"]`);
+            ($btn.length ? $btn : $(`.filter-btn[data-category="all"]`)).first().trigger('click');
             }
-        }
 
-        function filterFoods(category) {
+            // 3) UPDATED: normalize both the requested category and each food’s category
+            function filterFoods(category) {
             currentFilter = category;
 
             if (category === 'all') {
                 displayFoods(malaysianFoods);
                 $('#searchResults').hide();
-            } else {
-                const filtered = malaysianFoods.filter(food => food.category === category);
-                displayFoods(filtered);
-
-                // Show search results info
-                $('#searchResultText').text(`Found ${filtered.length} ${category} dishes`);
-                $('#searchResults').show();
+                return;
             }
-        }
+
+            const want = normalizeCategory(category);
+            const filtered = malaysianFoods.filter(food => normalizeCategory(food.category) === want);
+            displayFoods(filtered);
+
+            // Show search results info
+            $('#searchResultText').text(`Found ${filtered.length} ${want} dishes`);
+            $('#searchResults').show();
+            }
 
         function toggleFavorite(foodId) {
             const index = favoritesList.indexOf(foodId);
