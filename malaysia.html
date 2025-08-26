@@ -1991,54 +1991,54 @@
 
 
         (function () {
-  const $input = $('#searchInput');
-  const $clear = $('#clearSearchBtn');
+            const $input = $('#searchInput');
+            const $clear = $('#clearSearchBtn');
 
-  // Debounce helper to avoid spamming searches while typing
-  function debounce(fn, wait) {
-    let t;
-    return function(...args) {
-      clearTimeout(t);
-      t = setTimeout(() => fn.apply(this, args), wait);
-    };
-  }
+            // Debounce helper to avoid spamming searches while typing
+            function debounce(fn, wait) {
+                let t;
+                return function(...args) {
+                clearTimeout(t);
+                t = setTimeout(() => fn.apply(this, args), wait);
+                };
+        }
 
-  // Perform live search
-  const runSearch = debounce(function () {
-    const term = ($input.val() || '').trim();
-    if (term.length) {
-      performSearch(term); // already implemented in your file
-    } else {
-      // Empty → restore current filter view
-      filterFoods(currentFilter);
-      $('#searchResults').hide();
-    }
-    // Track interaction
-    trackUserInteraction('search_live', { term });
-  }, 250);
+        // Perform live search
+        const runSearch = debounce(function () {
+                const term = ($input.val() || '').trim();
+                if (term.length) {
+                performSearch(term); // already implemented in your file
+                } else {
+                // Empty → restore current filter view
+                filterFoods(currentFilter);
+                $('#searchResults').hide();
+                }
+                // Track interaction
+                trackUserInteraction('search_live', { term });
+        }, 250);
 
-  // Input listeners
-  $input.on('input', runSearch);
+        // Input listeners
+        $input.on('input', runSearch);
 
-  // Clear button
-  $clear.on('click', function () {
-    $input.val('');
-    filterFoods(currentFilter);
-    $('#searchResults').hide();
-    trackUserInteraction('search_cleared', {});
-    $input.trigger('blur'); // optional
-  });
+            // Clear button
+            $clear.on('click', function () {
+                $input.val('');
+                filterFoods(currentFilter);
+                $('#searchResults').hide();
+                trackUserInteraction('search_cleared', {});
+                $input.trigger('blur'); // optional
+        });
 
-  // Keyboard shortcut: Ctrl/Cmd+K focuses search
-  document.addEventListener('keydown', function (e) {
-    const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-    if ((isMac && e.metaKey && e.key.toLowerCase() === 'k') ||
-        (!isMac && e.ctrlKey && e.key.toLowerCase() === 'k')) {
-      e.preventDefault();
-      $input.focus().select();
-    }
-  });
-})();
+        // Keyboard shortcut: Ctrl/Cmd+K focuses search
+        document.addEventListener('keydown', function (e) {
+                const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+                if ((isMac && e.metaKey && e.key.toLowerCase() === 'k') ||
+                    (!isMac && e.ctrlKey && e.key.toLowerCase() === 'k')) {
+                e.preventDefault();
+                $input.focus().select();
+                }
+        });
+        })();
 
         // Keyboard shortcuts
         document.addEventListener('keydown', function (e) {
