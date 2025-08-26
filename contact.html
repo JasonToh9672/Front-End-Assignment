@@ -125,6 +125,31 @@
             text-align: center;
             color: #bdc3c7;
         }
+
+        /* NEW: Loading and status styles */
+        .loading-spinner {
+            display: none;
+            margin-left: 10px;
+        }
+
+        .status-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .status-success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .status-error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
     </style>
 </head>
 
@@ -195,8 +220,14 @@
                             <label for="message" class="form-label">Message</label>
                             <textarea class="form-control" id="message" rows="4" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-success w-100"><i class="fas fa-paper-plane"></i>
-                            Send</button>
+                        <button type="submit" class="btn btn-success w-100" id="submitBtn">
+                            <i class="fas fa-paper-plane"></i> Send
+                            <span class="loading-spinner">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </span>
+                        </button>
+                        <!-- NEW: Status message area -->
+                        <div id="statusMessage" class="status-message"></div>
                     </form>
                 </div>
             </div>
@@ -319,27 +350,187 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
-            // Load saved form data
-            const savedData = JSON.parse(localStorage.getItem("contactFormData") || "{}");
-            if (savedData.name) $("#name").val(savedData.name);
-            if (savedData.email) $("#email").val(savedData.email);
-            if (savedData.message) $("#message").val(savedData.message);
+            const API_CONFIG = {
+                baseUrl: 'https://jsonplaceholder.typicode.com',  // Free demo API
+                contactEndpoint: '/posts'  // This works immediately
+            };
 
-            // Save data on input
+            // Load saved form data (keep this functionality)
+            loadSavedFormData();
+
+            // Save data on input (keep this functionality)
             $("#name, #email, #message").on("input", function () {
-                const formData = {
-                    name: $("#name").val(),
-                    email: $("#email").val(),
-                    message: $("#message").val()
-                };
-                localStorage.setItem("contactFormData", JSON.stringify(formData));
+                saveFormDataToStorage();
             });
 
-            // Submit handler
+            // NEW: Enhanced submit handler with RESTful API call
             $("#contactForm").on("submit", function (e) {
                 e.preventDefault();
-                alert("Thank you for contacting us, " + $("#name").val() + "! Your message has been saved.");
+                sendContactMessage();
             });
+
+            // FUNCTION: Load saved form data from localStorage
+            function loadSavedFormData() {
+                try {
+                    const savedData = JSON.parse(localStorage.getItem("contactFormData") || "{}");
+                    if (savedData.name) $("#name").val(savedData.name);
+                    if (savedData.email) $("#email").val(savedData.email);
+                    if (savedData.message) $("#message").val(savedData.message);
+                } catch (error) {
+                    console.log("Error loading saved form data:", error);
+                }
+            }
+
+            // FUNCTION: Save form data to localStorage
+            function saveFormDataToStorage() {
+                try {
+                    const formData = {
+                        name: $("#name").val(),
+                        email: $("#email").val(),
+                        message: $("#message").val()
+                    };
+                    localStorage.setItem("contactFormData", JSON.stringify(formData));
+                } catch (error) {
+                    console.log("Error saving form data:", error);
+                }
+            }
+
+            // NEW FUNCTION: Send message via RESTful API
+            function sendContactMessage() {
+                // Collect form data
+                const formData = {
+                    name: $("#name").val().trim(),
+                    email: $("#email").val().trim(),
+                    message: $("#message").val().trim(),
+                    timestamp: new Date().toISOString(),
+                    // For demo API, we'll use these field names:
+                    title: $("#name").val().trim() + " - Contact Form",
+                    body: $("#message").val().trim(),
+                    userId: 1
+                };
+
+                // Validate required fields
+                if (!formData.name || !formData.email || !formData.message) {
+                    showStatusMessage("Please fill in all required fields.", "error");
+                    return;
+                }
+
+                // Show loading state
+                setLoadingState(true);
+                hideStatusMessage();
+
+                // Make AJAX call to RESTful API
+                $.ajax({
+                    url: API_CONFIG.baseUrl + API_CONFIG.contactEndpoint,
+                    method: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    data: JSON.stringify(formData),
+                    timeout: 10000, // 10 seconds timeout
+                    
+                    // SUCCESS: API call successful
+                    success: function(response, textStatus, xhr) {
+                        console.log("API Response:", response);
+                        
+                        // Clear the form on success
+                        clearForm();
+                        
+                        // Clear saved data
+                        localStorage.removeItem("contactFormData");
+                        
+                        // Show success message
+                        showStatusMessage(
+                            `Thank you, ${formData.name}! Your message has been sent successfully. We'll get back to you soon!`, 
+                            "success"
+                        );
+                        
+                        // Optional: Scroll to success message
+                        $('html, body').animate({
+                            scrollTop: $("#statusMessage").offset().top - 100
+                        }, 500);
+                    },
+                    
+                    // ERROR: API call failed
+                    error: function(xhr, textStatus, errorThrown) {
+                        console.error("API Error:", {
+                            status: xhr.status,
+                            statusText: xhr.statusText,
+                            textStatus: textStatus,
+                            errorThrown: errorThrown,
+                            responseText: xhr.responseText
+                        });
+                        
+                        let errorMessage = "Sorry, there was an error sending your message. ";
+                        
+                        // Handle different error types
+                        switch(textStatus) {
+                            case 'timeout':
+                                errorMessage += "The request timed out. Please check your connection and try again.";
+                                break;
+                            case 'abort':
+                                errorMessage += "The request was cancelled.";
+                                break;
+                            case 'parsererror':
+                                errorMessage += "There was an error processing the server response.";
+                                break;
+                            default:
+                                if (xhr.status === 0) {
+                                    errorMessage += "Please check your internet connection.";
+                                } else if (xhr.status >= 500) {
+                                    errorMessage += "Server error. Please try again later.";
+                                } else if (xhr.status >= 400) {
+                                    errorMessage += "There was a problem with your request.";
+                                } else {
+                                    errorMessage += "Please try again later.";
+                                }
+                        }
+                        
+                        showStatusMessage(errorMessage, "error");
+                    },
+                    
+                    // COMPLETE: Always runs after success or error
+                    complete: function() {
+                        // Hide loading state
+                        setLoadingState(false);
+                    }
+                });
+            }
+
+            // NEW FUNCTION: Show/hide loading state
+            function setLoadingState(isLoading) {
+                const $submitBtn = $("#submitBtn");
+                const $spinner = $submitBtn.find(".loading-spinner");
+                
+                if (isLoading) {
+                    $submitBtn.prop("disabled", true);
+                    $spinner.show();
+                } else {
+                    $submitBtn.prop("disabled", false);
+                    $spinner.hide();
+                }
+            }
+
+            // NEW FUNCTION: Show status message
+            function showStatusMessage(message, type) {
+                const $statusMessage = $("#statusMessage");
+                
+                $statusMessage
+                    .removeClass("status-success status-error")
+                    .addClass("status-" + type)
+                    .text(message)
+                    .slideDown();
+            }
+
+            // NEW FUNCTION: Hide status message
+            function hideStatusMessage() {
+                $("#statusMessage").slideUp();
+            }
+
+            // NEW FUNCTION: Clear form
+            function clearForm() {
+                $("#contactForm")[0].reset();
+                $("#name, #email, #message").val("");
+            }
         });
     </script>
 </body>
