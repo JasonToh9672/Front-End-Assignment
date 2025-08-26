@@ -471,6 +471,15 @@
                 </div>
                 <div class="col-md-9">
                     <div id="filterButtons" class="text-md-end">
+                        <div class="mt-3 mt-md-0 d-flex gap-2 justify-content-md-end align-items-center">
+                        <label for="searchInput" class="visually-hidden">Search Malaysian foods</label>
+                        <input id="searchInput" type="search" class="form-control"
+                            placeholder="Search foods, tags, origin… (e.g., 'Penang', 'spicy', 'noodles')"
+                            style="max-width: 380px;">
+                            <button id="clearSearchBtn" class="btn btn-outline-secondary" type="button" title="Clear search">
+                             <i class="fas fa-times"></i>
+                              </button>
+                            </div>
                         <button class="filter-btn active" data-category="all">All Foods</button>
                         <button class="filter-btn" data-category="rice">Rice Dishes</button>
                         <button class="filter-btn" data-category="noodles">Noodles</button>
@@ -508,7 +517,7 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="stat-card animate__animated animate__fadeInUp">
-                        <span class="stat-number counter" data-target="200">0</span>
+                        <span class="stat-number counter" data-target="100">0</span>
                         <div class="stat-label">Different Dishes</div>
                     </div>
                 </div>
@@ -739,7 +748,1063 @@
                 tags: ["Cold", "Colorful", "Sweet"],
                 origin: "Malaysia",
                 difficulty: "Easy"
-            }
+            },
+            {
+        id: 13,
+        name: "Kaya Toast",
+        description: "Toasted bread with coconut jam (kaya) and butter, often served with soft-boiled eggs.",
+        category: "snacks",
+        price: "RM 3-6",
+        rating: 4.5,
+        emoji: "🍞",
+        tags: ["Breakfast", "Sweet", "Traditional"],
+        origin: "Malaysia/Singapore",
+        difficulty: "Easy"
+            },
+            {
+        id: 14,
+        name: "Nasi Kerabu",
+        description: "Blue-tinted rice served with herbs, fried chicken or fish, and spicy sambal.",
+        category: "rice",
+        price: "RM 6-12",
+        rating: 4.7,
+        emoji: "🌿",
+        tags: ["Herbal", "Colorful", "Kelantan"],
+        origin: "Kelantan",
+        difficulty: "Medium"
+    },
+    {
+        id: 15,
+        name: "Keropok Lekor",
+        description: "Deep-fried fish crackers from Terengganu, chewy inside and crispy outside.",
+        category: "snacks",
+        price: "RM 2-5",
+        rating: 4.4,
+        emoji: "🍘",
+        tags: ["Crispy", "Fish", "Street Snack"],
+        origin: "Terengganu",
+        difficulty: "Easy"
+    },
+    {
+        id: 16,
+        name: "Kuih Lapis",
+        description: "Steamed colorful layered cake made from rice flour and coconut milk.",
+        category: "desserts",
+        price: "RM 2-4",
+        rating: 4.3,
+        emoji: "🍮",
+        tags: ["Layered", "Sweet", "Traditional"],
+        origin: "Malaysia",
+        difficulty: "Medium"
+    },
+    {
+        id: 17,
+        name: "Milo Dinosaur",
+        description: "Iced Milo drink topped with heaps of undissolved Milo powder.",
+        category: "drinks",
+        price: "RM 4-7",
+        rating: 4.6,
+        emoji: "🥤",
+        tags: ["Iced", "Chocolate", "Popular"],
+        origin: "Malaysia",
+        difficulty: "Easy"
+    },
+    {
+        id: 18,
+        name: "Nasi Dagang",
+        description: "Fragrant rice steamed in coconut milk, served with fish curry and pickled vegetables.",
+        category: "rice",
+        price: "RM 6-12",
+        rating: 4.7,
+        emoji: "🍛",
+        tags: ["Coconut", "Curry", "Terengganu"],
+        origin: "Terengganu/Kelantan",
+        difficulty: "Medium"
+    },
+    {
+        id: 19,
+        name: "Otak-Otak",
+        description: "Grilled fish paste wrapped in banana leaves, seasoned with spices and coconut milk.",
+        category: "snacks",
+        price: "RM 2-5",
+        rating: 4.5,
+        emoji: "🌿",
+        tags: ["Grilled", "Fish", "Spicy"],
+        origin: "Johor",
+        difficulty: "Medium"
+    },
+    {
+        id: 20,
+        name: "Mee Rebus",
+        description: "Yellow noodles in a thick, slightly sweet potato-based gravy with eggs and tofu.",
+        category: "noodles",
+        price: "RM 5-10",
+        rating: 4.4,
+        emoji: "🍲",
+        tags: ["Noodles", "Gravy", "Comfort Food"],
+        origin: "Johor",
+        difficulty: "Medium"
+    },
+    {
+        id: 21,
+        name: "Pisang Goreng",
+        description: "Deep-fried battered bananas, crispy on the outside and soft inside.",
+        category: "snacks",
+        price: "RM 1-3",
+        rating: 4.5,
+        emoji: "🍌",
+        tags: ["Fried", "Sweet", "Street Snack"],
+        origin: "Malaysia",
+        difficulty: "Easy"
+    },
+    {
+        id: 22,
+        name: "Nasi Kandar",
+        description: "Steamed rice served with a variety of curries and side dishes, Penang’s specialty.",
+        category: "rice",
+        price: "RM 8-20",
+        rating: 4.8,
+        emoji: "🍽️",
+        tags: ["Curry", "Spicy", "Penang"],
+        origin: "Penang",
+        difficulty: "Medium"
+    },
+    {
+        id: 23,
+        name: "Maggi Goreng",
+        description: "Stir-fried instant noodles with eggs, vegetables, and your choice of protein.",
+        category: "noodles",
+        price: "RM 4-8",
+        rating: 4.2,
+        emoji: "🍝",
+        tags: ["Instant Noodles", "Spicy", "Quick Meal"],
+        origin: "Mamak Stall",
+        difficulty: "Easy"
+    },
+    {
+        id: 24,
+        name: "Nasi Ulam",
+        description: "Herb rice dish mixed with raw herbs, vegetables, and sometimes dried fish or prawns.",
+        category: "rice",
+        price: "RM 6-12",
+        rating: 4.3,
+        emoji: "🥗",
+        tags: ["Herbal", "Healthy", "Traditional"],
+        origin: "Malay",
+        difficulty: "Medium"
+    },
+    {
+        id: 25,
+        name: "Pulut Panggang",
+        description: "Glutinous rice filled with spicy sambal, wrapped in banana leaves and grilled.",
+        category: "snacks",
+        price: "RM 2-4",
+        rating: 4.4,
+        emoji: "🍙",
+        tags: ["Glutinous Rice", "Grilled", "Spicy"],
+        origin: "Malaysia",
+        difficulty: "Medium"
+    },
+    {
+        id: 26,
+        name: "Rojak",
+        description: "Fruit and vegetable salad mixed with a thick, spicy peanut and shrimp paste sauce.",
+        category: "snacks",
+        price: "RM 4-8",
+        rating: 4.5,
+        emoji: "🥗",
+        tags: ["Salad", "Tangy", "Spicy"],
+        origin: "Malaysia",
+        difficulty: "Easy"
+    },
+    {
+        id: 27,
+        name: "Kuih Seri Muka",
+        description: "Two-layered dessert with glutinous rice base and pandan custard top.",
+        category: "desserts",
+        price: "RM 2-4",
+        rating: 4.6,
+        emoji: "🍰",
+        tags: ["Pandan", "Traditional", "Sweet"],
+        origin: "Malay",
+        difficulty: "Medium"
+    },
+    {
+        id: 28,
+        name: "Nasi Kukus",
+        description: "Steamed rice served with fried chicken, sambal, and curry gravy.",
+        category: "rice",
+        price: "RM 5-10",
+        rating: 4.6,
+        emoji: "🍗",
+        tags: ["Spicy", "Curry", "Fried Chicken"],
+        origin: "Kelantan/Terengganu",
+        difficulty: "Medium"
+    },
+    {
+        id: 29,
+        name: "Mee Bandung Muar",
+        description: "Noodles in a rich prawn and meat-based gravy, signature of Muar, Johor.",
+        category: "noodles",
+        price: "RM 6-12",
+        rating: 4.5,
+        emoji: "🍜",
+        tags: ["Rich Broth", "Johor", "Seafood"],
+        origin: "Johor",
+        difficulty: "Medium"
+    },
+    {
+        id: 30,
+        name: "Lemang",
+        description: "Glutinous rice cooked in bamboo with coconut milk, often served with rendang.",
+        category: "rice",
+        price: "RM 6-15",
+        rating: 4.7,
+        emoji: "🎋",
+        tags: ["Festive", "Glutinous Rice", "Coconut"],
+        origin: "Traditional Malay",
+        difficulty: "Hard"
+    },
+    {
+        id: 31,
+        name: "Tau Fu Fah",
+        description: "Soft soybean pudding served with sugar syrup or gula melaka.",
+        category: "desserts",
+        price: "RM 2-5",
+        rating: 4.3,
+        emoji: "🥛",
+        tags: ["Soy", "Pudding", "Sweet"],
+        origin: "Chinese Malaysian",
+        difficulty: "Easy"
+    },
+    {
+        id: 32,
+        name: "ABC Special",
+        description: "Upgraded ais kacang with ice cream, chocolate syrup, and more toppings.",
+        category: "desserts",
+        price: "RM 4-8",
+        rating: 4.6,
+        emoji: "🍨",
+        tags: ["Colorful", "Sweet", "Cold"],
+        origin: "Malaysia",
+        difficulty: "Easy"
+    },
+    {
+        id: 33,
+        name: "Sarawak Laksa",
+        description: "Spicy noodle soup from Sarawak with a base of sambal belacan, coconut milk, tamarind, and prawns.",
+        category: "noodles",
+        price: "RM 8-15",
+        rating: 4.8,
+        emoji: "🍤",
+        tags: ["Sarawak", "Spicy", "Seafood"],
+        origin: "Sarawak",
+        difficulty: "Hard"
+    },
+    {
+        id: 34,
+        name: "Kolo Mee",
+        description: "Dry-tossed noodles with minced meat, char siu, and fried shallots, Sarawak’s specialty.",
+        category: "noodles",
+        price: "RM 6-12",
+        rating: 4.7,
+        emoji: "🍜",
+        tags: ["Sarawak", "Dry Noodles", "Pork"],
+        origin: "Sarawak",
+        difficulty: "Medium"
+    },
+    {
+        id: 35,
+        name: "Manok Pansoh",
+        description: "Bidayuh-style chicken cooked in bamboo with herbs, creating a smoky flavor.",
+        category: "rice",
+        price: "RM 15-25",
+        rating: 4.6,
+        emoji: "🍗",
+        tags: ["Borneo", "Traditional", "Smoky"],
+        origin: "Sarawak",
+        difficulty: "Hard"
+    },
+    {
+        id: 36,
+        name: "Ikan Bakar",
+        description: "Charcoal-grilled fish marinated with spices, usually served with sambal belacan.",
+        category: "snacks",
+        price: "RM 10-20",
+        rating: 4.7,
+        emoji: "🐟",
+        tags: ["Grilled", "Seafood", "Spicy"],
+        origin: "Coastal Malaysia",
+        difficulty: "Medium"
+    },
+    {
+        id: 37,
+        name: "Ayam Percik",
+        description: "Grilled chicken basted with a spiced coconut gravy, popular during Ramadan.",
+        category: "rice",
+        price: "RM 8-15",
+        rating: 4.6,
+        emoji: "🍖",
+        tags: ["Grilled", "Coconut", "Festive"],
+        origin: "Kelantan",
+        difficulty: "Medium"
+    },
+    {
+        id: 38,
+        name: "Yong Tau Foo",
+        description: "Tofu and vegetables stuffed with fish paste, served in broth or fried.",
+        category: "snacks",
+        price: "RM 6-12",
+        rating: 4.4,
+        emoji: "🍲",
+        tags: ["Tofu", "Soup", "Chinese"],
+        origin: "Chinese Malaysian",
+        difficulty: "Medium"
+    },
+    {
+        id: 39,
+        name: "Banana Leaf Rice",
+        description: "Rice with curries, chutneys, and vegetables served on a banana leaf.",
+        category: "rice",
+        price: "RM 8-20",
+        rating: 4.8,
+        emoji: "🌿",
+        tags: ["Indian Malaysian", "Curry", "Vegetarian Friendly"],
+        origin: "South Indian Malaysian",
+        difficulty: "Medium"
+    },
+    {
+        id: 40,
+        name: "Nasi Tumpang",
+        description: "Cone-shaped rice dish layered with sambal, egg, meat floss, and curry.",
+        category: "rice",
+        price: "RM 6-12",
+        rating: 4.5,
+        emoji: "🍙",
+        tags: ["Layered", "Kelantan", "Traditional"],
+        origin: "Kelantan",
+        difficulty: "Medium"
+    },
+    {
+        id: 41,
+        name: "Mee Kolok Hijau",
+        description: "Green-colored noodles flavored with pandan and topped with minced meat and soy sauce.",
+        category: "noodles",
+        price: "RM 6-12",
+        rating: 4.3,
+        emoji: "💚",
+        tags: ["Sarawak", "Unique", "Noodles"],
+        origin: "Sarawak",
+        difficulty: "Medium"
+    },
+    {
+        id: 42,
+        name: "Ulam with Sambal Belacan",
+        description: "Fresh raw herbs and vegetables eaten with spicy sambal belacan dip.",
+        category: "snacks",
+        price: "RM 3-8",
+        rating: 4.2,
+        emoji: "🥒",
+        tags: ["Healthy", "Herbal", "Spicy"],
+        origin: "Malay",
+        difficulty: "Easy"
+    },
+    {
+        id: 43,
+        name: "Nasi Ambeng",
+        description: "Shared platter of rice with chicken, fried noodles, tempeh, and sambal.",
+        category: "rice",
+        price: "RM 10-20",
+        rating: 4.6,
+        emoji: "🍛",
+        tags: ["Javanese", "Sharing Dish", "Festive"],
+        origin: "Javanese Malaysian",
+        difficulty: "Hard"
+    },
+    {
+        id: 44,
+        name: "Kuih Onde-Onde",
+        description: "Glutinous rice balls filled with palm sugar and coated with grated coconut.",
+        category: "desserts",
+        price: "RM 2-5",
+        rating: 4.6,
+        emoji: "🥥",
+        tags: ["Sweet", "Palm Sugar", "Traditional"],
+        origin: "Malay",
+        difficulty: "Easy"
+    },
+    {
+        id: 45,
+        name: "Nasi Minyak",
+        description: "Aromatic ghee rice cooked with spices, usually served at weddings with curry dishes.",
+        category: "rice",
+        price: "RM 8-15",
+        rating: 4.7,
+        emoji: "🍚",
+        tags: ["Wedding Dish", "Spiced Rice", "Festive"],
+        origin: "Malay",
+        difficulty: "Medium"
+    },
+    {
+        id: 46,
+        name: "Mee Jawa",
+        description: "Noodles in a sweet-spicy tomato-based gravy with potatoes, tofu, and boiled egg.",
+        category: "noodles",
+        price: "RM 5-10",
+        rating: 4.4,
+        emoji: "🍝",
+        tags: ["Javanese", "Sweet-Spicy", "Noodles"],
+        origin: "Johor",
+        difficulty: "Medium"
+    },
+    {
+        id: 47,
+        name: "Sambal Sotong",
+        description: "Squid stir-fried in spicy sambal sauce, eaten with rice.",
+        category: "snacks",
+        price: "RM 8-20",
+        rating: 4.6,
+        emoji: "🦑",
+        tags: ["Seafood", "Spicy", "Malay"],
+        origin: "Malay",
+        difficulty: "Medium"
+    },
+    {
+        id: 48,
+        name: "Kuih Ketayap",
+        description: "Green pandan crepes filled with sweet coconut filling.",
+        category: "desserts",
+        price: "RM 2-4",
+        rating: 4.3,
+        emoji: "🥞",
+        tags: ["Coconut", "Pandan", "Traditional"],
+        origin: "Malay",
+        difficulty: "Easy"
+    },
+    {
+        id: 49,
+        name: "Mee Hailam",
+        description: "Noodles cooked in a thick soy-based gravy with chicken or seafood.",
+        category: "noodles",
+        price: "RM 6-12",
+        rating: 4.2,
+        emoji: "🥘",
+        tags: ["Chinese", "Soy Sauce", "Comfort Food"],
+        origin: "Chinese Malaysian",
+        difficulty: "Medium"
+    },
+    {
+        id: 50,
+        name: "Sup Kambing",
+        description: "Spiced mutton soup cooked with potatoes, carrots, and aromatic spices.",
+        category: "snacks",
+        price: "RM 8-20",
+        rating: 4.4,
+        emoji: "🍲",
+        tags: ["Soup", "Spicy", "Mutton"],
+        origin: "Indian Muslim Malaysian",
+        difficulty: "Medium"
+    },
+    {
+        id: 51,
+        name: "Putu Mayam",
+        description: "Rice flour noodles served with grated coconut and palm sugar.",
+        category: "desserts",
+        price: "RM 2-5",
+        rating: 4.2,
+        emoji: "🍯",
+        tags: ["Sweet", "Indian", "Traditional"],
+        origin: "Indian Malaysian",
+        difficulty: "Easy"
+    },
+    {
+        id: 52,
+        name: "Teh O Ais Limau",
+        description: "Refreshing iced lime tea, perfect for Malaysia’s tropical heat.",
+        category: "drinks",
+        price: "RM 2-4",
+        rating: 4.5,
+        emoji: "🍹",
+        tags: ["Citrus", "Iced", "Refreshing"],
+        origin: "Malaysia",
+        difficulty: "Easy"
+    },
+    {
+        id: 53,
+        name: "Kopi O",
+        description: "Strong black coffee, Malaysian kopitiam classic.",
+        category: "drinks",
+        price: "RM 2-5",
+        rating: 4.6,
+        emoji: "☕",
+        tags: ["Coffee", "Strong", "Traditional"],
+        origin: "Malaysia",
+        difficulty: "Easy"
+    },
+    {
+        id: 54,
+        name: "Bandung Drink",
+        description: "Rose syrup mixed with milk, sweet and pink-hued.",
+        category: "drinks",
+        price: "RM 2-4",
+        rating: 4.3,
+        emoji: "🌸",
+        tags: ["Rose", "Milky", "Sweet"],
+        origin: "Malaysia",
+        difficulty: "Easy"
+    },
+        {
+        id: 55,
+        name: "Sirap Selasih",
+        description: "Iced rose syrup drink with basil seeds, cooling and refreshing.",
+        category: "drinks",
+        price: "RM 2-4",
+        rating: 4.2,
+        emoji: "🥤",
+        tags: ["Cooling", "Sweet", "Traditional"],
+        origin: "Malaysia",
+        difficulty: "Easy"
+    },
+    {
+        id: 56,
+        name: "Roti Jala",
+        description: "Lacy crepes served with curry, popular in Malay feasts.",
+        category: "snacks",
+        price: "RM 3-8",
+        rating: 4.5,
+        emoji: "🧇",
+        tags: ["Crepe", "Curry", "Festive"],
+        origin: "Malay",
+        difficulty: "Medium"
+    },
+    {
+        id: 57,
+        name: "Kuih Dadar",
+        description: "Pandan crepe filled with grated coconut cooked in palm sugar.",
+        category: "desserts",
+        price: "RM 2-4",
+        rating: 4.4,
+        emoji: "🥥",
+        tags: ["Sweet", "Traditional", "Pandan"],
+        origin: "Malay",
+        difficulty: "Easy"
+    },
+    {
+        id: 58,
+        name: "Mee Kari",
+        description: "Curry noodle soup with tofu puffs, cockles, and bean sprouts.",
+        category: "noodles",
+        price: "RM 6-12",
+        rating: 4.6,
+        emoji: "🍜",
+        tags: ["Curry", "Noodles", "Spicy"],
+        origin: "Malaysia",
+        difficulty: "Medium"
+    },
+    {
+        id: 59,
+        name: "Lontong",
+        description: "Compressed rice cakes in coconut gravy with vegetables and sambal.",
+        category: "rice",
+        price: "RM 6-12",
+        rating: 4.3,
+        emoji: "🍲",
+        tags: ["Vegetarian", "Coconut", "Festive"],
+        origin: "Malay",
+        difficulty: "Medium"
+    },
+    {
+        id: 60,
+        name: "Mee Sup",
+        description: "Clear broth noodle soup with beef, chicken, or lamb, simple and comforting.",
+        category: "noodles",
+        price: "RM 5-10",
+        rating: 4.2,
+        emoji: "🍲",
+        tags: ["Soup", "Light", "Comfort Food"],
+        origin: "Malaysia",
+        difficulty: "Easy"
+    },
+    {
+        id: 61,
+        name: "Curry Puff",
+        description: "Pastry filled with spiced potato, chicken, or sardine, deep fried until golden.",
+        category: "snacks",
+        price: "RM 1-3",
+        rating: 4.5,
+        emoji: "🥟",
+        tags: ["Pastry", "Snack", "Savory"],
+        origin: "Malaysia",
+        difficulty: "Easy"
+    },
+    {
+        id: 62,
+        name: "Mee Bandung",
+        description: "Noodles in thick gravy made from prawn stock, beef, and spices.",
+        category: "noodles",
+        price: "RM 6-12",
+        rating: 4.4,
+        emoji: "🍜",
+        tags: ["Prawn", "Rich", "Johor"],
+        origin: "Johor",
+        difficulty: "Medium"
+    },
+    {
+        id: 63,
+        name: "Kuih Talam",
+        description: "Layered kuih with green pandan custard on top of a white coconut base.",
+        category: "desserts",
+        price: "RM 2-4",
+        rating: 4.3,
+        emoji: "🍮",
+        tags: ["Layered", "Sweet", "Traditional"],
+        origin: "Malay",
+        difficulty: "Medium"
+    },
+    {
+        id: 64,
+        name: "Roti John",
+        description: "Omelette sandwich with meat, onions, and sauces, a popular night market snack.",
+        category: "snacks",
+        price: "RM 5-10",
+        rating: 4.5,
+        emoji: "🥖",
+        tags: ["Sandwich", "Egg", "Street Food"],
+        origin: "Malaysia",
+        difficulty: "Easy"
+    },
+    {
+        id: 65,
+        name: "Nasi Kerabu Biru",
+        description: "Blue rice dish made with butterfly pea flowers, served with fried chicken and herbs.",
+        category: "rice",
+        price: "RM 6-12",
+        rating: 4.6,
+        emoji: "💙",
+        tags: ["Colorful", "Kelantan", "Herbal"],
+        origin: "Kelantan",
+        difficulty: "Medium"
+    },
+    {
+        id: 66,
+        name: "Mee Soto",
+        description: "Noodles in spiced chicken broth, topped with fried shallots and herbs.",
+        category: "noodles",
+        price: "RM 6-12",
+        rating: 4.4,
+        emoji: "🍲",
+        tags: ["Soup", "Chicken", "Malay"],
+        origin: "Johor",
+        difficulty: "Medium"
+    },
+    {
+        id: 67,
+        name: "Kuih Apam",
+        description: "Soft steamed rice cakes, sometimes colorful, served as a snack or dessert.",
+        category: "desserts",
+        price: "RM 2-4",
+        rating: 4.1,
+        emoji: "🧁",
+        tags: ["Soft", "Traditional", "Colorful"],
+        origin: "Malaysia",
+        difficulty: "Easy"
+    },
+    {
+        id: 68,
+        name: "Sup Tulang Merah",
+        description: "Red mutton bone soup, spicy and rich, eaten with bread.",
+        category: "snacks",
+        price: "RM 10-20",
+        rating: 4.5,
+        emoji: "🍖",
+        tags: ["Soup", "Mutton", "Spicy"],
+        origin: "Singapore/Malay",
+        difficulty: "Hard"
+    },
+    {
+        id: 69,
+        name: "Kuih Bahulu",
+        description: "Small sponge cakes baked in flower-shaped moulds, crispy outside and soft inside.",
+        category: "desserts",
+        price: "RM 3-6",
+        rating: 4.4,
+        emoji: "🍪",
+        tags: ["Cake", "Traditional", "Snack"],
+        origin: "Malay",
+        difficulty: "Medium"
+    },
+    {
+        id: 70,
+        name: "Mee Goreng Mamak",
+        description: "Mamak-style stir-fried noodles with egg, tofu, potatoes, and sambal.",
+        category: "noodles",
+        price: "RM 6-12",
+        rating: 4.6,
+        emoji: "🍝",
+        tags: ["Spicy", "Mamak Stall", "Stir-fried"],
+        origin: "Indian Muslim Malaysian",
+        difficulty: "Medium"
+    },
+    {
+        id: 71,
+        name: "Nasi Briyani",
+        description: "Fragrant spiced rice served with chicken, mutton, or fish curry.",
+        category: "rice",
+        price: "RM 10-20",
+        rating: 4.8,
+        emoji: "🍛",
+        tags: ["Indian", "Festive", "Spicy"],
+        origin: "Indian Muslim Malaysian",
+        difficulty: "Medium"
+    },
+    {
+        id: 72,
+        name: "Mee Rebus Johor",
+        description: "Noodles in thick, slightly sweet potato gravy with eggs and tofu, Johor specialty.",
+        category: "noodles",
+        price: "RM 6-12",
+        rating: 4.5,
+        emoji: "🍠",
+        tags: ["Sweet", "Potato", "Johor"],
+        origin: "Johor",
+        difficulty: "Medium"
+    },
+    {
+        id: 73,
+        name: "Kuih Tepung Pelita",
+        description: "Two-layered kuih with coconut milk top and pandan base, steamed in banana leaves.",
+        category: "desserts",
+        price: "RM 2-4",
+        rating: 4.4,
+        emoji: "🍮",
+        tags: ["Pandan", "Traditional", "Coconut"],
+        origin: "Malay",
+        difficulty: "Medium"
+    },
+    {
+        id: 74,
+        name: "Mee Goreng Basah",
+        description: "Wet-style fried noodles with a spicy-sweet gravy, served with seafood or chicken.",
+        category: "noodles",
+        price: "RM 6-12",
+        rating: 4.5,
+        emoji: "🥘",
+        tags: ["Spicy", "Gravy", "Street Food"],
+        origin: "Malaysia",
+        difficulty: "Medium"
+    },
+        {
+        id: 75,
+        name: "Kuih Keria",
+        description: "Sweet potato doughnuts coated with caramelized sugar.",
+        category: "desserts",
+        price: "RM 2-4",
+        rating: 4.3,
+        emoji: "🍩",
+        tags: ["Sweet", "Traditional", "Snack"],
+        origin: "Malay",
+        difficulty: "Easy"
+    },
+    {
+        id: 76,
+        name: "Mee Kari Ipoh",
+        description: "Ipoh-style curry noodles with bean sprouts, chicken, and cockles.",
+        category: "noodles",
+        price: "RM 6-12",
+        rating: 4.6,
+        emoji: "🍜",
+        tags: ["Ipoh", "Spicy", "Soup"],
+        origin: "Perak",
+        difficulty: "Medium"
+    },
+    {
+        id: 77,
+        name: "Kuih Seri Kaya",
+        description: "Steamed pandan custard kuih, sweet and soft.",
+        category: "desserts",
+        price: "RM 2-4",
+        rating: 4.2,
+        emoji: "🥧",
+        tags: ["Sweet", "Pandan", "Traditional"],
+        origin: "Malay",
+        difficulty: "Medium"
+    },
+    {
+        id: 78,
+        name: "Mee Goreng Pattaya",
+        description: "Fried noodles wrapped in a thin omelette parcel.",
+        category: "noodles",
+        price: "RM 6-12",
+        rating: 4.5,
+        emoji: "🍳",
+        tags: ["Egg", "Wrapped", "Street Food"],
+        origin: "Malaysia",
+        difficulty: "Medium"
+    },
+    {
+        id: 79,
+        name: "Kuih Kaswi",
+        description: "Steamed brown sugar cake topped with grated coconut.",
+        category: "desserts",
+        price: "RM 2-4",
+        rating: 4.2,
+        emoji: "🍮",
+        tags: ["Brown Sugar", "Traditional", "Sweet"],
+        origin: "Malay",
+        difficulty: "Easy"
+    },
+    {
+        id: 80,
+        name: "Mee Siam",
+        description: "Rice vermicelli in spicy, tangy gravy with tofu and egg.",
+        category: "noodles",
+        price: "RM 6-12",
+        rating: 4.4,
+        emoji: "🍲",
+        tags: ["Tangy", "Spicy", "Vermicelli"],
+        origin: "Malaysia/Singapore",
+        difficulty: "Medium"
+    },
+    {
+        id: 81,
+        name: "Kuih Akok",
+        description: "Kelantanese egg custard kuih, rich and sweet.",
+        category: "desserts",
+        price: "RM 2-4",
+        rating: 4.3,
+        emoji: "🥮",
+        tags: ["Custard", "Kelantan", "Sweet"],
+        origin: "Kelantan",
+        difficulty: "Medium"
+    },
+    {
+        id: 82,
+        name: "Mee Bandung Muar Special",
+        description: "Muar-style prawn-based noodle dish topped with seafood and egg.",
+        category: "noodles",
+        price: "RM 8-15",
+        rating: 4.6,
+        emoji: "🦐",
+        tags: ["Johor", "Seafood", "Rich"],
+        origin: "Muar, Johor",
+        difficulty: "Medium"
+    },
+    {
+        id: 83,
+        name: "Kuih Bangkit",
+        description: "Coconut cream cookies that melt in your mouth, popular during Chinese New Year.",
+        category: "desserts",
+        price: "RM 5-10",
+        rating: 4.5,
+        emoji: "🍪",
+        tags: ["Cookie", "Festive", "Traditional"],
+        origin: "Malay/Chinese",
+        difficulty: "Medium"
+    },
+    {
+        id: 84,
+        name: "Mee Jawa Special",
+        description: "Richer version of mee jawa with prawns, squid, and extra toppings.",
+        category: "noodles",
+        price: "RM 7-14",
+        rating: 4.5,
+        emoji: "🍤",
+        tags: ["Seafood", "Spicy", "Special"],
+        origin: "Malaysia",
+        difficulty: "Medium"
+    },
+    {
+        id: 85,
+        name: "Kuih Lompang",
+        description: "Steamed kuih made of rice flour, soft and chewy, topped with coconut.",
+        category: "desserts",
+        price: "RM 2-4",
+        rating: 4.1,
+        emoji: "🥥",
+        tags: ["Traditional", "Soft", "Sweet"],
+        origin: "Malay",
+        difficulty: "Easy"
+    },
+    {
+        id: 86,
+        name: "Mee Hoon Siam",
+        description: "Fried vermicelli noodles flavored with sambal and lime, tangy and spicy.",
+        category: "noodles",
+        price: "RM 5-10",
+        rating: 4.3,
+        emoji: "🍋",
+        tags: ["Tangy", "Spicy", "Vermicelli"],
+        origin: "Malaysia",
+        difficulty: "Medium"
+    },
+    {
+        id: 87,
+        name: "Kuih Peria",
+        description: "Bitter gourd-shaped kuih filled with sweet coconut, unique traditional snack.",
+        category: "desserts",
+        price: "RM 2-4",
+        rating: 4.0,
+        emoji: "🌰",
+        tags: ["Traditional", "Unique", "Sweet"],
+        origin: "Malay",
+        difficulty: "Medium"
+    },
+    {
+        id: 88,
+        name: "Mee Goreng Kampung",
+        description: "Village-style fried noodles with anchovies, egg, and spicy sambal.",
+        category: "noodles",
+        price: "RM 5-10",
+        rating: 4.4,
+        emoji: "🌶️",
+        tags: ["Spicy", "Anchovies", "Rustic"],
+        origin: "Malaysia",
+        difficulty: "Easy"
+    },
+    {
+        id: 89,
+        name: "Kuih Loyang",
+        description: "Crispy honeycomb cookies deep-fried until golden, festive snack.",
+        category: "desserts",
+        price: "RM 3-6",
+        rating: 4.3,
+        emoji: "🍯",
+        tags: ["Crispy", "Festive", "Sweet"],
+        origin: "Malay",
+        difficulty: "Medium"
+    },
+    {
+        id: 90,
+        name: "Mee Hoon Sup",
+        description: "Clear soup with vermicelli noodles, chicken, and vegetables.",
+        category: "noodles",
+        price: "RM 5-10",
+        rating: 4.2,
+        emoji: "🥗",
+        tags: ["Light", "Soup", "Comfort Food"],
+        origin: "Malaysia",
+        difficulty: "Easy"
+    },
+    {
+        id: 91,
+        name: "Kuih Cincin",
+        description: "Ring-shaped crunchy kuih from Sabah, made with rice flour and palm sugar.",
+        category: "desserts",
+        price: "RM 2-5",
+        rating: 4.2,
+        emoji: "⭕",
+        tags: ["Sabah", "Crunchy", "Sweet"],
+        origin: "Sabah",
+        difficulty: "Medium"
+    },
+    {
+        id: 92,
+        name: "Mee Goreng Sotong",
+        description: "Fried noodles with squid, sambal, and vegetables.",
+        category: "noodles",
+        price: "RM 6-12",
+        rating: 4.4,
+        emoji: "🦑",
+        tags: ["Seafood", "Spicy", "Street Food"],
+        origin: "Malaysia",
+        difficulty: "Medium"
+    },
+    {
+        id: 93,
+        name: "Kuih Karas",
+        description: "Thin, net-like crispy kuih from Kedah, sweet and crunchy.",
+        category: "desserts",
+        price: "RM 2-5",
+        rating: 4.2,
+        emoji: "🕸️",
+        tags: ["Crispy", "Kedah", "Traditional"],
+        origin: "Kedah",
+        difficulty: "Medium"
+    },
+    {
+        id: 94,
+        name: "Mee Goreng Kerang",
+        description: "Fried noodles with cockles, bean sprouts, and spicy sambal.",
+        category: "noodles",
+        price: "RM 6-12",
+        rating: 4.5,
+        emoji: "🐚",
+        tags: ["Seafood", "Spicy", "Street Food"],
+        origin: "Malaysia",
+        difficulty: "Medium"
+    },
+        {
+        id: 95,
+        name: "Kuih Penjaram",
+        description: "Traditional Sarawak kuih, soft in the middle with crispy edges, made from rice flour and palm sugar.",
+        category: "desserts",
+        price: "RM 2-5",
+        rating: 4.3,
+        emoji: "🥯",
+        tags: ["Sarawak", "Traditional", "Sweet"],
+        origin: "Sarawak",
+        difficulty: "Medium"
+    },
+    {
+        id: 96,
+        name: "Mee Kolok Special",
+        description: "Sarawak dry noodles served with char siu, minced meat, and vegetables.",
+        category: "noodles",
+        price: "RM 6-12",
+        rating: 4.6,
+        emoji: "🍜",
+        tags: ["Sarawak", "Dry Noodles", "Special"],
+        origin: "Sarawak",
+        difficulty: "Medium"
+    },
+    {
+        id: 97,
+        name: "Kuih Jala",
+        description: "Crispy net-like kuih from Sabah, sweet and crunchy snack for festivals.",
+        category: "desserts",
+        price: "RM 2-5",
+        rating: 4.2,
+        emoji: "🕸️",
+        tags: ["Sabah", "Crunchy", "Festive"],
+        origin: "Sabah",
+        difficulty: "Medium"
+    },
+    {
+        id: 98,
+        name: "Mee Kolok Merah",
+        description: "Unique Sarawak noodles tossed in a red sauce, slightly sweet and savory.",
+        category: "noodles",
+        price: "RM 6-12",
+        rating: 4.4,
+        emoji: "🍝",
+        tags: ["Sarawak", "Unique", "Colorful"],
+        origin: "Sarawak",
+        difficulty: "Medium"
+    },
+    {
+        id: 99,
+        name: "Kuih Celorot",
+        description: "Cone-shaped kuih wrapped in coconut leaves, filled with sweet rice flour custard.",
+        category: "desserts",
+        price: "RM 2-4",
+        rating: 4.3,
+        emoji: "🌿",
+        tags: ["Kelantan", "Traditional", "Sweet"],
+        origin: "Kelantan",
+        difficulty: "Medium"
+    },
+    {
+        id: 100,
+        name: "Mee Kolok Hitam",
+        description: "Sarawak noodles tossed in a dark soy-based sauce with minced meat and greens.",
+        category: "noodles",
+        price: "RM 6-12",
+        rating: 4.5,
+        emoji: "🍲",
+        tags: ["Sarawak", "Soy Sauce", "Noodles"],
+        origin: "Sarawak",
+        difficulty: "Medium"
+    }
         ];
 
         // Initialize page
@@ -1249,6 +2314,57 @@
             showNotification(`Exported ${favoriteFoods.length} favorite foods!`, 'success');
             trackUserInteraction('export_favorites', { count: favoriteFoods.length });
         }
+
+
+        (function () {
+  const $input = $('#searchInput');
+  const $clear = $('#clearSearchBtn');
+
+  // Debounce helper to avoid spamming searches while typing
+  function debounce(fn, wait) {
+    let t;
+    return function(...args) {
+      clearTimeout(t);
+      t = setTimeout(() => fn.apply(this, args), wait);
+    };
+  }
+
+  // Perform live search
+  const runSearch = debounce(function () {
+    const term = ($input.val() || '').trim();
+    if (term.length) {
+      performSearch(term); // already implemented in your file
+    } else {
+      // Empty → restore current filter view
+      filterFoods(currentFilter);
+      $('#searchResults').hide();
+    }
+    // Track interaction
+    trackUserInteraction('search_live', { term });
+  }, 250);
+
+  // Input listeners
+  $input.on('input', runSearch);
+
+  // Clear button
+  $clear.on('click', function () {
+    $input.val('');
+    filterFoods(currentFilter);
+    $('#searchResults').hide();
+    trackUserInteraction('search_cleared', {});
+    $input.trigger('blur'); // optional
+  });
+
+  // Keyboard shortcut: Ctrl/Cmd+K focuses search
+  document.addEventListener('keydown', function (e) {
+    const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+    if ((isMac && e.metaKey && e.key.toLowerCase() === 'k') ||
+        (!isMac && e.ctrlKey && e.key.toLowerCase() === 'k')) {
+      e.preventDefault();
+      $input.focus().select();
+    }
+  });
+})();
 
         // Keyboard shortcuts
         document.addEventListener('keydown', function (e) {
