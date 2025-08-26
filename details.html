@@ -63,16 +63,62 @@
             transform: translateY(-5px);
         }
 
+        /* Footer - Same as index.html */
         .footer {
-            background: #2c3e50;
+            background: var(--dark-color);
             color: white;
-            padding: 30px 0;
-            margin-top: 60px;
+            padding: 50px 0 30px;
         }
 
-        .footer a {
-            color: #f39c12;
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #bdc3c7;
             text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+                .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #34495e;
+            padding-top: 20px;
+            text-align: center;
+            color: #bdc3c7;
         }
     </style>
 </head>
@@ -163,11 +209,49 @@
             </div>
         </div>
     </section>
-
     <!-- Footer -->
-    <footer class="footer text-center">
-        <p>&copy; 2025 Street Food Explorer | All Rights Reserved</p>
-        <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4><i class="fas fa-utensils"></i> Street Food Explorer</h4>
+                    <p>Your ultimate guide to discovering the world's most amazing street foods. From local Malaysian
+                        favorites to global culinary treasures.</p>
+                    <div class="social-links mt-3">
+                        <a href="https://web.facebook.com/StreetFoodExplorer9672/" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="https://x.com/Street_Food9672" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/street_food_explorer9672/" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="malaysia.html">Malaysian Street Food</a></li>
+                        <li><a href="global.html">Global Street Food</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="gallery.html">Photo Gallery</a></li>
+                        <li><a href="map.html">Food Map</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#" onclick="showPrivacyPolicy()">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> streetfoodexplorer08@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> +60 16-510-9672</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Kuala Lumpur, Malaysia</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Street Food Explorer. All rights reserved. | Developed by UCCD2323 Group Project</p>
+            </div>
+        </div>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>

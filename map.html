@@ -74,16 +74,61 @@
       margin-top: 20px;
     }
 
-    .footer {
-      background: #2c3e50;
-      color: white;
-      padding: 30px 0;
-      margin-top: 40px;
+        /* Footer */
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 50px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 20px;
+
+            color: var(--secondary-color);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #34495e;
+            padding-top: 20px;
+            text-align: center;
+            color: #bdc3c7;
+        }
+
+    .social-links a {
+        color: white;
+        font-size: 1.5rem;
+        margin-right: 15px;
+        transition: all 0.3s ease;
     }
 
-    .footer a {
-      color: #f39c12;
-      text-decoration: none;
+    .social-links a:hover {
+        color: var(--secondary-color);
+        transform: translateY(-2px);
     }
 
     .location-info {
@@ -185,13 +230,109 @@
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="footer text-center">
-    <div class="container">
-      <p>&copy; 2025 Street Food Explorer | All Rights Reserved</p>
-      <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4><i class="fas fa-utensils"></i> Street Food Explorer</h4>
+                    <p>Your ultimate guide to discovering the world's most amazing street foods. From local Malaysian
+                        favorites to global culinary treasures.</p>
+                    <div class="social-links mt-3">
+                        <a href="https://web.facebook.com/StreetFoodExplorer9672/" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="https://x.com/Street_Food9672" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/street_food_explorer9672/" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="malaysia.html">Malaysian Street Food</a></li>
+                        <li><a href="global.html">Global Street Food</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="gallery.html">Photo Gallery</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a></li>
+                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> streetfoodexplorer08@gmail.com</p>
+                    <p><i class="fas fa-phone"></i> +60 16-510-9672</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Kuala Lumpur, Malaysia</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Street Food Explorer. All rights reserved. | Developed by UCCD2323 Group Project</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Privacy Policy Modal -->
+    <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="privacyModalLabel">Privacy Policy</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Data Collection</h6>
+                    <p>We collect information to provide better services to our users. This includes search preferences,
+                        favorite foods, and location data when you use our map features.</p>
+
+                    <h6>Use of Cookies</h6>
+                    <p>We use cookies and local storage to enhance your browsing experience, remember your preferences,
+                        and provide personalized content.</p>
+
+                    <h6>Data Security</h6>
+                    <p>We implement appropriate security measures to protect your personal information against
+                        unauthorized access, alteration, disclosure, or destruction.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </footer>
+
+    <!-- Terms Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="termsModalLabel">Terms of Service</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Website Usage</h6>
+                    <p>By using Street Food Explorer, you agree to use the site responsibly and not engage in any
+                        activities that could harm the site or other users.</p>
+
+                    <h6>Content Guidelines</h6>
+                    <p>All user-generated content must be respectful and relevant to street food culture. We reserve the
+                        right to remove inappropriate content.</p>
+
+                    <h6>Liability</h6>
+                    <p>Street Food Explorer provides information for educational and entertainment purposes. We are not
+                        responsible for any food-related incidents or experiences.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
