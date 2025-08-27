@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Global Street Food - Street Food Explorer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
@@ -791,6 +792,40 @@
             $('#exportFavoritesBtn').on('click', exportMyGlobalFavorites);
             // Search params
             setTimeout(checkForSearchParams, 900);
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const foodId = urlParams.get("id");
+
+            if (foodId) {
+                const food = foodsData.find(f => f.id == foodId);
+                if (food) {
+                    showFoodModal(food);
+
+                    setTimeout(() => {
+                        const modalEl = document.getElementById("foodModal");
+                        if (modalEl && bootstrap?.Modal) {
+                            const modal = new bootstrap.Modal(modalEl);
+
+                            // Clean URL immediately
+                            if (window.history.replaceState) {
+                                const cleanUrl = window.location.pathname;
+                                window.history.replaceState({}, document.title, cleanUrl);
+                            }
+
+                            // ✅ When modal closes, remove any leftover backdrop
+                            modalEl.addEventListener("hidden.bs.modal", () => {
+                                document.querySelectorAll('.modal-backdrop')
+                                    .forEach(el => el.remove());
+                                document.body.classList.remove("modal-open");
+                                document.body.style.overflow = ""; // re-enable scrolling
+                                console.log("Modal closed → backdrop removed → page is clickable again.");
+                            });
+
+                            modal.show();
+                        }
+                    }, 200);
+                }
+            }
         });
 
         function initializeGlobalPage() {
@@ -1284,5 +1319,6 @@
         console.log('🌍 Global Street Food Page Loaded!');
     </script>
 </body>
+
 
 </html>
