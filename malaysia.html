@@ -1504,6 +1504,25 @@
             setTimeout(loadMalaysianFoods, 200); // Show loading animation
             setupFilterButtons();
             startCounterAnimations();
+
+            const urlParams = new URLSearchParams(window.location.search);
+    const foodId = urlParams.get("id");
+
+    if (foodId) {
+        // Wait until foods are loaded
+        const tryShowModal = () => {
+            if (malaysianFoods.length > 0) {
+                const food = foodsData.find(f => f.id == foodId);
+                if (food) {
+                    showFoodModal(food); 
+                }
+            } else {
+                
+                setTimeout(tryShowModal, 300);
+            }
+        };
+        tryShowModal();
+    }
         });
         
 
@@ -2333,7 +2352,19 @@ function generateWhereToFind(food) {
         console.log(`📊 ${foodsData.length} Malaysian foods available`);
         console.log('❤️ Favorites system active');
         console.log('🔍 Filter and search functionality ready');
+
+         window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            if (urlParams.has("id")) {
+                const id = urlParams.get("id");
+
+                // Call your function
+                viewFoodDetails(id);
+            }
+        };
     </script>
 </body>
+
 
 </html>
