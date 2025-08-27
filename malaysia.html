@@ -419,6 +419,7 @@
 </head>
 
 <body>
+
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
@@ -457,11 +458,20 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="malaysia-hero">
-        <div class="container">
+   <section class="malaysia-hero">
+        <div class="hero-background-layer"></div> <div class="container position-relative" style="z-index: 2;">
             <div class="animate__animated animate__fadeInDown">
                 <h1>Malaysian Street Food</h1>
                 <p class="lead">Discover the incredible flavors of Malaysia's diverse culinary heritage</p>
+            </div>
+            
+            <div id="featuredDish" class="mt-4 p-3 rounded animate__animated animate__fadeInUp" style="animation-delay: 0.5s; background: rgba(0,0,0,0.3); display: none; border: 1px solid rgba(255, 255, 255, 0.2);">
+                </div>
+            
+            <div class="mt-4 animate__animated animate__fadeInUp" style="animation-delay: 0.8s;">
+                <a href="#foodContainer" class="btn btn-lg btn-custom-hero">
+                    <i class="fas fa-arrow-down me-2"></i> Explore Dishes
+                </a>
             </div>
         </div>
     </section>
@@ -1486,6 +1496,8 @@
 
         // Initialize page
         $(document).ready(function () {
+            displayFeaturedDish();
+            setupHeroInteractions();
             initializeMalaysiaPage();
             loadFavorites();
             setupFilterToggle();
@@ -1493,6 +1505,73 @@
             setupFilterButtons();
             startCounterAnimations();
         });
+        
+
+        function displayFeaturedDish() {
+            if (foodsData.length === 0) return;
+
+            // Select a random food item from the main data array
+            const featured = foodsData[Math.floor(Math.random() * foodsData.length)];
+            const container = $('#featuredDish');
+
+            const html = `
+                <a href="#" data-featured-id="${featured.id}" id="featuredLink" title="Click to find ${featured.name} below!">
+                    <div class="d-flex align-items-center">
+                        <span class="food-emoji-featured">${featured.emoji}</span>
+                        <div>
+                            <strong>Featured Dish of the Moment:</strong> ${featured.name}
+                            <br>
+                            <small>${featured.tags.slice(0, 2).join(' • ')}</small>
+                        </div>
+                    </div>
+                </a>
+            `;
+            container.html(html).css('display', 'inline-block');
+
+            // Add click listener for smooth scroll and highlight
+            $('#featuredLink').on('click', function(e) {
+                e.preventDefault();
+                const foodId = $(this).data('featured-id');
+                const foodCardWrapper = $(`.food-item-wrapper[data-category="${normalizeCategory(featured.category)}"]`);
+                const foodCard = foodCardWrapper.find(`.view-details[data-food-id="${foodId}"]`).closest('.food-item');
+                
+                if (foodCard.length) {
+                    $('html, body').animate({
+                        scrollTop: foodCard.offset().top - 100 // Adjust for fixed navbar
+                    }, 800, function() {
+                        // Add a temporary highlight class
+                        foodCard.addClass('highlight-food');
+                        setTimeout(() => {
+                            foodCard.removeClass('highlight-food');
+                        }, 4000); // Remove highlight after 4 seconds
+                    });
+                } else {
+                    showNotification('Scroll down to find more dishes!', 'info');
+                }
+            });
+        }
+
+        function setupHeroInteractions() {
+            const hero = document.querySelector('.malaysia-hero');
+            const background = document.querySelector('.hero-background-layer');
+            if (!hero || !background) return;
+
+            hero.addEventListener('mousemove', (e) => {
+                const { clientX, clientY } = e;
+                const { offsetWidth, offsetHeight } = hero;
+                // Calculate movement intensity
+                const x = (clientX / offsetWidth - 0.5) * 20; // Lowered intensity for subtlety
+                const y = (clientY / offsetHeight - 0.5) * 20;
+
+                // Apply a 3D transformation
+                background.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg) scale(1.05)`;
+            });
+
+            // Reset when the mouse leaves the hero section
+            hero.addEventListener('mouseleave', () => {
+                background.style.transform = 'perspective(1000px) rotateY(0) rotateX(0) scale(1.05)';
+            });
+        }
 
         function initializeMalaysiaPage() {
             // Track page visit

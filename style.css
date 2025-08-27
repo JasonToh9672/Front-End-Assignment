@@ -43,3 +43,86 @@
             background-color: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
         }
+
+        
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* New Interactive Hero Styles For Malaysia.html*/
+
+        .hero-background-layer {
+            position: absolute;
+            top: -25%;
+            left: -25%;
+            width: 150%;
+            height: 150%;
+            /* New animated emoji background */
+            background-color: #cda412;
+            background-image: linear-gradient(rgba(218, 97, 5, 0.75), rgba(198, 91, 9, 0.75)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160"><style>text{font-size:32px;opacity:0.2;}</style><text x="15" y="45">🍚</text><text x="85" y="45">🍜</text><text x="50" y="95">🍢</text><text x="120" y="95">🍧</text><text x="15" y="145">🥞</text><text x="85" y="145">🥤</text></svg>');
+            z-index: 1;
+            transition: transform 0.2s ease-out;
+            animation: move-emojis 80s linear infinite;
+        }
+
+        @keyframes move-emojis {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 320px 320px;
+            }
+        }
+
+        #featuredDish {
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #featuredDish:hover {
+            background: rgba(0,0,0,0.5);
+            transform: scale(1.05);
+        }
+        
+        #featuredDish a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #featuredDish .food-emoji-featured {
+            font-size: 2rem;
+            margin-right: 15px;
+        }
+
+        .btn-custom-hero {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            border: 2px solid white;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-custom-hero:hover {
+            color: #ff6b35;
+            background: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
