@@ -545,6 +545,7 @@
         </div>
     </section>
 
+    <!-- Modal -->
     <div id="modalContainer"></div>
 
     <!-- Stats -->
@@ -809,7 +810,7 @@
             if (prefs.lastGlobalCountry) currentCountry = prefs.lastGlobalCountry;
 
             console.log('Global page initialized');
-        }
+        };
 
         function loadFavorites() {
             favoritesGlobal = JSON.parse(localStorage.getItem('streetFood_favorites_global') || '[]');
@@ -948,6 +949,7 @@
         function createFoodCard(food) {
             const isFav = favoritesGlobal.includes(food.id);
             const favClass = isFav ? 'fas text-danger' : 'far';
+
             return $(`
         <div class="col-lg-4 col-md-6 food-item-wrapper" data-category="${food.category}" data-country="${food.country}">
           <div class="food-item animate__animated animate__fadeInUp">
@@ -983,7 +985,7 @@
           </div>
         </div>
       `);
-        }
+    }
 
         function generateStars(r) { 
             const full = Math.floor(r); const half = r % 1 !== 0; let s = ''; 
@@ -1022,6 +1024,9 @@
             // track
             trackUserInteraction('view_details_global', { foodId: id, foodName: food.name });
         }
+
+        // Store foods data in localStorage for related dishes
+        localStorage.setItem("foodsData", JSON.stringify(foodsData))
 
         function showFoodModal(food) {
             const isFav = favoritesGlobal.includes(food.id);
