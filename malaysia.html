@@ -1501,28 +1501,28 @@
             initializeMalaysiaPage();
             loadFavorites();
             setupFilterToggle();
-            setTimeout(loadMalaysianFoods, 200); // Show loading animation
+            setTimeout(loadMalaysianFoods, 1500); // Show loading animation
             setupFilterButtons();
             startCounterAnimations();
 
             const urlParams = new URLSearchParams(window.location.search);
-    const foodId = urlParams.get("id");
+            const foodId = urlParams.get("id");
 
-    if (foodId) {
-        // Wait until foods are loaded
-        const tryShowModal = () => {
-            if (malaysianFoods.length > 0) {
-                const food = foodsData.find(f => f.id == foodId);
-                if (food) {
-                    showFoodModal(food); 
-                }
-            } else {
-                
-                setTimeout(tryShowModal, 300);
+            if (foodId) {
+                // Wait until foods are loaded
+                const tryShowModal = () => {
+                    if (malaysianFoods.length > 0) {
+                        const food = foodsData.find(f => f.id == foodId);
+                        if (food) {
+                            showFoodModal(food); 
+                        }
+                    } else {
+                        
+                        setTimeout(tryShowModal, 300);
+                    }
+                };
+                tryShowModal();
             }
-        };
-        tryShowModal();
-    }
         });
         
 
@@ -2368,3 +2368,4 @@ function generateWhereToFind(food) {
 
 
 </html>
+
