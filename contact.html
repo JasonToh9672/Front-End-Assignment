@@ -271,8 +271,12 @@
                 </div>
             </div>
             <div class="col-lg-6">
+                <h4 class="mb-3 text-center" style="cursor: pointer; color: #070707;">
+                  Visit Us At
+                </h4>
                 <div id="contactMap"></div>
             </div>
+        </div>
         </div>
 
         <div class="text-center mt-5">
@@ -338,9 +342,8 @@
     <script>
         $(document).ready(function () {
             // --- Map Initialization ---
-            // NEW: Initialize Leaflet map
             // Coordinates for Kuala Lumpur, Malaysia
-            const mapCoordinates = [3.1390, 101.6869]; 
+            const mapCoordinates = [3.110538845322836, 101.66532100609466]; 
             const map = L.map('contactMap').setView(mapCoordinates, 12); // Set initial zoom level
 
             // Add the tile layer from OpenStreetMap
@@ -349,9 +352,20 @@
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }).addTo(map);
 
-            // Add a marker to the map
+            // Create the Google Maps URL
+            const googleMapsUrl = `https://www.google.com/maps?q=${mapCoordinates[0]},${mapCoordinates[1]}`;
+            
+            // 1. Update the marker's popup to be a clickable link
+            const popupContent = `<a href="${googleMapsUrl}" target="_blank" style="text-decoration: none; color: inherit;">
+                                    <b>Street Food Explorer HQ</b><br>Click to view on Google Maps
+                                  </a>`;
             const marker = L.marker(mapCoordinates).addTo(map);
-            marker.bindPopup("<b>Street Food Explorer HQ</b><br>Kuala Lumpur").openPopup();
+            marker.bindPopup(popupContent).openPopup();
+
+            // 2. Add a click event to the "Visit Us At" title
+            $("#visitUsLink").on("click", function() {
+                window.open(googleMapsUrl, '_blank');
+            });
 
 
             // --- Form Functionality ---
