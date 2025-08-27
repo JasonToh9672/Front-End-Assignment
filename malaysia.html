@@ -44,8 +44,20 @@
             padding: 30px 0;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: sticky;
-            top: 76px;
+            top: 65px;
             z-index: 100;
+        }
+
+        #toggleFiltersBtn {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            border: none;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+        #toggleFiltersBtn:hover {
+            opacity: 0.9;
         }
 
         .filter-btn {
@@ -394,22 +406,14 @@
         box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         font-size: 16px;
         z-index: 2000;
-        animation: fadeIn 0.5s, fadeOut 0.5s 2.5s; /* smooth in/out */
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.5s, transform 0.5s;
         }
-
-        @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-20px); }
-        to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeOut {
-        from { opacity: 1; transform: translateY(0); }
-        to { opacity: 0; transform: translateY(-20px); }
-        }
-
 
         .notification.show {
-            transform: translateX(0);
+            opacity: 1;
+            transform: translateX(0)
         }
     </style>
 </head>
@@ -465,32 +469,39 @@
     <!-- Filter Section -->
     <section class="filter-section">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-3">
-                    <h5 class="mb-md-0 mb-3">Filter by Search:</h5>
-                    <br>
-                    <h5 class="mb-md-0 mb-3">Filter by Category:</h5>
-                </div>
-                <div class="col-md-9">
-                    <div id="filterButtons" class="text-md-end">
-                        <div class="mt-3 mt-md-0 d-flex gap-2 justify-content-md-end align-items-center">
-                        <label for="searchInput" class="visually-hidden">Search Malaysian foods</label>
-                        <input id="searchInput" type="search" class="form-control"
-                            placeholder="Search foods, tags, origin… (e.g., 'Penang', 'spicy', 'noodles')"
-                            style="max-width: 380px;">
-                            <button id="clearSearchBtn" class="btn btn-outline-secondary" type="button" title="Clear search">
-                             <i class="fas fa-times"></i>
-                              </button>
-                            </div>
-                        <button class="filter-btn active" data-category="all">All Foods</button>
-                        <button class="filter-btn" data-category="rice">Rice Dishes</button>
-                        <button class="filter-btn" data-category="noodles">Noodles</button>
-                        <button class="filter-btn" data-category="snacks">Snacks</button>
-                        <button class="filter-btn" data-category="desserts">Desserts</button>
-                        <button class="filter-btn" data-category="drinks">Drinks</button>
+
+            <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 0.5rem;">
+                <button class="btn btn-sm btn-outline-secondary ms auto" id="toggleFiltersBtn" data-bs-toggle="collapse" data-bs-target="#filtersContent">Hide Filters</button>
+            </div>
+
+            <div class="collapse show" id="filtersContent">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <h5 class="mb-md-0 mb-3">Filter by Search:</h5>
+                        <br>
+                        <h5 class="mb-md-0 mb-3">Filter by Category:</h5>
+                    </div>
+                    <div class="col-md-9">
+                        <div id="filterButtons" class="text-md-end">
+                            <div class="mt-3 mt-md-0 d-flex gap-2 justify-content-md-end align-items-center">
+                            <label for="searchInput" class="visually-hidden">Search Malaysian foods</label>
+                            <input id="searchInput" type="search" class="form-control"
+                                placeholder="Search foods, tags, origin… (e.g., 'Penang', 'spicy', 'noodles')"
+                                style="max-width: 380px;">
+                                <button id="clearSearchBtn" class="btn btn-outline-secondary" type="button" title="Clear search">
+                                <i class="fas fa-times"></i>
+                                </button>
+                                </div>
+                            <button class="filter-btn active" data-category="all">All Foods</button>
+                            <button class="filter-btn" data-category="rice">Rice Dishes</button>
+                            <button class="filter-btn" data-category="noodles">Noodles</button>
+                            <button class="filter-btn" data-category="snacks">Snacks</button>
+                            <button class="filter-btn" data-category="desserts">Desserts</button>
+                            <button class="filter-btn" data-category="drinks">Drinks</button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </div>    
         </div>
     </section>
 
@@ -511,6 +522,9 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal -->
+    <div id="modalContainer"></div>
 
     <!-- Stats Section -->
     <section class="stats-section">
@@ -771,7 +785,7 @@
                 rating: 4.5,
                 emoji: "🍞",
                 tags: ["Breakfast", "Sweet", "Traditional"],
-                origin: "Malaysia/Singapore",
+                origin: "Malaysia",
                 difficulty: "Easy",
                 imageUrl: "images/malaysia/kaya toast.jpg"
             },
@@ -784,7 +798,7 @@
                 rating: 4.9,
                 emoji: "🥘",
                 tags: ["Beef", "Curry", "Rich"],
-                origin: "Minangkabau/Malaysia",
+                origin: "Malaysia",
                 difficulty: "Hard",
                 imageUrl: "images/malaysia/rendang.jpg"
             },
@@ -810,7 +824,7 @@
                 rating: 4.5,
                 emoji: "🐟",
                 tags: ["Grilled", "Spicy", "Traditional"],
-                origin: "Muar, Johor",
+                origin: "Johor",
                 difficulty: "Medium",
                 imageUrl: "images/malaysia/otak otak.jpg"
             },
@@ -1032,7 +1046,7 @@
                 rating: 4.5,
                 emoji: "🍝",
                 tags: ["Tangy", "Spicy", "Noodles"],
-                origin: "Malaysia/Singapore",
+                origin: "Malaysia",
                 difficulty: "Medium",
                 imageUrl: "images/malaysia/mee siam.avif"
             },
@@ -1136,7 +1150,7 @@
                 rating: 4.5,
                 emoji: "🍝",
                 tags: ["Gravy", "Tomato", "Rich"],
-                origin: "Muar, Johor",
+                origin: "Johor",
                 difficulty: "Medium",
                 imageUrl: "images/malaysia/mee bandung.jpg"
             },
@@ -1357,7 +1371,7 @@
                 rating: 4.6,
                 emoji: "🍗",
                 tags: ["Spicy", "Chicken", "Indonesian"],
-                origin: "Malaysia/Indonesia",
+                origin: "Malaysia",
                 difficulty: "Medium",
                 imageUrl: "images/malaysia/nasi ayam penyet.jpeg"
             },
@@ -1474,6 +1488,7 @@
         $(document).ready(function () {
             initializeMalaysiaPage();
             loadFavorites();
+            setupFilterToggle();
             setTimeout(loadMalaysianFoods, 1500); // Show loading animation
             setupFilterButtons();
             startCounterAnimations();
@@ -1514,7 +1529,29 @@
             // Hide loading spinner
             $('#loadingSpinner').fadeOut();
 
+            const preferences = JSON.parse(localStorage.getItem('streetFood_preferences') || '{}');
+            const lastFilter = preferences.lastMalaysianFilter || 'all';
+
+            // Find the correct filter button and trigger a click to apply the filter.
+            const $btn = $(`.filter-btn[data-category="${lastFilter}"]`);
+            if ($btn.length) {
+                $btn.trigger('click');
+            } else {
+                // Fallback to the 'All Foods' button if the saved filter is not found
+                $(`.filter-btn[data-category="all"]`).trigger('click');
+            }
+
             console.log('Malaysian foods loaded:', malaysianFoods.length);
+
+            // Restore scroll position after content has been loaded and displayed
+            const scrollPosition = sessionStorage.getItem('scrollPosition');
+            if (scrollPosition) {
+                // We use a small timeout to ensure the browser has finished rendering the new content
+                setTimeout(function() {
+                    window.scrollTo(0, parseInt(scrollPosition, 10));
+                    sessionStorage.removeItem('scrollPosition'); // Clean up for the next navigation
+                }, 100); 
+            }
         }
 
         function displayFoods(foods) {
@@ -1555,6 +1592,32 @@
             }, 100);
         }
 
+         function setupFilterToggle() {
+            const toggleBtn = document.getElementById('toggleFiltersBtn');
+            const filtersContent = document.getElementById('filtersContent');
+
+            // 1. Restore the filters' visibility state when the page loads
+            if (localStorage.getItem('filtersHidden') === 'true') {
+                filtersContent.classList.remove('show');
+                toggleBtn.textContent = 'Show Filters';
+            } else {
+                filtersContent.classList.add('show');
+                toggleBtn.textContent = 'Hide Filters';
+            }
+
+            // 2. Listen for Bootstrap's 'hide' event to save the state
+            filtersContent.addEventListener('hide.bs.collapse', () => {
+                toggleBtn.textContent = 'Show Filters';
+                localStorage.setItem('filtersHidden', 'true');
+            });
+
+            // 3. Listen for Bootstrap's 'show' event to save the state
+            filtersContent.addEventListener('show.bs.collapse', () => {
+                toggleBtn.textContent = 'Hide Filters';
+                localStorage.setItem('filtersHidden', 'false');
+            });
+        }
+
         function createFoodCard(food) {
 
             const isFavorite = favoritesList.includes(food.id);
@@ -1570,7 +1633,7 @@
                                 : `<div class="food-emoji">${food.emoji || ""}</div>`
                             }
                             <div class="food-badge">${food.origin}</div>
-                            <button class="favorite-btn" data-food-id="${food.id}">
+                            <button type="button" class="favorite-btn" data-food-id="${food.id}">
                                 <i class="${favoriteClass} fa-heart"></i>
                             </button>
                         </div>
@@ -1623,7 +1686,7 @@
             return stars;
         }
 
-        // 1) Helper: normalize category labels consistently
+
         function normalizeCategory(cat) {
             if (!cat) return 'other';
             const c = String(cat).trim().toLowerCase();
@@ -1637,7 +1700,7 @@
             return c;
         }
 
-        // 2) UPDATED: event delegation + safe preference restore
+   
         function setupFilterButtons() {
             // Delegate to the container so it still works if buttons are created later
             $('#filterButtons')
@@ -1648,9 +1711,19 @@
                 // Update active button
                 $('.filter-btn').removeClass('active');
                 $(this).addClass('active');
+                currentFilter = category;
 
-                // Filter foods
-                filterFoods(category);
+                const searchTerm = $('#searchInput').val().trim();
+
+                if (searchTerm) {
+                    // If a keyword exists, re-run the search.
+                    // The performSearch function will automatically use the updated 'currentFilter'.
+                    performSearch(searchTerm);
+                } else {
+                    // If the search box is empty, just filter by the new category as before.
+                    filterFoods(category);
+                }
+
 
                 // Store filter preference
                 const preferences = JSON.parse(localStorage.getItem('streetFood_preferences') || '{}');
@@ -1670,7 +1743,7 @@
             ($btn.length ? $btn : $(`.filter-btn[data-category="all"]`)).first().trigger('click');
             }
 
-            // 3) UPDATED: normalize both the requested category and each food’s category
+
             function filterFoods(category) {
             currentFilter = category;
 
@@ -1689,22 +1762,20 @@
             $('#searchResults').show();
             }
 
-        function toggleFavorite(foodId) {
-            const index = favoritesList.indexOf(foodId);
-
-            if (index > -1) {
-                favoritesList.splice(index, 1);
-                showNotification('Removed from favorites!', 'info');
+        function toggleFavorite(id) {
+            const idx = favoritesList.indexOf(id);
+            if (idx > -1) {
+                favoritesList.splice(idx, 1);
+                showNotification('Removed from favorites', 'info');
+                $(`.favorite-btn[data-food-id=${id}] i`).removeClass('fas text-danger').addClass('far');
             } else {
-                favoritesList.push(foodId);
-                showNotification('Added to favorites!', 'success');
+                favoritesList.push(id);
+                showNotification('Added to favorites', 'success');
+                $(`.favorite-btn[data-food-id=${id}] i`).removeClass('far').addClass('fas text-danger');
             }
 
             // Update localStorage
             localStorage.setItem('streetFood_favorites', JSON.stringify(favoritesList));
-
-            // Update display
-            displayFoods(currentFilter === 'all' ? malaysianFoods : malaysianFoods.filter(food => food.category === currentFilter));
 
             // Track interaction
             trackUserInteraction('toggle_favorite', { foodId: foodId, action: index > -1 ? 'remove' : 'add' });
@@ -1725,6 +1796,8 @@
         }
 
         function showFoodModal(food) {
+            const isFav = favoritesList.includes(food.id);
+
             const modal = `
                 <div class="modal fade" id="foodModal" tabindex="-1" aria-labelledby="foodModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
@@ -1752,15 +1825,10 @@
                                         <strong>Difficulty to Make:</strong> ${food.difficulty}</p>
                                         
                                         <h6>Where to Find</h6>
-                                        <p>Available at hawker centers, street stalls, and local restaurants throughout Malaysia. 
-                                        Best enjoyed fresh and hot from the stall!</p>
+                                        <p>${generateWhereToFind(food)}</p>
                                         
                                         <h6>Fun Facts</h6>
-                                        <ul>
-                                            <li>This dish represents the multicultural essence of Malaysian cuisine</li>
-                                            <li>Often prepared using traditional cooking methods passed down through generations</li>
-                                            <li>A must-try for anyone visiting Malaysia</li>
-                                        </ul>
+                                        ${generateFunFacts(food)}
                                     </div>
                                     <div class="col-md-4">
                                         <div class="bg-light p-3 rounded">
@@ -1784,8 +1852,8 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-custom" onclick="addToFavorites(${food.id})" data-bs-dismiss="modal">
-                                    <i class="fas fa-heart"></i> Add to Favorites
+                                <button type="button" class="btn btn-custom" data-food-id="${food.id}" onclick="addToFavorites(${food.id})">
+                                    <i class="${isFav ? 'fas text-danger' : 'far'} fa-heart"></i> Add to Favorites
                                 </button>
                             </div>
                         </div>
@@ -1793,19 +1861,8 @@
                 </div>
             `;
 
-            // Remove existing modal if any
-            $('#foodModal').remove();
-
-            // Add new modal to body
-            $('body').append(modal);
-
-            // Show modal
+            $('#modalContainer').html(modal);
             $('#foodModal').modal('show');
-
-            // Clean up when modal is hidden
-            $('#foodModal').on('hidden.bs.modal', function () {
-                $(this).remove();
-            });
         }
 
         function shareFood(foodId) {
@@ -1829,15 +1886,29 @@
             trackUserInteraction('share_food', { foodId: foodId, foodName: food.name });
         }
 
-        function addToFavorites(foodId) {
-            if (!favoritesList.includes(foodId)) {
-                favoritesList.push(foodId);
-                localStorage.setItem('streetFood_favorites', JSON.stringify(favoritesList));
+        function addToFavorites(id) {
+            const alreadyFav = favoritesList.includes(id);
+            if (!alreadyFav) {
+                favoritesList.push(id);
                 showNotification('Added to favorites!', 'success');
             } else {
                 showNotification('Already in favorites!', 'info');
             }
+
+            localStorage.setItem('streetFood_favorites', JSON.stringify(favoritesList));
+
+            // Update card heart icon
+            const cardBtnIcon = $(`.favorite-btn[data-food-id='${id}'] i`);
+            cardBtnIcon.removeClass('far').addClass('fas text-danger');
+
+            // Update modal heart icon
+            const modalBtnIcon = $(`#foodModal button[data-food-id='${id}'] i`);
+            if (modalBtnIcon.length) {
+                modalBtnIcon.removeClass('far').addClass('fas text-danger');
+            }
         }
+
+        let notifTimer = null;
 
         function showNotification(message, type = "success") {
             const notif = document.getElementById("notification");
@@ -1858,7 +1929,14 @@
             notif.style.display = "block";
 
             // Auto-hide after 3 seconds
-            setTimeout(hideNotification, 3000);
+            if (notifTimer) clearTimeout(notifTimer);
+
+            notif.classList.add("show");
+
+            notifTimer = setTimeout(() => {
+                notif.classList.remove("show");
+                notifTimer = null;
+            }, 3000);
         }
 
         function hideNotification() {
@@ -1940,14 +2018,29 @@
         }
 
         function performSearch(searchTerm) {
-            const results = malaysianFoods.filter(food =>
-                food.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                food.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                food.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+            const lowerCaseTerm = searchTerm.toLowerCase();
+
+            // First, determine the list of foods to search from, respecting the current category filter.
+            let baseFoods;
+            if (currentFilter === 'all') {
+                baseFoods = malaysianFoods;
+            } else {
+                // If a category like "Noodles" is active, only search within that category.
+                const activeCategory = normalizeCategory(currentFilter);
+                baseFoods = malaysianFoods.filter(food => normalizeCategory(food.category) === activeCategory);
+            }
+
+            // Now, filter that list with a more complete search logic that includes the 'origin'.
+            const results = baseFoods.filter(food =>
+                food.name.toLowerCase().includes(lowerCaseTerm) ||
+                food.description.toLowerCase().includes(lowerCaseTerm) ||
+                food.origin.toLowerCase().includes(lowerCaseTerm) || // <-- Now searches the origin
+                food.tags.some(tag => tag.toLowerCase().includes(lowerCaseTerm))
             );
 
             displayFoods(results);
 
+            // Update the search results text
             if (results.length > 0) {
                 $('#searchResultText').text(`Found ${results.length} results for "${searchTerm}"`);
                 $('#searchResults').show();
@@ -2010,6 +2103,64 @@
 
             showNotification(`Exported ${favoriteFoods.length} favorite foods!`, 'success');
             trackUserInteraction('export_favorites', { count: favoriteFoods.length });
+        }
+
+function generateWhereToFind(food) {
+            let text = `This popular dish is widely available at hawker centers, street-side stalls (gerai), and local restaurants throughout Malaysia. `;
+            
+            // Add a special note if the food has a specific origin state
+            const specificOrigins = ["malaysia", "malaysia/singapore", "malaysia/indonesia"];
+            if (food.origin && !specificOrigins.includes(food.origin.toLowerCase())) {
+                text += `For the most authentic taste, it's highly recommended to try it in its region of origin, ${food.origin}. `;
+            }
+
+            // Add a hint based on its tags
+            if (food.tags.includes('Breakfast')) {
+                text += `It's a particularly popular choice to start the day.`;
+            } else if (food.tags.includes('Street Food') || food.tags.includes('Snack')) {
+                text += `You'll often find the best versions at bustling night markets (pasar malam).`;
+            } else if (food.tags.includes('Festive')) {
+                text += `Look for it especially during festive seasons and celebrations.`;
+            }
+            return text;
+        }
+
+        function generateFunFacts(food) {
+            const facts = [];
+
+            // Fact 1: Origin-specific fact
+            if (food.origin && !["malaysia", "malaysia/singapore", "malaysia/indonesia"].includes(food.origin.toLowerCase())) {
+                facts.push(`While enjoyed nationwide, locals in ${food.origin} take special pride in their unique version of ${food.name}.`);
+            }
+            
+            // Fact 2: National dish fact
+            if (food.tags.includes('National Dish')) {
+                facts.push(`${food.name} is more than just a meal; it's widely considered Malaysia's national dish, beloved by all communities.`);
+            }
+
+            // Fact 3: Flavor profile from tags
+            const flavorTags = food.tags.filter(tag => ['Spicy', 'Sweet', 'Coconut', 'Herbal', 'Sour', 'Tangy', 'Rich'].includes(tag));
+            if (flavorTags.length > 1) {
+                facts.push(`The dish is celebrated for its complex flavor profile, masterfully balancing ${flavorTags[0].toLowerCase()} and ${flavorTags[1].toLowerCase()} notes.`);
+            } else if (flavorTags.length > 0) {
+                 facts.push(`A key characteristic of this dish is its distinct ${flavorTags[0].toLowerCase()} flavor, which comes from traditional herbs and spices.`);
+            }
+
+            // Fact 4: Special preparation or category
+            if (food.category.toLowerCase() === 'dessert') {
+                 facts.push(`Like many traditional Malaysian desserts (kuih-muih), it often uses coconut milk and palm sugar (gula melaka) for a rich, local flavor.`);
+            } else if (food.tags.includes('Grilled')) {
+                facts.push(`The smoky aroma for stir-fried dishes, is a crucial element that locals look for in a well-made version of this dish.`);
+            }
+            
+            // Add fallback facts if we don't have enough yet
+            if (facts.length < 2) {
+                facts.push(`The recipe for ${food.name} often varies from state to state, with each region adding its own local twist.`);
+                facts.push(`This dish is a perfect example of Malaysia's multicultural culinary heritage, blending different influences into a unique taste.`);
+            }
+
+            // Return a formatted list of the first 3 facts
+            return `<ul>${facts.slice(0, 3).map(fact => `<li>${fact}</li>`).join('')}</ul>`;
         }
 
 
@@ -2077,6 +2228,10 @@
             const sessionData = JSON.parse(sessionStorage.getItem('streetFood_session') || '{}');
             sessionData.malaysiaPageEndTime = new Date().toISOString();
             sessionStorage.setItem('streetFood_session', JSON.stringify(sessionData));
+        });
+
+        window.addEventListener('beforeunload', function() {
+            sessionStorage.setItem('scrollPosition', window.scrollY);
         });
 
         // Add highlight style for searched items
