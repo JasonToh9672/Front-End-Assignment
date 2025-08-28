@@ -285,6 +285,7 @@
                 <a href="https://web.facebook.com/StreetFoodExplorer9672/" target="_blank"><i class="fab fa-facebook"></i></a>
                 <a href="https://x.com/Street_Food9672" target="_blank"><i class="fab fa-twitter"></i></a>
                 <a href="https://www.instagram.com/street_food_explorer9672/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <br><br><br><br>
             </div>
         </div>
     </div>
@@ -478,9 +479,31 @@
                 });
             }
 
-            function setLoadingState(isLoading) { /* ... function unchanged ... */ }
-            function showStatusMessage(message, type) { /* ... function unchanged ... */ }
-            function hideStatusMessage() { /* ... function unchanged ... */ }
+            function setLoadingState(isLoading) {
+                const btn = $("#submitBtn");
+                if (isLoading) {
+                    btn.prop("disabled", true);
+                    btn.find(".loading-spinner").show();
+                } else {
+                    btn.prop("disabled", false);
+                    btn.find(".loading-spinner").hide();
+                }
+            }
+
+            function showStatusMessage(message, type) {
+                const statusDiv = $("#statusMessage");
+                // Remove any existing status classes
+                statusDiv.removeClass("status-success status-error");
+                // Add the new class based on the 'type'
+                statusDiv.addClass(type === "success" ? "status-success" : "status-error");
+                // Set the message text and display the element
+                statusDiv.text(message).show();
+            }
+
+            function hideStatusMessage() {
+                $("#statusMessage").hide();
+            }
+            
             function clearForm() {
                  $("#contactForm")[0].reset();
                  $("#name, #email, #message").val("");
