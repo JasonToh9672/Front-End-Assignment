@@ -478,41 +478,47 @@
 
     <!-- Filter Section -->
     <section class="filter-section">
-        <div class="container">
+    <div class="container">
 
-            <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 0.5rem;">
-                <button class="btn btn-sm btn-outline-secondary ms auto" id="toggleFiltersBtn" data-bs-toggle="collapse" data-bs-target="#filtersContent">Hide Filters</button>
-            </div>
+        <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 0.5rem;">
+            <button class="btn btn-sm btn-outline-secondary ms-auto" id="toggleFiltersBtn" data-bs-toggle="collapse" data-bs-target="#filtersContent">Hide Filters</button>
+        </div>
 
-            <div class="collapse show" id="filtersContent">
-                <div class="row align-items-center">
-                    <div class="col-md-3">
-                        <h5 class="mb-md-0 mb-3">Filter by Search:</h5>
-                        <br>
-                        <h5 class="mb-md-0 mb-3">Filter by Category:</h5>
-                    </div>
-                    <div class="col-md-9">
-                        <div id="filterButtons" class="text-md-end">
-                            <div class="mt-3 mt-md-0 d-flex gap-2 justify-content-md-end align-items-center">
-                            <label for="searchInput" class="visually-hidden">Search Malaysian foods</label>
-                            <input id="searchInput" type="search" class="form-control"
-                                placeholder="Search foods, tags, origin… (e.g., 'Penang', 'spicy', 'noodles')"
-                                style="max-width: 380px;">
-                                <button id="clearSearchBtn" class="btn btn-outline-secondary" type="button" title="Clear search">
-                                <i class="fas fa-times"></i>
-                                </button>
-                                </div>
-                            <button class="filter-btn active" data-category="all">All Foods</button>
-                            <button class="filter-btn" data-category="rice">Rice Dishes</button>
-                            <button class="filter-btn" data-category="noodles">Noodles</button>
-                            <button class="filter-btn" data-category="snacks">Snacks</button>
-                            <button class="filter-btn" data-category="desserts">Desserts</button>
-                            <button class="filter-btn" data-category="drinks">Drinks</button>
-                        </div>
+        <div class="collapse show" id="filtersContent">
+            <div class="row align-items-center mb-3">
+                <div class="col-md-3">
+                    <h5 class="mb-md-0 mb-2">Filter by Search:</h5>
+                </div>
+                <div class="col-md-9">
+                    <div class="d-flex gap-2 justify-content-md-end">
+                        <label for="searchInput" class="visually-hidden">Search Malaysian foods</label>
+                        <input id="searchInput" type="search" class="form-control"
+                               placeholder="Search foods, tags, origin… (e.g., 'Penang', 'spicy', 'noodles')"
+                               style="max-width:460px;">
+                        <button id="clearSearchBtn" class="btn btn-outline-secondary" type="button" title="Clear search">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
                 </div>
-            </div>    
-        </div>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <h5 class="mb-md-0 mb-2">Filter by Category:</h5>
+                </div>
+                <div class="col-md-9">
+                    <div id="filterButtons" class="text-md-end">
+                        <button class="filter-btn active" data-category="all">All Foods</button>
+                        <button class="filter-btn" data-category="rice">Rice Dishes</button>
+                        <button class="filter-btn" data-category="noodles">Noodles</button>
+                        <button class="filter-btn" data-category="snacks">Snacks</button>
+                        <button class="filter-btn" data-category="desserts">Desserts</button>
+                        <button class="filter-btn" data-category="drinks">Drinks</button>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </div>
     </section>
 
     <!-- Food Grid Section -->
@@ -529,6 +535,12 @@
                     <div class="spinner"></div>
                     <p>Loading delicious Malaysian foods...</p>
                 </div>
+            </div>
+
+            <div class="text-center mt-3">
+                <button class="btn btn-outline-secondary" id="exportFavoritesBtn">
+                    <i class="fas fa-file-export me-1"></i> Export Malaysia Favorites (Alt+F)
+                </button>
             </div>
         </div>
     </section>
@@ -1504,20 +1516,19 @@
             setTimeout(loadMalaysianFoods, 200); // Show loading animation
             setupFilterButtons();
             startCounterAnimations();
+            $('#exportFavoritesBtn').on('click', exportMyFavorites);
 
             const urlParams = new URLSearchParams(window.location.search);
             const foodId = urlParams.get("id");
-
+        
             if (foodId) {
-                // Wait until foods are loaded
                 const tryShowModal = () => {
                     if (malaysianFoods.length > 0) {
                         const food = foodsData.find(f => f.id == foodId);
                         if (food) {
-                            showFoodModal(food); 
+                            showFoodModal(food);
                         }
                     } else {
-                        
                         setTimeout(tryShowModal, 300);
                     }
                 };
@@ -2352,17 +2363,6 @@ function generateWhereToFind(food) {
         console.log(`📊 ${foodsData.length} Malaysian foods available`);
         console.log('❤️ Favorites system active');
         console.log('🔍 Filter and search functionality ready');
-
-         window.onload = function () {
-            const urlParams = new URLSearchParams(window.location.search);
-
-            if (urlParams.has("id")) {
-                const id = urlParams.get("id");
-
-                // Call your function
-                viewFoodDetails(id);
-            }
-        };
     </script>
 </body>
 

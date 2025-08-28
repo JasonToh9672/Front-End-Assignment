@@ -285,6 +285,7 @@
                 <a href="https://web.facebook.com/StreetFoodExplorer9672/" target="_blank"><i class="fab fa-facebook"></i></a>
                 <a href="https://x.com/Street_Food9672" target="_blank"><i class="fab fa-twitter"></i></a>
                 <a href="https://www.instagram.com/street_food_explorer9672/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <br><br><br><br>
             </div>
         </div>
     </div>
@@ -337,6 +338,7 @@
     <div class="modal fade" id="termsModal" tabindex="-1">...</div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
     <script>
@@ -416,8 +418,38 @@
                 }
             }
             
-            function loadSavedFormData() { /* ... function unchanged ... */ }
-            function saveFormDataToStorage() { /* ... function unchanged ... */ }
+           function loadSavedFormData() {
+                // Retrieve the saved data string from local storage
+                const savedDataJSON = localStorage.getItem("contactFormData");
+
+                // Check if any data exists
+                if (savedDataJSON) {
+                    // Convert the JSON string back into a JavaScript object
+                    const savedData = JSON.parse(savedDataJSON);
+
+                    // Populate the form fields with the saved values
+                    $("#name").val(savedData.name || "");
+                    $("#email").val(savedData.email || "");
+                    $("#message").val(savedData.message || "");
+
+                    // IMPORTANT: Update the character counter to reflect the loaded message
+                    const messageLength = savedData.message ? savedData.message.length : 0;
+                    const maxLength = $("#message").attr("maxlength");
+                    $("#charCounter").text(`${messageLength} / ${maxLength}`);
+                }
+            }
+            
+            function saveFormDataToStorage() {
+                // Create an object to hold the current form values
+                const formData = {
+                    name: $("#name").val(),
+                    email: $("#email").val(),
+                    message: $("#message").val()
+                };
+                
+                // Convert the object to a JSON string and save it to local storage
+                localStorage.setItem("contactFormData", JSON.stringify(formData));
+            }
 
             function sendContactMessage() {
                 const formData = {
@@ -478,9 +510,31 @@
                 });
             }
 
-            function setLoadingState(isLoading) { /* ... function unchanged ... */ }
-            function showStatusMessage(message, type) { /* ... function unchanged ... */ }
-            function hideStatusMessage() { /* ... function unchanged ... */ }
+            function setLoadingState(isLoading) {
+                const btn = $("#submitBtn");
+                if (isLoading) {
+                    btn.prop("disabled", true);
+                    btn.find(".loading-spinner").show();
+                } else {
+                    btn.prop("disabled", false);
+                    btn.find(".loading-spinner").hide();
+                }
+            }
+
+            function showStatusMessage(message, type) {
+                const statusDiv = $("#statusMessage");
+                // Remove any existing status classes
+                statusDiv.removeClass("status-success status-error");
+                // Add the new class based on the 'type'
+                statusDiv.addClass(type === "success" ? "status-success" : "status-error");
+                // Set the message text and display the element
+                statusDiv.text(message).show();
+            }
+
+            function hideStatusMessage() {
+                $("#statusMessage").hide();
+            }
+            
             function clearForm() {
                  $("#contactForm")[0].reset();
                  $("#name, #email, #message").val("");
