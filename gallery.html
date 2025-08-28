@@ -1048,52 +1048,55 @@
         });
     </script>
 
-    <!-- jQuery (needed for REST API calls) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- jQuery (needed for REST API calls) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            // Show loading spinner
-            $('#loadingSpinner').show();
+<script>
+    $(document).ready(function () {
+        // Show loading spinner
+        $('#loadingSpinner').show();
 
-            // Call TheMealDB API - FIXED VERSION (doesn't clear existing items)
-            $.getJSON("https://www.themealdb.com/api/json/v1/1/search.php?f=c")
-                .done(function (data) {
-                    if (data.meals) {
-                        // Add new meals from API (keeping your original 9 items)
-                        data.meals.slice(0, 6).forEach(meal => {
-                        const item = `
-                            <div class="col-md-4 gallery-item" data-category="api">
-                                <img src="${meal.strMealThumb}" class="gallery-img" alt="${meal.strMeal}">
-                                <div class="api-badge">API</div>
-                                <div class="gallery-overlay">
-                                    <h5>${meal.strMeal}</h5>
-                                    <p>${meal.strArea} - ${meal.strCategory}</p>
-                                    <small><i class="fas fa-globe"></i> ${meal.strArea}</small>
-                                </div>
-                            </div>`;
-                            $("#galleryGrid").append(item);
-                        });
-                    }
-                })
-                .fail(function () {
-                    console.log("Failed to load API data");
-                    $('#galleryGrid').append(`
-                    <div class="col-12 text-center">
-                        <div class="alert alert-warning">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            Failed to load additional food items. Please try refreshing.
-                        </div>
+        let requests = [];
+        // Call random.php 6 times
+        for (let i = 0; i < 6; i++) {
+            requests.push($.getJSON("https://www.themealdb.com/api/json/v1/1/random.php"));
+        }
+
+        // Wait for all requests to finish
+        $.when.apply($, requests).done(function (...responses) {
+            responses.forEach(function (response) {
+                let data = response[0]; // jQuery packs results in [0]
+                if (data.meals) {
+                    let meal = data.meals[0];
+                    const item = `
+                        <div class="col-md-4 gallery-item" data-category="api">
+                            <img src="${meal.strMealThumb}" class="gallery-img" alt="${meal.strMeal}">
+                            <div class="api-badge">API</div>
+                            <div class="gallery-overlay">
+                                <h5>${meal.strMeal}</h5>
+                                <p>${meal.strArea} - ${meal.strCategory}</p>
+                                <small><i class="fas fa-globe"></i> ${meal.strArea}</small>
+                            </div>
+                        </div>`;
+                    $("#galleryGrid").append(item);
+                }
+            });
+        }).fail(function () {
+            console.log("Failed to load API data");
+            $('#galleryGrid').append(`
+                <div class="col-12 text-center">
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Failed to load additional food items. Please try refreshing.
                     </div>
-                `);
-                })
-                .always(function () {
-                    // Hide loading spinner
-                    $('#loadingSpinner').hide();
-                });
+                </div>
+            `);
+        }).always(function () {
+            // Hide loading spinner
+            $('#loadingSpinner').hide();
         });
-    </script>
-
+    });
+</script>
 </body>
 
 </html>
