@@ -485,23 +485,30 @@
             </div>
 
             <div class="collapse show" id="filtersContent">
-                <div class="row align-items-center">
+                <div class="row align-items-center mb-3">
                     <div class="col-md-3">
-                        <h5 class="mb-md-0 mb-3">Filter by Search:</h5>
-                        <br>
-                        <h5 class="mb-md-0 mb-3">Filter by Category:</h5>
+                        <h5 class="mb-md-0 mb-2">Filter by Search:</h5>
                     </div>
                     <div class="col-md-9">
-                        <div id="filterButtons" class="text-md-end">
-                            <div class="mt-3 mt-md-0 d-flex gap-2 justify-content-md-end align-items-center">
+                        <div class="d-flex gap-2 justify-content-md-start">
                             <label for="searchInput" class="visually-hidden">Search Malaysian foods</label>
                             <input id="searchInput" type="search" class="form-control"
                                 placeholder="Search foods, tags, origin… (e.g., 'Penang', 'spicy', 'noodles')"
                                 style="max-width: 380px;">
-                                <button id="clearSearchBtn" class="btn btn-outline-secondary" type="button" title="Clear search">
+                            <button id="clearSearchBtn" class="btn btn-outline-secondary" type="button" title="Clear search">
                                 <i class="fas fa-times"></i>
-                                </button>
-                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <h5 class="mb-md-0 mb-2">Filter by Category:</h5>
+                    </div>
+                    <div class="col-md-9">
+                        <div id="filterButtons">
                             <button class="filter-btn active" data-category="all">All Foods</button>
                             <button class="filter-btn" data-category="rice">Rice Dishes</button>
                             <button class="filter-btn" data-category="noodles">Noodles</button>
@@ -511,7 +518,7 @@
                         </div>
                     </div>
                 </div>
-            </div>    
+            </div>
         </div>
     </section>
 
