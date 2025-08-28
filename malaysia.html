@@ -1517,6 +1517,23 @@
             setupFilterButtons();
             startCounterAnimations();
             $('#exportFavoritesBtn').on('click', exportMyFavorites);
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const foodId = urlParams.get("id");
+        
+            if (foodId) {
+                const tryShowModal = () => {
+                    if (malaysianFoods.length > 0) {
+                        const food = foodsData.find(f => f.id == foodId);
+                        if (food) {
+                            showFoodModal(food);
+                        }
+                    } else {
+                        setTimeout(tryShowModal, 300);
+                    }
+                };
+                tryShowModal();
+            }
         });
         
 
@@ -2348,5 +2365,6 @@ function generateWhereToFind(food) {
         console.log('🔍 Filter and search functionality ready');
     </script>
 </body>
+
 
 </html>
