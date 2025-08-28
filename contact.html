@@ -8,8 +8,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 
     <link rel="stylesheet" type="text/css" href="style.css">
     <style>
@@ -70,16 +71,19 @@
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px S10px rgba(0, 0, 0, 0.1);
-            height: 100%; /* NEW: Ensure columns are equal height */
+            height: 100%;
+            /* NEW: Ensure columns are equal height */
         }
-        
+
         /* NEW: Styles for the map */
         #contactMap {
             height: 100%;
-            min-height: 450px; /* Ensure map has a good minimum height */
+            min-height: 450px;
+            /* Ensure map has a good minimum height */
             width: 100%;
             border-radius: 12px;
-            z-index: 0; /* Ensures it stays behind other elements if needed */
+            z-index: 0;
+            /* Ensures it stays behind other elements if needed */
         }
 
         .social-links a {
@@ -142,7 +146,7 @@
         .footer-section ul li a:hover {
             color: var(--secondary-color);
         }
-        
+
         /* NEW: Make footer contact info links clearer */
         .footer-section .contact-link {
             color: #bdc3c7;
@@ -272,22 +276,24 @@
             </div>
             <div class="col-lg-6">
                 <h4 class="mb-3 text-center" style="cursor: pointer; color: #070707;">
-                  Visit Us At
+                    Visit Us At
                 </h4>
                 <div id="contactMap"></div>
             </div>
         </div>
-        </div>
+    </div>
 
-        <div class="text-center mt-5">
-            <h4>Follow Us</h4>
-            <div class="social-links">
-                <a href="https://web.facebook.com/StreetFoodExplorer9672/" target="_blank"><i class="fab fa-facebook"></i></a>
-                <a href="https://x.com/Street_Food9672" target="_blank"><i class="fab fa-twitter"></i></a>
-                <a href="https://www.instagram.com/street_food_explorer9672/" target="_blank"><i class="fab fa-instagram"></i></a>
-                <br><br><br><br>
-            </div>
+    <div class="text-center mt-5">
+        <h4>Follow Us</h4>
+        <div class="social-links">
+            <a href="https://web.facebook.com/StreetFoodExplorer9672/" target="_blank"><i
+                    class="fab fa-facebook"></i></a>
+            <a href="https://x.com/Street_Food9672" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/street_food_explorer9672/" target="_blank"><i
+                    class="fab fa-instagram"></i></a>
+            <br><br><br><br>
         </div>
+    </div>
     </div>
 
     <footer class="footer">
@@ -298,9 +304,11 @@
                     <p>Your ultimate guide to discovering the world's most amazing street foods. From local Malaysian
                         favorites to global culinary treasures.</p>
                     <div class="social-links1 mt-3">
-                        <a href="https://web.facebook.com/StreetFoodExplorer9672/" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="https://web.facebook.com/StreetFoodExplorer9672/" title="Facebook"><i
+                                class="fab fa-facebook"></i></a>
                         <a href="https://x.com/Street_Food9672" title="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="https://www.instagram.com/street_food_explorer9672/" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.instagram.com/street_food_explorer9672/" title="Instagram"><i
+                                class="fab fa-instagram"></i></a>
                     </div>
                 </div>
                 <div class="footer-section">
@@ -323,8 +331,10 @@
                 </div>
                 <div class="footer-section">
                     <h4>Contact Info</h4>
-                    <p><i class="fas fa-envelope"></i> <a href="mailto:info@streetfoodexplorer.com" class="contact-link">info@streetfoodexplorer.com</a></p>
-                    <p><i class="fas fa-phone"></i> <a href="tel:+60165109672" class="contact-link">+60 16-510-9672</a></p>
+                    <p><i class="fas fa-envelope"></i> <a href="mailto:info@streetfoodexplorer.com"
+                            class="contact-link">info@streetfoodexplorer.com</a></p>
+                    <p><i class="fas fa-phone"></i> <a href="tel:+60165109672" class="contact-link">+60 16-510-9672</a>
+                    </p>
                     <p><i class="fas fa-map-marker-alt"></i> Kuala Lumpur, Malaysia</p>
                 </div>
             </div>
@@ -339,13 +349,14 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
     <script>
         $(document).ready(function () {
             // --- Map Initialization ---
             // Coordinates for Kuala Lumpur, Malaysia
-            const mapCoordinates = [3.110538845322836, 101.66532100609466]; 
+            const mapCoordinates = [3.110538845322836, 101.66532100609466];
             const map = L.map('contactMap').setView(mapCoordinates, 12); // Set initial zoom level
 
             // Add the tile layer from OpenStreetMap
@@ -356,7 +367,7 @@
 
             // Create the Google Maps URL
             const googleMapsUrl = `https://www.google.com/maps?q=${mapCoordinates[0]},${mapCoordinates[1]}`;
-            
+
             // 1. Update the marker's popup to be a clickable link
             const popupContent = `<a href="${googleMapsUrl}" target="_blank" style="text-decoration: none; color: inherit;">
                                     <b>Street Food Explorer HQ</b><br>Click to view on Google Maps
@@ -365,7 +376,7 @@
             marker.bindPopup(popupContent).openPopup();
 
             // 2. Add a click event to the "Visit Us At" title
-            $("#visitUsLink").on("click", function() {
+            $("#visitUsLink").on("click", function () {
                 window.open(googleMapsUrl, '_blank');
             });
 
@@ -378,17 +389,22 @@
 
             loadSavedFormData();
 
+            const savedNameCookie = getCookie("userName");
+            if (savedNameCookie) {
+                $("#name").val(savedNameCookie);
+            }
+
             $("#name, #email, #message").on("input", function () {
                 saveFormDataToStorage();
             });
-            
+
             // NEW: Real-time email validation on blur
-            $("#email").on("blur", function() {
+            $("#email").on("blur", function () {
                 validateEmailField();
             });
 
             // NEW: Character counter for message textarea
-            $("#message").on("input", function() {
+            $("#message").on("input", function () {
                 const currentLength = $(this).val().length;
                 const maxLength = $(this).attr("maxlength");
                 $("#charCounter").text(`${currentLength} / ${maxLength}`);
@@ -401,14 +417,14 @@
                     sendContactMessage();
                 }
             });
-            
+
             // FUNCTION: Validate email format
             // NEW
             function validateEmailField() {
                 const emailInput = $("#email");
                 const email = emailInput.val().trim();
                 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                
+
                 if (email === "" || !emailPattern.test(email)) {
                     emailInput.addClass("is-invalid");
                     return false;
@@ -417,8 +433,8 @@
                     return true;
                 }
             }
-            
-           function loadSavedFormData() {
+
+            function loadSavedFormData() {
                 // Retrieve the saved data string from local storage
                 const savedDataJSON = localStorage.getItem("contactFormData");
 
@@ -438,7 +454,7 @@
                     $("#charCounter").text(`${messageLength} / ${maxLength}`);
                 }
             }
-            
+
             function saveFormDataToStorage() {
                 // Create an object to hold the current form values
                 const formData = {
@@ -446,7 +462,7 @@
                     email: $("#email").val(),
                     message: $("#message").val()
                 };
-                
+
                 // Convert the object to a JSON string and save it to local storage
                 localStorage.setItem("contactFormData", JSON.stringify(formData));
             }
@@ -476,35 +492,40 @@
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
                     data: JSON.stringify(formData),
-                    timeout: 10000, 
-                    success: function(response, textStatus, xhr) {
+                    timeout: 10000,
+                    success: function (response, textStatus, xhr) {
                         console.log("API Response:", response);
                         clearForm();
                         localStorage.removeItem("contactFormData");
+
+
+                        setCookie("userName", formData.name, 7);
+
+
                         showStatusMessage(
-                            `Thank you, ${formData.name}! Your message has been sent successfully. We'll get back to you soon!`, 
+                            `Thank you, ${formData.name}! Your message has been sent successfully. We'll get back to you soon!`,
                             "success"
                         );
                         $('html, body').animate({
                             scrollTop: $("#statusMessage").offset().top - 100
                         }, 500);
                     },
-                    error: function(xhr, textStatus, errorThrown) {
+                    error: function (xhr, textStatus, errorThrown) {
                         console.error("API Error:", { status: xhr.status, statusText: xhr.statusText, textStatus: textStatus, errorThrown: errorThrown, responseText: xhr.responseText });
                         let errorMessage = "Sorry, there was an error sending your message. ";
-                        switch(textStatus) {
+                        switch (textStatus) {
                             case 'timeout': errorMessage += "The request timed out. Please check your connection and try again."; break;
                             case 'abort': errorMessage += "The request was cancelled."; break;
                             case 'parsererror': errorMessage += "There was an error processing the server response."; break;
                             default:
-                                if (xhr.status === 0) { errorMessage += "Please check your internet connection."; } 
-                                else if (xhr.status >= 500) { errorMessage += "Server error. Please try again later."; } 
-                                else if (xhr.status >= 400) { errorMessage += "There was a problem with your request."; } 
+                                if (xhr.status === 0) { errorMessage += "Please check your internet connection."; }
+                                else if (xhr.status >= 500) { errorMessage += "Server error. Please try again later."; }
+                                else if (xhr.status >= 400) { errorMessage += "There was a problem with your request."; }
                                 else { errorMessage += "Please try again later."; }
                         }
                         showStatusMessage(errorMessage, "error");
                     },
-                    complete: function() {
+                    complete: function () {
                         setLoadingState(false);
                     }
                 });
@@ -534,12 +555,32 @@
             function hideStatusMessage() {
                 $("#statusMessage").hide();
             }
-            
+
             function clearForm() {
-                 $("#contactForm")[0].reset();
-                 $("#name, #email, #message").val("");
-                 // NEW: Reset character counter after clearing
-                 $("#charCounter").text("0 / 1000");
+                $("#contactForm")[0].reset();
+                $("#name, #email, #message").val("");
+                // NEW: Reset character counter after clearing
+                $("#charCounter").text("0 / 1000");
+            }
+
+            function setCookie(name, value, days) {
+                const d = new Date();
+                d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+                const expires = "expires=" + d.toUTCString();
+                document.cookie = name + "=" + encodeURIComponent(value) + ";" + expires + ";path=/";
+            }
+
+            function getCookie(name) {
+                const cname = name + "=";
+                const decodedCookie = decodeURIComponent(document.cookie);
+                const ca = decodedCookie.split(';');
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i].trim();
+                    if (c.indexOf(cname) === 0) {
+                        return c.substring(cname.length, c.length);
+                    }
+                }
+                return "";
             }
         });
     </script>
