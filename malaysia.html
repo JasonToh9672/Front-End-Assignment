@@ -478,48 +478,47 @@
 
     <!-- Filter Section -->
     <section class="filter-section">
-        <div class="container">
+    <div class="container">
 
-            <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 0.5rem;">
-                <button class="btn btn-sm btn-outline-secondary ms auto" id="toggleFiltersBtn" data-bs-toggle="collapse" data-bs-target="#filtersContent">Hide Filters</button>
-            </div>
+        <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 0.5rem;">
+            <button class="btn btn-sm btn-outline-secondary ms-auto" id="toggleFiltersBtn" data-bs-toggle="collapse" data-bs-target="#filtersContent">Hide Filters</button>
+        </div>
 
-            <div class="collapse show" id="filtersContent">
-                <div class="row align-items-center mb-3">
-                    <div class="col-md-3">
-                        <h5 class="mb-md-0 mb-2">Filter by Search:</h5>
-                    </div>
-                    <div class="col-md-9">
-                        <div class="d-flex gap-2 justify-content-md-start">
-                            <label for="searchInput" class="visually-hidden">Search Malaysian foods</label>
-                            <input id="searchInput" type="search" class="form-control"
-                                placeholder="Search foods, tags, origin… (e.g., 'Penang', 'spicy', 'noodles')"
-                                style="max-width: 380px;">
-                            <button id="clearSearchBtn" class="btn btn-outline-secondary" type="button" title="Clear search">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
+        <div class="collapse show" id="filtersContent">
+            <div class="row align-items-center mb-3">
+                <div class="col-md-3">
+                    <h5 class="mb-md-0 mb-2">Filter by Search:</h5>
+                </div>
+                <div class="col-md-9">
+                    <div class="d-flex gap-2 justify-content-md-start">
+                        <label for="searchInput" class="visually-hidden">Search Malaysian foods</label>
+                        <input id="searchInput" type="search" class="form-control"
+                               placeholder="Search foods, tags, origin… (e.g., 'Penang', 'spicy', 'noodles')"
+                               style="max-width: 380px;">
+                        <button id="clearSearchBtn" class="btn btn-outline-secondary" type="button" title="Clear search">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
                 </div>
             </div>
-            
+
             <div class="row align-items-center">
                 <div class="col-md-3">
                     <h5 class="mb-md-0 mb-2">Filter by Category:</h5>
-                    </div>
-                    <div class="col-md-9">
-                        <div id="filterButtons">
-                            <button class="filter-btn active" data-category="all">All Foods</button>
-                            <button class="filter-btn" data-category="rice">Rice Dishes</button>
-                            <button class="filter-btn" data-category="noodles">Noodles</button>
-                            <button class="filter-btn" data-category="snacks">Snacks</button>
-                            <button class="filter-btn" data-category="desserts">Desserts</button>
-                            <button class="filter-btn" data-category="drinks">Drinks</button>
-                        </div>
+                </div>
+                <div class="col-md-9">
+                    <div id="filterButtons">
+                        <button class="filter-btn active" data-category="all">All Foods</button>
+                        <button class="filter-btn" data-category="rice">Rice Dishes</button>
+                        <button class="filter-btn" data-category="noodles">Noodles</button>
+                        <button class="filter-btn" data-category="snacks">Snacks</button>
+                        <button class="filter-btn" data-category="desserts">Desserts</button>
+                        <button class="filter-btn" data-category="drinks">Drinks</button>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>    
+    </div>
     </section>
 
     <!-- Food Grid Section -->
