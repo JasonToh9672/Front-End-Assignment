@@ -129,6 +129,33 @@
         }
 
         /* Grid */
+        .back-to-top {
+            position: fixed;
+            right: 24px;
+            bottom: 50px;
+            width: 50px;
+            height: 50px;
+            border: 0;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: #fff;
+            display: grid;
+            place-items: center;
+            font-size: 1.25rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, .2);
+            z-index: 1030;
+            cursor: pointer;
+        }
+
+        .back-to-top:hover {
+            background: var(--secondary-color);
+        }
+
+        .back-to-top:focus-visible {
+            outline: 3px solid var(--dark-color);
+            outline-offset: 3px;
+        }
+
         .food-grid {
             padding: 16px 0 80px;
             background: var(--light-color)
@@ -517,6 +544,7 @@
                         <div class="d-flex align-items-center flex-wrap">
                             <span class="me-2 fw-semibold">Category:</span>
                             <button class="filter-btn active" data-category="all">All</button>
+                            <button class="filter-btn" data-category="favorites"><i class="fas fa-heart me-1"></i> Favourites</button>
                             <button class="filter-btn" data-category="rice">Rice</button>
                             <button class="filter-btn" data-category="noodles">Noodles</button>
                             <button class="filter-btn" data-category="snacks">Snacks</button>
@@ -549,15 +577,13 @@
                 </div>
             </div>
 
-            <div class="text-center mt-3">
-                <button class="btn btn-outline-secondary" id="exportFavoritesBtn">
-                    <i class="fas fa-file-export me-1"></i> Export My Global Favorites (Alt+G)
-                </button>
-            </div>
         </div>
     </section>
 
     <!-- Modal -->
+    <button type="button" id="backToTopBtn" class="back-to-top" aria-label="Back to top" title="Back to top">
+        <i class="fas fa-arrow-up" aria-hidden="true"></i>
+    </button>
     <div id="modalContainer"></div>
 
     <!-- Stats -->
@@ -800,7 +826,9 @@
             setTimeout(loadGlobalFoods, 1200); // loading animation
             setupFilterButtons();
             startCounterAnimations();
-            $('#exportFavoritesBtn').on('click', exportMyGlobalFavorites);
+            $('#backToTopBtn').on('click', function () {
+                window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+            });
             // Search params
             setTimeout(checkForSearchParams, 900);
 
@@ -938,7 +966,9 @@
 
         function applyFiltersAndDisplay() {
             let list = [...globalFoods];
-            if (currentCategory !== 'all') {
+            if (currentCategory === 'favorites') {
+                list = list.filter(f => favoritesGlobal.includes(f.id));
+            } else if (currentCategory !== 'all') {
                 list = list.filter(f => f.category === currentCategory);
             }
             if (currentCountry && currentCountry !== 'all') {
@@ -947,7 +977,7 @@
             displayFoods(list);
 
             if (currentCategory !== 'all' || (currentCountry && currentCountry !== 'all')) {
-                const catLabel = currentCategory === 'all' ? 'all categories' : currentCategory;
+                const catLabel = currentCategory === 'all' ? 'all categories' : currentCategory === 'favorites' ? 'favourites' : currentCategory;
                 const countryLabel = (!currentCountry || currentCountry === 'all') ? 'all countries' : currentCountry;
                 $('#searchResultText').text(`Showing ${list.length} items • ${catLabel} • ${countryLabel}`);
                 $('#searchResults').show();
@@ -966,7 +996,7 @@
             <div class="alert alert-info">
               <i class="fas fa-search"></i>
               <h5>No foods found</h5>
-              <p>Try a different country or category!</p>
+              <p>${currentCategory === 'favorites' ? 'Tap a heart on a food card to save it here, or select a different country to see more favourites.' : 'Try a different country or category!'}</p>
             </div>
           </div>
         `);
@@ -1057,6 +1087,7 @@
             }
             localStorage.setItem('streetFood_favorites_global', JSON.stringify(favoritesGlobal));
 
+            if (currentCategory === 'favorites') applyFiltersAndDisplay();
             trackUserInteraction('toggle_favorite_global', { foodId: id, action: idx > -1 ? 'remove' : 'add' });
         }
 
@@ -1157,6 +1188,7 @@
             if (modalBtnIcon.length) {
                 modalBtnIcon.removeClass('far').addClass('fas text-danger');
             }
+            if (currentCategory === 'favorites') applyFiltersAndDisplay();
         }
 
         // --------------------------------
@@ -1193,7 +1225,7 @@
         }
 
         // --------------------------------
-        // Notification, Counters, Export
+        // Notification and Counters
         // --------------------------------
         let notifTimer = null;
 
@@ -1249,21 +1281,9 @@
             }, 40);
         }
 
-        function exportMyGlobalFavorites() {
-            const favFoods = globalFoods.filter(f => favoritesGlobal.includes(f.id));
-            if (favFoods.length === 0) { showNotification('No favorites to export!', 'warning'); return; }
-            const dataStr = JSON.stringify({ exportDate: new Date().toISOString(), totalFavorites: favFoods.length, foods: favFoods }, null, 2);
-            const blob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url; a.download = 'my_global_favorites.json'; a.click();
-            URL.revokeObjectURL(url);
-            showNotification(`Exported ${favFoods.length} favorite foods!`, 'success');
-            trackUserInteraction('export_favorites_global', { count: favFoods.length });
-        }
         // Alt+G shortcut
         document.addEventListener('keydown', e => {
-            if (e.altKey && e.key.toLowerCase() === 'g') { e.preventDefault(); exportMyGlobalFavorites(); }
+            if (e.altKey && e.key.toLowerCase() === 'g') { e.preventDefault(); $('.filter-btn[data-category="favorites"]').trigger('click'); }
         });
 
         // --------------------------------
