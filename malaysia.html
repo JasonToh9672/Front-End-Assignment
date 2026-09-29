@@ -85,13 +85,19 @@
             background: var(--light-color);
         }
 
+        #foodContainer {
+            row-gap: 30px;
+        }
+
         .food-item {
             background: white;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
-            margin-bottom: 30px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
             position: relative;
         }
 
@@ -102,6 +108,7 @@
 
         .food-image {
             height: 250px;
+            flex-shrink: 0;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             position: relative;
             overflow: hidden;
@@ -150,6 +157,9 @@
 
         .food-content {
             padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .food-title {
@@ -188,6 +198,7 @@
         }
 
         .food-tags {
+            margin-top: auto;
             margin-bottom: 15px;
         }
 

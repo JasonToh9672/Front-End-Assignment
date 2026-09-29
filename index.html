@@ -144,14 +144,19 @@
             border-radius: 2px;
         }
 
+        #popularFoodsContainer {
+            row-gap: 30px;
+        }
+
         .food-card {
             background: white;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
-            margin-bottom: 30px;
             height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .food-card:hover {
@@ -160,6 +165,7 @@
         }
 
         .food-image {
+            flex-shrink: 0;
             width: 100%;
             height: 200px;
             position: relative;
@@ -176,6 +182,9 @@
 
         .food-content {
             padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .food-title {
@@ -192,6 +201,7 @@
         }
 
         .food-rating {
+            margin-top: auto;
             display: flex;
             align-items: center;
             margin-bottom: 15px;
