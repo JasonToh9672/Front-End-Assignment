@@ -338,14 +338,19 @@
         }
 
         /* Animations */
-        .fade-in {
-            animation: foodFadeInUp 1s ease-out;
+        .food-card-reveal.reveal-pending {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .food-card-reveal.reveal-visible {
+            animation: foodFadeInUp 0.9s ease-out both;
         }
 
         @keyframes foodFadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(40px);
             }
 
             to {
@@ -1737,6 +1742,7 @@
                     behavior: "smooth",
                     block: "start"
                 });
+                observeFoodCards();
             } else {
                 alert(`No results found for "${searchTerm}". Try searching for Malaysian foods like "nasi lemak" or "char kway teow"`);
             }
@@ -1774,6 +1780,7 @@
                 const foodCard = createFoodCard(food);
                 container.innerHTML += foodCard;
             });
+            observeFoodCards();
 
             setTimeout(() => {
                 $('.favorite-btn').on('click', function () {
@@ -1795,7 +1802,7 @@
 
 
             return `
-            <div class="col-lg-4 col-md-6 fade-in">
+            <div class="col-lg-4 col-md-6 food-card-reveal">
                 <div class="food-card">
                     <div class="food-image" style="position: relative;">
                         <img src="${food.image}" alt="${food.name}">
@@ -1895,6 +1902,32 @@
             userPreferences = { ...userPreferences, ...newPrefs };
             localStorage.setItem('streetFood_preferences', JSON.stringify(userPreferences));
             console.log('Preferences updated:', userPreferences);
+        }
+
+        // Observe after every render so animations start on screen, not on page load.
+        let foodCardObserver;
+
+        function observeFoodCards() {
+            if (!('IntersectionObserver' in window) ||
+                window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            if (!foodCardObserver) {
+                foodCardObserver = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (!entry.isIntersecting) return;
+                        entry.target.classList.remove('reveal-pending');
+                        entry.target.classList.add('reveal-visible');
+                        foodCardObserver.unobserve(entry.target);
+                    });
+                }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+            }
+
+            foodCardObserver.disconnect();
+            document.querySelectorAll('#popularFoodsContainer .food-card-reveal').forEach(card => {
+                if (card.classList.contains('reveal-visible')) return;
+                card.classList.add('reveal-pending');
+                foodCardObserver.observe(card);
+            });
         }
 
         // Animation setup
