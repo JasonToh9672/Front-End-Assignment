@@ -129,33 +129,6 @@
         }
 
         /* Grid */
-        .back-to-top {
-            position: fixed;
-            right: 24px;
-            bottom: 50px;
-            width: 50px;
-            height: 50px;
-            border: 0;
-            border-radius: 50%;
-            background: var(--primary-color);
-            color: #fff;
-            display: grid;
-            place-items: center;
-            font-size: 1.25rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, .2);
-            z-index: 1030;
-            cursor: pointer;
-        }
-
-        .back-to-top:hover {
-            background: var(--secondary-color);
-        }
-
-        .back-to-top:focus-visible {
-            outline: 3px solid var(--dark-color);
-            outline-offset: 3px;
-        }
-
         .food-grid {
             padding: 16px 0 80px;
             background: var(--light-color)
@@ -581,9 +554,6 @@
     </section>
 
     <!-- Modal -->
-    <button type="button" id="backToTopBtn" class="back-to-top" aria-label="Back to top" title="Back to top">
-        <i class="fas fa-arrow-up" aria-hidden="true"></i>
-    </button>
     <div id="modalContainer"></div>
 
     <!-- Stats -->
@@ -826,9 +796,6 @@
             setTimeout(loadGlobalFoods, 1200); // loading animation
             setupFilterButtons();
             startCounterAnimations();
-            $('#backToTopBtn').on('click', function () {
-                window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
-            });
             // Search params
             setTimeout(checkForSearchParams, 900);
 
@@ -1349,6 +1316,7 @@
 
         console.log('🌍 Global Street Food Page Loaded!');
     </script>
+    <script src="navigation.js"></script>
 </body>
 
 
