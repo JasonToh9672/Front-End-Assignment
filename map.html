@@ -205,28 +205,59 @@
 
   <!-- Map Section -->
   <div class="container py-5">
-    <div id="map"></div>
-
-    <div class="map-controls">
-      <div class="row">
-        <div class="col-md-8">
-          <input type="text" id="locationSearch" class="form-control mb-3"
-            placeholder="Enter a location (e.g. Kuala Lumpur, Penang, Bangkok)">
-        </div>
-        <div class="col-md-4">
-          <button class="btn btn-primary me-2" id="searchBtn"><i class="fas fa-search"></i> Search</button>
-          <button class="btn btn-success" id="myLocationBtn"><i class="fas fa-location-arrow"></i> My Location</button>
-        </div>
+    <form id="locationSearchForm" class="row g-2 mb-3">
+      <div class="col-md-8">
+        <label for="locationSearch" class="form-label">Search a city, address or landmark</label>
+        <input type="search" id="locationSearch" class="form-control" placeholder="e.g. Jalan Alor, Kuala Lumpur" required maxlength="200">
       </div>
-      <div class="text-center mt-3">
-        <button class="btn btn-warning" id="saveLocationBtn"><i class="fas fa-bookmark"></i> Save Current View</button>
+      <div class="col-md-4 d-flex align-items-end gap-2">
+        <button class="btn btn-primary" id="searchBtn" type="submit">Search</button>
+        <button class="btn btn-success" id="myLocationBtn" type="button">My Location</button>
+      </div>
+    </form>
+    <div id="locationResults" class="list-group mb-3" aria-label="Location search results"></div>
+    <p id="mapStatus" role="status" aria-live="polite">Choose a location to discover nearby food.</p>
+    <div id="map" aria-label="Food locations map"></div>
+    <p class="small text-muted mt-2">Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors. Search, places and routes powered by <a href="https://www.geoapify.com/">Geoapify</a>.</p>
+    <div class="map-controls row g-3 align-items-end">
+      <div class="col-sm-4">
+        <label for="foodType" class="form-label">Food places</label>
+        <select id="foodType" class="form-select">
+          <option value="catering.restaurant,catering.fast_food,catering.food_court,catering.cafe">All food places</option>
+          <option value="catering.restaurant">Restaurants</option>
+          <option value="catering.fast_food,catering.food_court">Quick bites &amp; food courts</option>
+          <option value="catering.cafe">Cafes</option>
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <label for="searchRadius" class="form-label">Within</label>
+        <select id="searchRadius" class="form-select"><option value="1000">1 km</option><option value="3000" selected>3 km</option><option value="5000">5 km</option></select>
+      </div>
+      <div class="col-sm-5 d-flex gap-2 flex-wrap">
+        <button class="btn btn-primary" id="searchAreaBtn" type="button">Find food around map centre</button>
+        <button class="btn btn-outline-secondary" id="saveLocationBtn" type="button">Save view</button>
       </div>
     </div>
-
-    <div class="location-info" id="locationInfo" style="display:none;">
-      <h4><i class="fas fa-map-marker-alt text-danger"></i> Current Location</h4>
-      <p id="currentLocationText">Kuala Lumpur, Malaysia</p>
-      <p><small class="text-muted">Showing popular street food areas in this region</small></p>
+    <div class="location-info">
+      <h2 class="h5">Route starting point</h2>
+      <p id="currentLocationText">Kuala Lumpur city centre (default)</p>
+      <p class="small text-muted">Choose a search result or use My Location to change your starting point. To start elsewhere, move the map and select Use map centre.</p>
+      <button id="useMapStartBtn" class="btn btn-outline-primary btn-sm" type="button">Use map centre as starting point</button>
+      <label for="travelMode" class="ms-sm-3 mt-2">Travel by</label>
+      <select id="travelMode" class="form-select d-inline-block w-auto"><option value="walk">Walking</option><option value="drive">Driving</option><option value="bicycle">Cycling</option></select>
+    </div>
+    <div class="row mt-4 g-4">
+      <section class="col-lg-6" aria-labelledby="placesHeading">
+        <h2 class="h4" id="placesHeading">Food places</h2>
+        <p class="small text-muted">Nearby results depend on available map data; some stalls may not be listed.</p>
+        <div id="foodPlaces" class="list-group"></div>
+      </section>
+      <section class="col-lg-6" aria-labelledby="directionsHeading">
+        <h2 class="h4" id="directionsHeading">Directions</h2>
+        <p id="routeStatus" role="status" aria-live="polite">Select Directions on a food place to plan a route.</p>
+        <button class="btn btn-outline-secondary btn-sm mb-3" type="button" id="clearRouteBtn" hidden>Clear route</button>
+        <ol id="routeSteps" class="ps-4"></ol>
+      </section>
     </div>
   </div>
 
@@ -338,191 +369,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-  <script>
-    let map;
-    let markers = [];
-    let currentLocation = "Kuala Lumpur";
-
-    // Street food locations database
-    const streetFoodLocations = {
-      "kuala lumpur": [
-        { lat: 3.1390, lng: 101.6869, name: "Jalan Alor Food Street", desc: "Famous night food street with diverse local cuisine" },
-        { lat: 3.1520, lng: 101.7020, name: "Kampung Baru Night Market", desc: "Traditional Malay street food" },
-        { lat: 3.1478, lng: 101.6953, name: "Petaling Street", desc: "Chinatown street food and local delicacies" },
-        { lat: 3.1319, lng: 101.6841, name: "Bangsar Food Court", desc: "Popular local food court" },
-        { lat: 3.1570, lng: 101.7116, name: "Wangsa Maju Night Market", desc: "Local night market with variety of street food" }
-      ],
-      "penang": [
-        { lat: 5.4164, lng: 100.3327, name: "Gurney Drive Food Court", desc: "Seaside hawker center with famous Penang dishes" },
-        { lat: 5.4141, lng: 100.3288, name: "Chulia Street Night Market", desc: "Heritage area with diverse street food" },
-        { lat: 5.4238, lng: 100.3105, name: "Red Garden Food Paradise", desc: "Popular food court in George Town" },
-        { lat: 5.4185, lng: 100.3292, name: "Armenian Street", desc: "Historical street with local food vendors" },
-        { lat: 5.4089, lng: 100.3418, name: "New Lane Hawker Center", desc: "Local hawker center with authentic dishes" }
-      ],
-      "bangkok": [
-        { lat: 13.7563, lng: 100.5018, name: "Chatuchak Weekend Market", desc: "Massive market with incredible street food variety" },
-        { lat: 13.7440, lng: 100.5014, name: "Khao San Road", desc: "Backpacker area with diverse street food" },
-        { lat: 13.7308, lng: 100.5065, name: "Chinatown (Yaowarat)", desc: "Best Chinese-Thai street food in Bangkok" },
-        { lat: 13.7278, lng: 100.5340, name: "Rot Fai Night Market", desc: "Vintage night market with great food stalls" },
-        { lat: 13.7461, lng: 100.5351, name: "Or Tor Kor Market", desc: "Premium fresh market with food court" }
-      ],
-      "singapore": [
-        { lat: 1.2834, lng: 103.8607, name: "Maxwell Food Centre", desc: "Famous hawker center in Chinatown" },
-        { lat: 1.3048, lng: 103.8318, name: "Lau Pa Sat", desc: "Historic hawker center with satay street" },
-        { lat: 1.3521, lng: 103.8198, name: "Newton Food Centre", desc: "24-hour hawker center popular with tourists" },
-        { lat: 1.3138, lng: 103.8611, name: "Chinatown Complex Food Centre", desc: "Largest hawker center in Singapore" },
-        { lat: 1.4370, lng: 103.7865, name: "Jurong East Hawker Centre", desc: "Local hawker center in residential area" }
-      ]
-    };
-
-    function initMap() {
-      // Initialize map centered on Kuala Lumpur
-      map = L.map('map').setView([3.1390, 101.6869], 12);
-
-      // Add OpenStreetMap tiles
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-      }).addTo(map);
-
-      // Load default location
-      loadStreetFoodMarkers(currentLocation.toLowerCase());
-      updateLocationInfo(currentLocation);
-    }
-
-    function loadStreetFoodMarkers(location) {
-      // Clear existing markers
-      markers.forEach(marker => map.removeLayer(marker));
-      markers = [];
-
-      const locations = streetFoodLocations[location];
-      if (!locations) {
-        // If location not in database, show generic message
-        showNoDataMessage(location);
-        return;
-      }
-
-      // Add markers for street food locations
-      locations.forEach((spot, index) => {
-        const customIcon = L.divIcon({
-          className: 'food-marker',
-          html: '🍜',
-          iconSize: [30, 30],
-          iconAnchor: [15, 15]
-        });
-
-        const marker = L.marker([spot.lat, spot.lng], { icon: customIcon })
-          .addTo(map)
-          .bindPopup(`
-            <div style="text-align: center; min-width: 200px;">
-              <h6 style="color: #e74c3c; margin-bottom: 10px;">🍽️ ${spot.name}</h6>
-              <p style="margin: 5px 0; font-size: 14px;">${spot.desc}</p>
-              <hr style="margin: 10px 0;">
-              <small style="color: #666;">📍 ${spot.lat.toFixed(4)}, ${spot.lng.toFixed(4)}</small>
-            </div>
-          `);
-
-        markers.push(marker);
-      });
-
-      // Fit map to show all markers
-      if (locations.length > 0) {
-        const group = new L.featureGroup(markers);
-        map.fitBounds(group.getBounds().pad(0.1));
-      }
-    }
-
-    function showNoDataMessage(location) {
-      // Center map on a default location and show message
-      map.setView([3.1390, 101.6869], 10);
-
-      const popup = L.popup()
-        .setLatLng([3.1390, 101.6869])
-        .setContent(`
-          <div style="text-align: center;">
-            <h6 style="color: #e74c3c;">📍 ${location}</h6>
-            <p>Street food data for this location is being collected.</p>
-            <small>Currently showing: Kuala Lumpur area</small>
-          </div>
-        `)
-        .openOn(map);
-    }
-
-    function updateLocationInfo(location) {
-      document.getElementById('currentLocationText').textContent = location;
-      document.getElementById('locationInfo').style.display = 'block';
-    }
-
-    // Event handlers
-    $(document).ready(function () {
-      initMap();
-
-      // Search button
-      $("#searchBtn").on("click", function () {
-        const searchTerm = $("#locationSearch").val().trim().toLowerCase();
-        if (searchTerm) {
-          currentLocation = searchTerm;
-          loadStreetFoodMarkers(searchTerm);
-          updateLocationInfo(searchTerm);
-          $("#locationSearch").val('');
-        } else {
-          alert("Please enter a location to search!");
-        }
-      });
-
-      // Enter key search
-      $("#locationSearch").on("keypress", function (e) {
-        if (e.which === 13) {
-          $("#searchBtn").click();
-        }
-      });
-
-      // My location button
-      $("#myLocationBtn").on("click", function () {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function (position) {
-            const lat = position.coords.latitude;
-            const lng = position.coords.longitude;
-            map.setView([lat, lng], 15);
-
-            // Add marker for user location
-            const userIcon = L.divIcon({
-              className: 'food-marker',
-              html: '📍',
-              iconSize: [30, 30],
-              iconAnchor: [15, 15]
-            });
-
-            L.marker([lat, lng], { icon: userIcon })
-              .addTo(map)
-              .bindPopup("📍 You are here!")
-              .openPopup();
-
-            updateLocationInfo("Your Current Location");
-          }, function () {
-            alert("Unable to get your location. Please ensure location services are enabled.");
-          });
-        } else {
-          alert("Geolocation is not supported by this browser.");
-        }
-      });
-
-      // Save location button
-      $("#saveLocationBtn").on("click", function () {
-        const center = map.getCenter();
-        const zoom = map.getZoom();
-
-        // Store in memory (since localStorage isn't available)
-        window.savedLocation = {
-          lat: center.lat,
-          lng: center.lng,
-          zoom: zoom,
-          name: currentLocation
-        };
-
-        alert(`📌 Saved current map view of ${currentLocation}!\n\nLocation: ${center.lat.toFixed(4)}, ${center.lng.toFixed(4)}\nZoom: ${zoom}`);
-      });
-    });
-  </script>
+  <script src="map-config.js?v=1"></script>
+  <script src="map-data.js?v=1"></script>
+  <script src="map-explorer.js?v=1"></script>
     <button type="button" id="backToTopBtn" class="back-to-top" aria-label="Back to top" title="Back to top">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
             <path d="M12 19V5M5 12l7-7 7 7" />
