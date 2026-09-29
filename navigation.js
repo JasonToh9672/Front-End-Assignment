@@ -1,16 +1,9 @@
 (() => {
     const scrollBehavior = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth';
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.id = 'backToTopBtn';
-    button.className = 'back-to-top';
-    button.setAttribute('aria-label', 'Back to top');
-    button.title = 'Back to top';
-    button.innerHTML = '<span aria-hidden="true">↑</span>';
+    const button = document.getElementById('backToTopBtn');
     button.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: scrollBehavior() });
     });
-    document.body.appendChild(button);
 
     // Wait until the page's filter handler has updated the results.
     document.addEventListener('click', event => {
