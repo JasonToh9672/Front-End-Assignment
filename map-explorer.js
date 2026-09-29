@@ -132,26 +132,35 @@
         } catch (error) { report('mapStatus', error); }
     }
 
+    function selectLocation(result, fallbackName) {
+        const point = { lat: result.lat, lon: result.lon, name: result.formatted || fallbackName };
+        setStart(point);
+        map.setView([point.lat, point.lon], 14);
+        return nearby(point);
+    }
+
     async function search(event) {
         event.preventDefault();
         const text = el('locationSearch').value.trim();
         if (!text) return;
+        stopRequest('places');
         message('mapStatus', 'Searching locations…');
         el('locationResults').replaceChildren();
         try {
             const data = await api('search', 'v1/geocode/search', { text, limit: '5', format: 'json', lang: 'en' });
             const results = (data.results || []).filter(validPoint);
-            message('mapStatus', results.length ? 'Choose a result to find nearby food and set your route starting point.' : 'No locations found. Try a city name or a more complete address.');
-            results.forEach(result => {
-                const point = { lat: result.lat, lon: result.lon, name: result.formatted || text };
-                el('locationResults').appendChild(makeButton(point.name, () => {
+            if (!results.length) {
+                message('mapStatus', 'No locations found. Try a city name or a more complete address.');
+                return;
+            }
+            results.slice(1).forEach(result => {
+                el('locationResults').appendChild(makeButton(`Other match: ${result.formatted || text}`, () => {
                     stopRequest('search');
                     el('locationResults').replaceChildren();
-                    setStart(point);
-                    map.setView([point.lat, point.lon], 14);
-                    nearby(point);
+                    selectLocation(result, text);
                 }, 'list-group-item list-group-item-action'));
             });
+            await selectLocation(results[0], text);
         } catch (error) { report('mapStatus', error); }
     }
 

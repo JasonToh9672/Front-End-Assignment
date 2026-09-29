@@ -43,22 +43,23 @@ function app(key = 'test-browser-key') {
         }
     };
     vm.runInNewContext(fs.readFileSync('map-explorer.js', 'utf8'), context);
-    return { get, calls, responses, routes, saved, geoSuccess: p => geoSuccess(p), geoFailure: p => geoFailure(p) };
+    return { get, calls, responses, routes, saved, map, geoSuccess: p => geoSuccess(p), geoFailure: p => geoFailure(p) };
 }
 const flush = () => new Promise(resolve => setImmediate(resolve));
 const place = { features: [{ properties: { lat: 3.15, lon: 101.7, name: '<img onerror=bad()>', formatted: 'Test address' } }] };
 
-test('search selection finds food and uses correct coordinate order for directions', async () => {
+test('search automatically moves the map, finds food and uses correct coordinate order for directions', async () => {
     const a = app();
     await flush();
     a.get('locationSearch').value = 'Kuala Lumpur';
     a.responses.push({ results: [{ lat: 3.14, lon: 101.69, formatted: 'Kuala Lumpur' }] });
+    a.responses.push(place);
     await a.get('locationSearchForm').events.submit({ preventDefault() {} });
     assert.equal(a.calls[0].url.pathname, '/v1/geocode/search');
     assert.equal(a.calls[0].url.searchParams.get('text'), 'Kuala Lumpur');
-    a.responses.push(place);
-    a.get('locationResults').children[0].events.click();
-    await flush();
+    assert.equal(a.map.getCenter().lat, 3.14);
+    assert.equal(a.map.getCenter().lng, 101.69);
+    assert.equal(a.get('locationResults').children.length, 0);
     assert.equal(a.calls[1].url.searchParams.get('filter'), 'circle:101.69,3.14,3000');
     const card = a.get('foodPlaces').children[0];
     assert.equal(card.children[0].textContent, '<img onerror=bad()>'); // External names stay plain text.
