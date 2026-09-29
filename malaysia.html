@@ -2170,8 +2170,15 @@
             e.preventDefault();
             const target = $($(this).attr('href'));
             if (target.length) {
-                $('html, body').animate({
-                    scrollTop: target.offset().top - 100
+                let scrollOffset = 100;
+                if (target.is('#foodContainer')) {
+                    const filterSection = $('.filter-section');
+                    const stickyTop = parseFloat(filterSection.css('top')) || 0;
+                    // Leave the full images below the sticky filters, including when collapsed.
+                    scrollOffset = stickyTop + filterSection.outerHeight() + 24;
+                }
+                $('html, body').stop(true).animate({
+                    scrollTop: Math.max(0, target.offset().top - scrollOffset)
                 }, 800);
             }
         });
