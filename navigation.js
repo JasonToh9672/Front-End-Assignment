@@ -1,6 +1,18 @@
 (() => {
     const scrollBehavior = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth';
-    const button = document.getElementById('backToTopBtn');
+    // Also support older cached pages that do not contain the button markup yet.
+    const button = document.getElementById('backToTopBtn') || document.createElement('button');
+    button.id = 'backToTopBtn';
+    button.type = 'button';
+    button.className = 'back-to-top';
+    button.setAttribute('aria-label', 'Back to top');
+    button.title = 'Back to top';
+    const renderArrow = () => {
+        button.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19V5M5 12l7-7 7 7" /></svg>';
+    };
+    renderArrow();
+    if (!button.isConnected) document.body.appendChild(button);
+    window.addEventListener('pageshow', renderArrow);
     button.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: scrollBehavior() });
     });
