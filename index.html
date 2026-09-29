@@ -145,7 +145,7 @@
         }
 
         #popularFoodsContainer {
-            row-gap: 30px;
+            --bs-gutter-y: 30px;
         }
 
         .food-card {
@@ -339,18 +339,16 @@
 
         /* Animations */
         .fade-in {
-            animation: fadeInUp 1s ease-out;
+            animation: foodFadeIn 0.6s ease-out;
         }
 
-        @keyframes fadeInUp {
+        @keyframes foodFadeIn {
             from {
                 opacity: 0;
-                transform: translateY(30px);
             }
 
             to {
                 opacity: 1;
-                transform: translateY(0);
             }
         }
 
@@ -1912,7 +1910,7 @@
                 });
             }, observerOptions);
 
-            document.querySelectorAll('.food-card, .feature-card').forEach(el => {
+            document.querySelectorAll('.feature-card').forEach(el => {
                 observer.observe(el);
             });
         }

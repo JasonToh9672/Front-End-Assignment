@@ -520,6 +520,7 @@
                 <div class="col-md-9">
                     <div id="filterButtons" class="text-md-end">
                         <button class="filter-btn active" data-category="all">All Foods</button>
+                        <button class="filter-btn" data-category="favorites"><i class="fas fa-heart me-1"></i> Favourites</button>
                         <button class="filter-btn" data-category="rice">Rice Dishes</button>
                         <button class="filter-btn" data-category="noodles">Noodles</button>
                         <button class="filter-btn" data-category="snacks">Snacks</button>
@@ -548,11 +549,6 @@
                 </div>
             </div>
 
-            <div class="text-center mt-3">
-                <button class="btn btn-outline-secondary" id="exportFavoritesBtn">
-                    <i class="fas fa-file-export me-1"></i> Export Malaysia Favorites (Alt+F)
-                </button>
-            </div>
         </div>
     </section>
 
@@ -1527,7 +1523,6 @@
             setTimeout(loadMalaysianFoods, 200); // Show loading animation
             setupFilterButtons();
             startCounterAnimations();
-            $('#exportFavoritesBtn').on('click', exportMyFavorites);
 
             const urlParams = new URLSearchParams(window.location.search);
             const foodId = urlParams.get("id");
@@ -1684,7 +1679,7 @@
                         <div class="alert alert-info">
                             <i class="fas fa-search"></i>
                             <h5>No foods found</h5>
-                            <p>Try selecting a different category or check back later for more delicious options!</p>
+                            <p>${currentFilter === 'favorites' ? 'Tap a heart on a food card to save it here. If you are searching, try another search term.' : 'Try selecting a different category or check back later for more delicious options!'}</p>
                         </div>
                     </div>
                 `);
@@ -1873,14 +1868,29 @@
                 return;
             }
 
-            const want = normalizeCategory(category);
-            const filtered = malaysianFoods.filter(food => normalizeCategory(food.category) === want);
+            const want = category === 'favorites' ? 'favourite' : normalizeCategory(category);
+            const filtered = getFilteredFoods(category);
             displayFoods(filtered);
 
             // Show search results info
             $('#searchResultText').text(`Found ${filtered.length} ${want} dishes`);
             $('#searchResults').show();
             }
+
+        function getFilteredFoods(category) {
+            if (category === 'all') return malaysianFoods;
+            if (category === 'favorites') {
+                return malaysianFoods.filter(food => favoritesList.includes(food.id));
+            }
+            return malaysianFoods.filter(food => normalizeCategory(food.category) === normalizeCategory(category));
+        }
+
+        function refreshFavoritesFilter() {
+            if (currentFilter !== 'favorites') return;
+            const searchTerm = ($('#searchInput').val() || '').trim();
+            if (searchTerm) performSearch(searchTerm);
+            else filterFoods(currentFilter);
+        }
 
         function toggleFavorite(id) {
             const idx = favoritesList.indexOf(id);
@@ -1898,7 +1908,8 @@
             localStorage.setItem('streetFood_favorites', JSON.stringify(favoritesList));
 
             // Track interaction
-            trackUserInteraction('toggle_favorite', { foodId: foodId, action: index > -1 ? 'remove' : 'add' });
+            refreshFavoritesFilter();
+            trackUserInteraction('toggle_favorite', { foodId: id, action: idx > -1 ? 'remove' : 'add' });
         }
 
         function viewFoodDetails(foodId) {
@@ -2026,6 +2037,7 @@
             if (modalBtnIcon.length) {
                 modalBtnIcon.removeClass('far').addClass('fas text-danger');
             }
+            refreshFavoritesFilter();
         }
 
         let notifTimer = null;
@@ -2141,14 +2153,7 @@
             const lowerCaseTerm = searchTerm.toLowerCase();
 
             // First, determine the list of foods to search from, respecting the current category filter.
-            let baseFoods;
-            if (currentFilter === 'all') {
-                baseFoods = malaysianFoods;
-            } else {
-                // If a category like "Noodles" is active, only search within that category.
-                const activeCategory = normalizeCategory(currentFilter);
-                baseFoods = malaysianFoods.filter(food => normalizeCategory(food.category) === activeCategory);
-            }
+            const baseFoods = getFilteredFoods(currentFilter);
 
             // Now, filter that list with a more complete search logic that includes the 'origin'.
             const results = baseFoods.filter(food =>
@@ -2202,35 +2207,6 @@
                 }
             });
         });
-
-        // Export favorites functionality
-        function exportMyFavorites() {
-            const favoriteFoods = malaysianFoods.filter(food => favoritesList.includes(food.id));
-
-            if (favoriteFoods.length === 0) {
-                showNotification('No favorites to export!', 'warning');
-                return;
-            }
-
-            const dataStr = JSON.stringify({
-                exportDate: new Date().toISOString(),
-                totalFavorites: favoriteFoods.length,
-                foods: favoriteFoods
-            }, null, 2);
-
-            const dataBlob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(dataBlob);
-
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'my_favorite_malaysian_foods.json';
-            link.click();
-
-            URL.revokeObjectURL(url);
-
-            showNotification(`Exported ${favoriteFoods.length} favorite foods!`, 'success');
-            trackUserInteraction('export_favorites', { count: favoriteFoods.length });
-        }
 
 function generateWhereToFind(food) {
             let text = `This popular dish is widely available at hawker centers, street-side stalls (gerai), and local restaurants throughout Malaysia. `;
@@ -2346,7 +2322,7 @@ function generateWhereToFind(food) {
             // Alt + F for favorites
             if (e.altKey && e.key === 'f') {
                 e.preventDefault();
-                exportMyFavorites();
+                $('.filter-btn[data-category="favorites"]').trigger('click');
             }
         });
 
